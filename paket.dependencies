@@ -6,12 +6,6 @@ nuget FSharp.Formatting
 nuget Fake
 nuget FsCheck
 nuget FsCheck.Xunit
-nuget Microsoft.AspNet.WebApi 5.2.3
-nuget Microsoft.AspNet.WebApi.Client 5.2.3
-nuget Microsoft.AspNet.WebApi.Core 5.2.3
-nuget Microsoft.AspNet.WebApi.Owin 5.2.3
-nuget Microsoft.AspNet.WebApi.OwinSelfHost 5.2.3
-nuget Microsoft.AspNet.WebApi.WebHost 5.2.3
 nuget Microsoft.Owin 3.0.1 framework: >= net45
 nuget Microsoft.Owin.Diagnostics 3.0.1
 nuget Microsoft.Owin.FileSystems 3.0.1
