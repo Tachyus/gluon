@@ -29,6 +29,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{603A6B73-7725-48F8-870D-50685AC95C96}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SampleApp", "samples\SampleApp\SampleApp.fsproj", "{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{72FDBA6E-CE61-4811-9F18-39FAA585B5EA} = {72FDBA6E-CE61-4811-9F18-39FAA585B5EA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "samples\WebApp\WebApp.csproj", "{D137BEC5-3BD3-421F-94EB-47F6A8A63859}"
 EndProject
