@@ -6,13 +6,13 @@ for the C# applcication.
 
 ## F# Project
 
-In the F# project, reference `Tachyus.Gluon` NuGet package.  Also
-reference `Owin` and `Microsoft.Owin`.  Mark some methods as remote:
+In the F# project, reference `Gluon` NuGet package. Also reference
+`Owin` and `Microsoft.Owin`. Mark some methods as remote:
 
 ```fsharp
 module MyApp.Arithmetic
 
-[<Tachyus.Gluon.Remote>]
+[<Gluon.Remote>]
 let incr x = x + 1
 ```
 
@@ -23,7 +23,7 @@ namespace MyApp
 
 open Owin
 open Microsoft.Owin
-open Tachyus.Gluon
+open Gluon
 
 type Startup() =
     member x.Configuration(app: IAppBuilder) =
@@ -41,7 +41,7 @@ Reference a bunch of packages, namely:
     Microsoft.Owin.Host.SystemWeb
     Microsoft.Owin.Hosting
     Owin
-    Tachyus.Gluon.Client
+    Gluon.Client
     jQuery
     jQuery.TypeScript.DefinitelyTyped
 
@@ -54,13 +54,13 @@ already.  This typically takes this form in `.csproj`:
 In your `Scripts/app.ts`, write something like this:
 
 ```typescript
-/// <reference path="Tachyus.Gluon.ts" />
-/// <reference path="Tachyus.Gluon.Generated.ts" />
+/// <reference path="Gluon.ts" />
+/// <reference path="Gluon.Generated.ts" />
 /// <reference path="typings/jquery/jquery.d.ts" />
 
 jQuery(() => {
     console.log('start');
-    var cli = new Tachyus.Gluon.Client();
+    var cli = new Gluon.Client();
 
     MyApp.Arithmetic.incr(cli)(1).then(x => {
         console.log('incr(1) = ', x);

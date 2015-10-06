@@ -12,14 +12,14 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-namespace Tachyus.Gluon.TypeScript
+namespace Gluon.TypeScript
 
 open System
 open System.IO
 open System.Text
 open System.Threading
 open System.Web
-open Tachyus.Gluon
+open Gluon
 
 module FileWriter =
 

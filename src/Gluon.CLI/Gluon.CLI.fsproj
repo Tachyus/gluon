@@ -7,9 +7,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>72fdba6e-ce61-4811-9f18-39faa585b5ea</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <Name>Gluon.exe</Name>
-    <RootNamespace>Tachyus.Gluon</RootNamespace>
-    <AssemblyName>Gluon</AssemblyName>
+    <Name>Gluon.CLI</Name>
+    <RootNamespace>$(Name)</RootNamespace>
+    <AssemblyName>$(Name)</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
   </PropertyGroup>
@@ -21,7 +21,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <StartArguments>--out "samples\WebApp\Gen\Tachyus.Gluon.Generated.ts" --reflect "samples\SampleApp\bin\Debug\SampleApp.dll"</StartArguments>
+    <StartArguments>--out "samples\WebApp\Gen\Gluon.Generated.ts" --reflect "samples\SampleApp\bin\Debug\SampleApp.dll"</StartArguments>
     <StartWorkingDirectory>C:\Users\Anton\work\gluon\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

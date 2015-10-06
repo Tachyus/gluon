@@ -12,7 +12,7 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-module internal Tachyus.Gluon.AssemblyResolvers
+module internal Gluon.CLI.AssemblyResolvers
 
 open System
 open System.Reflection

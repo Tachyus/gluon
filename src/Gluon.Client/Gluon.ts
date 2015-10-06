@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+// Copyright 2015 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -13,458 +13,413 @@
 // permissions and limitations under the License.
 
 // <BOOTSTRAP-DEFS>
-module Tachyus.Gluon.Schema {
-
+module Gluon.Schema {
+  
     export class Delete {
-
+      
         constructor() { }
-        tag(): string { return "Delete"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.HttpMethod", this);
+         tag(): string { return "Delete";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
         }
     }
     export class Get {
-
+      
         constructor() { }
-        tag(): string { return "Get"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.HttpMethod", this);
+         tag(): string { return "Get";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
         }
     }
     export class Post {
-
+      
         constructor() { }
-        tag(): string { return "Post"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.HttpMethod", this);
+         tag(): string { return "Post";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
         }
     }
     export class Put {
-
+      
         constructor() { }
-        tag(): string { return "Put"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.HttpMethod", this);
+         tag(): string { return "Put";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
         }
     }
     export type HttpMethod = Delete | Get | Post | Put;
     export class HttpCallingConvention {
-
-        constructor(public Item1: Tachyus.Gluon.Schema.HttpMethod,
-            public path: string) { }
-        tag(): string { return "HttpCallingConvention"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.CallingConvention", this);
+      
+        constructor(public Item1: Gluon.Schema.HttpMethod,
+        public path: string) { }
+         tag(): string { return "HttpCallingConvention";}
+         toJSON(): any {
+          
+            return Gluon.Internals.toJSON("Gluon.Schema.CallingConvention", this);
         }
     }
     export type CallingConvention = HttpCallingConvention;
     export class ArrayType {
-
-        constructor(public Item: Tachyus.Gluon.Schema.DataType) { }
-        tag(): string { return "ArrayType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+      
+        constructor(public Item: Gluon.Schema.DataType) { }
+         tag(): string { return "ArrayType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class BooleanType {
-
+      
         constructor() { }
-        tag(): string { return "BooleanType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "BooleanType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class BytesType {
-
+      
         constructor() { }
-        tag(): string { return "BytesType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "BytesType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class DateTimeType {
-
+      
         constructor() { }
-        tag(): string { return "DateTimeType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "DateTimeType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class DoubleType {
-
+      
         constructor() { }
-        tag(): string { return "DoubleType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "DoubleType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class IntType {
-
+      
         constructor() { }
-        tag(): string { return "IntType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "IntType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class JsonType {
-
+      
         constructor() { }
-        tag(): string { return "JsonType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "JsonType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class ListType {
-
-        constructor(public Item: Tachyus.Gluon.Schema.DataType) { }
-        tag(): string { return "ListType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+      
+        constructor(public Item: Gluon.Schema.DataType) { }
+         tag(): string { return "ListType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class OptionType {
-
-        constructor(public Item: Tachyus.Gluon.Schema.DataType) { }
-        tag(): string { return "OptionType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+      
+        constructor(public Item: Gluon.Schema.DataType) { }
+         tag(): string { return "OptionType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class SequenceType {
-
-        constructor(public Item: Tachyus.Gluon.Schema.DataType) { }
-        tag(): string { return "SequenceType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+      
+        constructor(public Item: Gluon.Schema.DataType) { }
+         tag(): string { return "SequenceType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class StringDictType {
-
-        constructor(public Item: Tachyus.Gluon.Schema.DataType) { }
-        tag(): string { return "StringDictType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+      
+        constructor(public Item: Gluon.Schema.DataType) { }
+         tag(): string { return "StringDictType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class StringType {
-
+      
         constructor() { }
-        tag(): string { return "StringType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "StringType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class TupleType {
-
-        constructor(public Item: Tachyus.Gluon.Schema.DataType[]) { }
-        tag(): string { return "TupleType"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+      
+        constructor(public Item: Gluon.Schema.DataType []) { }
+         tag(): string { return "TupleType";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export class TypeReference {
-
+      
         constructor(public Item: string) { }
-        tag(): string { return "TypeReference"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.DataType", this);
+         tag(): string { return "TypeReference";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
     export type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
     export class Parameter {
-
+      
         constructor(public ParameterName: string,
-            public ParameterType: Tachyus.Gluon.Schema.DataType) { }
+        public ParameterType: Gluon.Schema.DataType) { }
         static fromJSON(json: any): Parameter {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.Parameter", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.Parameter", json);
         }
-        tag(): string { return "Parameter"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.Parameter", this);
+         tag(): string { return "Parameter";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.Parameter", this);
         }
     }
     export class Method {
-
-        constructor(public CallingConvention: Tachyus.Gluon.Schema.CallingConvention,
-            public MethodName: string,
-            public MethodParameters: Tachyus.Gluon.Schema.Parameter[],
-            public MethodReturnType: Tachyus.Gluon.Option<Tachyus.Gluon.Schema.DataType>) {
-
-        }
+      
+        constructor(public CallingConvention: Gluon.Schema.CallingConvention,
+        public MethodName: string,
+        public MethodParameters: Gluon.Schema.Parameter [],
+        public MethodReturnType: Gluon.Option<Gluon.Schema.DataType>) { }
         static fromJSON(json: any): Method {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.Method", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.Method", json);
         }
-        tag(): string { return "Method"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.Method", this);
+         tag(): string { return "Method";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.Method", this);
         }
     }
     export class EnumCase {
-
+      
         constructor(public EnumCaseName: string,
-            public EnumCaseValue: number) { }
+        public EnumCaseValue: number) { }
         static fromJSON(json: any): EnumCase {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.EnumCase", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.EnumCase", json);
         }
-        tag(): string { return "EnumCase"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.EnumCase", this);
+         tag(): string { return "EnumCase";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.EnumCase", this);
         }
     }
     export class Enum {
-
+      
         constructor(public EnumName: string,
-            public EnumCases: Tachyus.Gluon.Schema.EnumCase[]) { }
+        public EnumCases: Gluon.Schema.EnumCase []) { }
         static fromJSON(json: any): Enum {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.Enum", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.Enum", json);
         }
-        tag(): string { return "Enum"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.Enum", this);
+         tag(): string { return "Enum";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.Enum", this);
         }
     }
     export class Field {
-
+      
         constructor(public FieldName: string,
-            public FieldType: Tachyus.Gluon.Schema.DataType) { }
+        public FieldType: Gluon.Schema.DataType) { }
         static fromJSON(json: any): Field {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.Field", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.Field", json);
         }
-        tag(): string { return "Field"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.Field", this);
+         tag(): string { return "Field";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.Field", this);
         }
     }
     export class Record {
-
+      
         constructor(public RecordName: string,
-            public RecordFields: Tachyus.Gluon.Schema.Field[]) { }
+        public RecordFields: Gluon.Schema.Field []) { }
         static fromJSON(json: any): Record {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.Record", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.Record", json);
         }
-        tag(): string { return "Record"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.Record", this);
+         tag(): string { return "Record";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.Record", this);
         }
     }
     export class UnionCase {
-
+      
         constructor(public CaseName: string,
-            public CaseFields: Tachyus.Gluon.Schema.Field[]) { }
+        public CaseFields: Gluon.Schema.Field []) { }
         static fromJSON(json: any): UnionCase {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.UnionCase", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.UnionCase", json);
         }
-        tag(): string { return "UnionCase"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.UnionCase", this);
+         tag(): string { return "UnionCase";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.UnionCase", this);
         }
     }
     export class Union {
-
+      
         constructor(public UnionName: string,
-            public UnionCases: Tachyus.Gluon.Schema.UnionCase[]) { }
+        public UnionCases: Gluon.Schema.UnionCase []) { }
         static fromJSON(json: any): Union {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.Union", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.Union", json);
         }
-        tag(): string { return "Union"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.Union", this);
+         tag(): string { return "Union";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.Union", this);
         }
     }
     export class DefineEnum {
-
-        constructor(public Item: Tachyus.Gluon.Schema.Enum) { }
-        tag(): string { return "DefineEnum"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.TypeDefinition", this);
+      
+        constructor(public Item: Gluon.Schema.Enum) { }
+         tag(): string { return "DefineEnum";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
         }
     }
     export class DefineRecord {
-
-        constructor(public Item: Tachyus.Gluon.Schema.Record) { }
-        tag(): string { return "DefineRecord"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.TypeDefinition", this);
+      
+        constructor(public Item: Gluon.Schema.Record) { }
+         tag(): string { return "DefineRecord";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
         }
     }
     export class DefineUnion {
-
-        constructor(public Item: Tachyus.Gluon.Schema.Union) { }
-        tag(): string { return "DefineUnion"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.TypeDefinition", this);
+      
+        constructor(public Item: Gluon.Schema.Union) { }
+         tag(): string { return "DefineUnion";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
         }
     }
     export type TypeDefinition = DefineEnum | DefineRecord | DefineUnion;
     export class Service {
-
-        constructor(public Methods: Tachyus.Gluon.Schema.Method[],
-            public TypeDefinitions: Tachyus.Gluon.Schema.TypeDefinition[]) { }
+      
+        constructor(public Methods: Gluon.Schema.Method [],
+        public TypeDefinitions: Gluon.Schema.TypeDefinition []) { }
         static fromJSON(json: any): Service {
-
-            return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.Service", json);
+           return Gluon.Internals.fromJSON("Gluon.Schema.Service", json);
         }
-        tag(): string { return "Service"; }
-        toJSON(): any {
-
-            return Tachyus.Gluon.Internals.toJSON("Tachyus.Gluon.Schema.Service", this);
+         tag(): string { return "Service";}
+         toJSON(): any {
+           return Gluon.Internals.toJSON("Gluon.Schema.Service", this);
         }
     }
 }
-module Tachyus.Gluon.Schema.HttpMethod {
-
+ module Gluon.Schema.HttpMethod {
+  
     export function fromJSON(json: any): HttpMethod {
-
-        return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.HttpMethod", json);
+       return Gluon.Internals.fromJSON("Gluon.Schema.HttpMethod", json);
     }
-    export function match<T>(value: Tachyus.Gluon.Schema.HttpMethod,
-        cont: {
-            Delete: (() => T), Get: (() => T), Post: (() => T), Put: (() => T)
-        }): T {
-
-        if (value instanceof Delete) { return cont.Delete(); }
-        else if (value instanceof Get) { return cont.Get(); }
-        else if (value instanceof Post) { return cont.Post(); }
-        else if (value instanceof Put) { return cont.Put(); } else {
-            throw new Error("match failed");
+    export function match<T>(value: Gluon.Schema.HttpMethod,
+    cont: {
+      Delete: (() => T), Get: (() => T), Post: (() => T), Put: (() => T)
+    }): T {
+      
+        if (value instanceof Delete) { return cont.Delete();}
+        else if (value instanceof Get) { return cont.Get();}
+        else if (value instanceof Post) { return cont.Post();}
+        else if (value instanceof Put) { return cont.Put();} else {
+           throw new Error("match failed");
         }
     }
 }
-module Tachyus.Gluon.Schema.CallingConvention {
-
+ module Gluon.Schema.CallingConvention {
+  
     export function fromJSON(json: any): CallingConvention {
-
-        return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.CallingConvention", json);
+       return Gluon.Internals.fromJSON("Gluon.Schema.CallingConvention", json);
     }
-    export function match<T>(value: Tachyus.Gluon.Schema.CallingConvention,
-        cont: {
-            HttpCallingConvention: ((Item1: Tachyus.Gluon.Schema.HttpMethod,
-                path: string) => T)
-        }): T {
-
+    export function match<T>(value: Gluon.Schema.CallingConvention,
+    cont: {
+      HttpCallingConvention: ((Item1:  Gluon.Schema.HttpMethod,
+      path:  string) => T)
+    }): T {
+      
         if (value instanceof HttpCallingConvention) {
-            return cont.HttpCallingConvention(value.Item1, value.path);
-        } else { throw new Error("match failed"); }
+           return cont.HttpCallingConvention(value.Item1, value.path);
+        } else { throw new Error("match failed");}
     }
 }
-module Tachyus.Gluon.Schema.DataType {
-
+ module Gluon.Schema.DataType {
+  
     export function fromJSON(json: any): DataType {
-
-        return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.DataType", json);
+       return Gluon.Internals.fromJSON("Gluon.Schema.DataType", json);
     }
-    export function match<T>(value: Tachyus.Gluon.Schema.DataType,
-        cont: {
-            ArrayType: ((Item: Tachyus.Gluon.Schema.DataType) => T),
-            BooleanType: (() => T),
-            BytesType: (() => T),
-            DateTimeType: (() => T),
-            DoubleType: (() => T),
-            IntType: (() => T),
-            JsonType: (() => T),
-            ListType: ((Item: Tachyus.Gluon.Schema.DataType) => T),
-            OptionType: ((Item: Tachyus.Gluon.Schema.DataType) => T),
-            SequenceType: ((Item: Tachyus.Gluon.Schema.DataType) => T),
-            StringDictType: ((Item: Tachyus.Gluon.Schema.DataType) => T),
-            StringType: (() => T),
-            TupleType: ((Item: Tachyus.Gluon.Schema.DataType[]) => T),
-            TypeReference: ((Item: string) => T)
-        }): T {
-
-        if (value instanceof ArrayType) { return cont.ArrayType(value.Item); }
-        else if (value instanceof BooleanType) { return cont.BooleanType(); }
-        else if (value instanceof BytesType) { return cont.BytesType(); }
-        else if (value instanceof DateTimeType) { return cont.DateTimeType(); }
-        else if (value instanceof DoubleType) { return cont.DoubleType(); }
-        else if (value instanceof IntType) { return cont.IntType(); }
-        else if (value instanceof JsonType) { return cont.JsonType(); }
+    export function match<T>(value: Gluon.Schema.DataType,
+    cont: {
+      ArrayType: ((Item:  Gluon.Schema.DataType) => T),
+      BooleanType: (() => T),
+      BytesType: (() => T),
+      DateTimeType: (() => T),
+      DoubleType: (() => T),
+      IntType: (() => T),
+      JsonType: (() => T),
+      ListType: ((Item:  Gluon.Schema.DataType) => T),
+      OptionType: ((Item:  Gluon.Schema.DataType) => T),
+      SequenceType: ((Item:  Gluon.Schema.DataType) => T),
+      StringDictType: ((Item:  Gluon.Schema.DataType) => T),
+      StringType: (() => T),
+      TupleType: ((Item:  Gluon.Schema.DataType []) => T),
+      TypeReference: ((Item:  string) => T)
+    }): T {
+      
+        if (value instanceof ArrayType) { return cont.ArrayType(value.Item);}
+        else if (value instanceof BooleanType) { return cont.BooleanType();}
+        else if (value instanceof BytesType) { return cont.BytesType();}
+        else if (value instanceof DateTimeType) { return cont.DateTimeType();}
+        else if (value instanceof DoubleType) { return cont.DoubleType();}
+        else if (value instanceof IntType) { return cont.IntType();}
+        else if (value instanceof JsonType) { return cont.JsonType();}
         else if (value instanceof ListType) {
-            return cont.ListType(value.Item);
+           return cont.ListType(value.Item);
         }
         else if (value instanceof OptionType) {
-            return cont.OptionType(value.Item);
+           return cont.OptionType(value.Item);
         }
         else if (value instanceof SequenceType) {
-            return cont.SequenceType(value.Item);
+           return cont.SequenceType(value.Item);
         }
         else if (value instanceof StringDictType) {
-            return cont.StringDictType(value.Item);
+           return cont.StringDictType(value.Item);
         }
-        else if (value instanceof StringType) { return cont.StringType(); }
+        else if (value instanceof StringType) { return cont.StringType();}
         else if (value instanceof TupleType) {
-            return cont.TupleType(value.Item);
+           return cont.TupleType(value.Item);
         }
         else if (value instanceof TypeReference) {
-            return cont.TypeReference(value.Item);
-        } else { throw new Error("match failed"); }
+           return cont.TypeReference(value.Item);
+        } else { throw new Error("match failed");}
     }
 }
-module Tachyus.Gluon.Schema.TypeDefinition {
-
+ module Gluon.Schema.TypeDefinition {
+  
     export function fromJSON(json: any): TypeDefinition {
-
-        return Tachyus.Gluon.Internals.fromJSON("Tachyus.Gluon.Schema.TypeDefinition", json);
+       return Gluon.Internals.fromJSON("Gluon.Schema.TypeDefinition", json);
     }
-    export function match<T>(value: Tachyus.Gluon.Schema.TypeDefinition,
-        cont: {
-            DefineEnum: ((Item: Tachyus.Gluon.Schema.Enum) => T),
-            DefineRecord: ((Item: Tachyus.Gluon.Schema.Record) => T),
-            DefineUnion: ((Item: Tachyus.Gluon.Schema.Union) => T)
-        }): T {
-
-        if (value instanceof DefineEnum) { return cont.DefineEnum(value.Item); }
+    export function match<T>(value: Gluon.Schema.TypeDefinition,
+    cont: {
+      DefineEnum: ((Item:  Gluon.Schema.Enum) => T),
+      DefineRecord: ((Item:  Gluon.Schema.Record) => T),
+      DefineUnion: ((Item:  Gluon.Schema.Union) => T)
+    }): T {
+      
+        if (value instanceof DefineEnum) { return cont.DefineEnum(value.Item);}
         else if (value instanceof DefineRecord) {
-            return cont.DefineRecord(value.Item);
+           return cont.DefineRecord(value.Item);
         }
         else if (value instanceof DefineUnion) {
-            return cont.DefineUnion(value.Item);
-        } else { throw new Error("match failed"); }
+           return cont.DefineUnion(value.Item);
+        } else { throw new Error("match failed");}
     }
 }
 // </BOOTSTRAP-DEFS>
 
 /** Implements the client side of the Gluon connector. */
-module Tachyus.Gluon {
+module Gluon {
 
-    import S = Tachyus.Gluon.Schema;
+    import S = Gluon.Schema;
 
     // Option<T> support ------------------------------------------------------
 
@@ -1527,38 +1482,38 @@ module Tachyus.Gluon {
 }
 
 // <BOOTSTRAP-INIT>
-Tachyus.Gluon.Internals.registerActivators({
-    "Tachyus.Gluon.Schema.Delete": () => new Tachyus.Gluon.Schema.Delete(),
-    "Tachyus.Gluon.Schema.Get": () => new Tachyus.Gluon.Schema.Get(),
-    "Tachyus.Gluon.Schema.Post": () => new Tachyus.Gluon.Schema.Post(),
-    "Tachyus.Gluon.Schema.Put": () => new Tachyus.Gluon.Schema.Put(),
-    "Tachyus.Gluon.Schema.HttpCallingConvention": (a, b) => new Tachyus.Gluon.Schema.HttpCallingConvention(a, b),
-    "Tachyus.Gluon.Schema.ArrayType": (a) => new Tachyus.Gluon.Schema.ArrayType(a),
-    "Tachyus.Gluon.Schema.BooleanType": () => new Tachyus.Gluon.Schema.BooleanType(),
-    "Tachyus.Gluon.Schema.BytesType": () => new Tachyus.Gluon.Schema.BytesType(),
-    "Tachyus.Gluon.Schema.DateTimeType": () => new Tachyus.Gluon.Schema.DateTimeType(),
-    "Tachyus.Gluon.Schema.DoubleType": () => new Tachyus.Gluon.Schema.DoubleType(),
-    "Tachyus.Gluon.Schema.IntType": () => new Tachyus.Gluon.Schema.IntType(),
-    "Tachyus.Gluon.Schema.JsonType": () => new Tachyus.Gluon.Schema.JsonType(),
-    "Tachyus.Gluon.Schema.ListType": (a) => new Tachyus.Gluon.Schema.ListType(a),
-    "Tachyus.Gluon.Schema.OptionType": (a) => new Tachyus.Gluon.Schema.OptionType(a),
-    "Tachyus.Gluon.Schema.SequenceType": (a) => new Tachyus.Gluon.Schema.SequenceType(a),
-    "Tachyus.Gluon.Schema.StringDictType": (a) => new Tachyus.Gluon.Schema.StringDictType(a),
-    "Tachyus.Gluon.Schema.StringType": () => new Tachyus.Gluon.Schema.StringType(),
-    "Tachyus.Gluon.Schema.TupleType": (a) => new Tachyus.Gluon.Schema.TupleType(a),
-    "Tachyus.Gluon.Schema.TypeReference": (a) => new Tachyus.Gluon.Schema.TypeReference(a),
-    "Tachyus.Gluon.Schema.Parameter": (a, b) => new Tachyus.Gluon.Schema.Parameter(a, b),
-    "Tachyus.Gluon.Schema.Method": (a, b, c, d) => new Tachyus.Gluon.Schema.Method(a, b, c, d),
-    "Tachyus.Gluon.Schema.EnumCase": (a, b) => new Tachyus.Gluon.Schema.EnumCase(a, b),
-    "Tachyus.Gluon.Schema.Enum": (a, b) => new Tachyus.Gluon.Schema.Enum(a, b),
-    "Tachyus.Gluon.Schema.Field": (a, b) => new Tachyus.Gluon.Schema.Field(a, b),
-    "Tachyus.Gluon.Schema.Record": (a, b) => new Tachyus.Gluon.Schema.Record(a, b),
-    "Tachyus.Gluon.Schema.UnionCase": (a, b) => new Tachyus.Gluon.Schema.UnionCase(a, b),
-    "Tachyus.Gluon.Schema.Union": (a, b) => new Tachyus.Gluon.Schema.Union(a, b),
-    "Tachyus.Gluon.Schema.DefineEnum": (a) => new Tachyus.Gluon.Schema.DefineEnum(a),
-    "Tachyus.Gluon.Schema.DefineRecord": (a) => new Tachyus.Gluon.Schema.DefineRecord(a),
-    "Tachyus.Gluon.Schema.DefineUnion": (a) => new Tachyus.Gluon.Schema.DefineUnion(a),
-    "Tachyus.Gluon.Schema.Service": (a, b) => new Tachyus.Gluon.Schema.Service(a, b)
+Gluon.Internals.registerActivators({
+  "Gluon.Schema.Delete": () => new Gluon.Schema.Delete(),
+  "Gluon.Schema.Get": () => new Gluon.Schema.Get(),
+  "Gluon.Schema.Post": () => new Gluon.Schema.Post(),
+  "Gluon.Schema.Put": () => new Gluon.Schema.Put(),
+  "Gluon.Schema.HttpCallingConvention": (a, b) => new Gluon.Schema.HttpCallingConvention(a, b),
+  "Gluon.Schema.ArrayType": (a) => new Gluon.Schema.ArrayType(a),
+  "Gluon.Schema.BooleanType": () => new Gluon.Schema.BooleanType(),
+  "Gluon.Schema.BytesType": () => new Gluon.Schema.BytesType(),
+  "Gluon.Schema.DateTimeType": () => new Gluon.Schema.DateTimeType(),
+  "Gluon.Schema.DoubleType": () => new Gluon.Schema.DoubleType(),
+  "Gluon.Schema.IntType": () => new Gluon.Schema.IntType(),
+  "Gluon.Schema.JsonType": () => new Gluon.Schema.JsonType(),
+  "Gluon.Schema.ListType": (a) => new Gluon.Schema.ListType(a),
+  "Gluon.Schema.OptionType": (a) => new Gluon.Schema.OptionType(a),
+  "Gluon.Schema.SequenceType": (a) => new Gluon.Schema.SequenceType(a),
+  "Gluon.Schema.StringDictType": (a) => new Gluon.Schema.StringDictType(a),
+  "Gluon.Schema.StringType": () => new Gluon.Schema.StringType(),
+  "Gluon.Schema.TupleType": (a) => new Gluon.Schema.TupleType(a),
+  "Gluon.Schema.TypeReference": (a) => new Gluon.Schema.TypeReference(a),
+  "Gluon.Schema.Parameter": (a, b) => new Gluon.Schema.Parameter(a, b),
+  "Gluon.Schema.Method": (a, b, c, d) => new Gluon.Schema.Method(a, b, c, d),
+  "Gluon.Schema.EnumCase": (a, b) => new Gluon.Schema.EnumCase(a, b),
+  "Gluon.Schema.Enum": (a, b) => new Gluon.Schema.Enum(a, b),
+  "Gluon.Schema.Field": (a, b) => new Gluon.Schema.Field(a, b),
+  "Gluon.Schema.Record": (a, b) => new Gluon.Schema.Record(a, b),
+  "Gluon.Schema.UnionCase": (a, b) => new Gluon.Schema.UnionCase(a, b),
+  "Gluon.Schema.Union": (a, b) => new Gluon.Schema.Union(a, b),
+  "Gluon.Schema.DefineEnum": (a) => new Gluon.Schema.DefineEnum(a),
+  "Gluon.Schema.DefineRecord": (a) => new Gluon.Schema.DefineRecord(a),
+  "Gluon.Schema.DefineUnion": (a) => new Gluon.Schema.DefineUnion(a),
+  "Gluon.Schema.Service": (a, b) => new Gluon.Schema.Service(a, b)
 });
-Tachyus.Gluon.Internals.registerTypeDefinitions([["DefineUnion", { "UnionName": "Tachyus.Gluon.Schema.HttpMethod", "UnionCases": [{ "CaseName": "Delete", "CaseFields": [] }, { "CaseName": "Get", "CaseFields": [] }, { "CaseName": "Post", "CaseFields": [] }, { "CaseName": "Put", "CaseFields": [] }] }], ["DefineUnion", { "UnionName": "Tachyus.Gluon.Schema.CallingConvention", "UnionCases": [{ "CaseName": "HttpCallingConvention", "CaseFields": [{ "FieldName": "Item1", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.HttpMethod"] }, { "FieldName": "path", "FieldType": ["StringType"] }] }] }], ["DefineUnion", { "UnionName": "Tachyus.Gluon.Schema.DataType", "UnionCases": [{ "CaseName": "ArrayType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.DataType"] }] }, { "CaseName": "BooleanType", "CaseFields": [] }, { "CaseName": "BytesType", "CaseFields": [] }, { "CaseName": "DateTimeType", "CaseFields": [] }, { "CaseName": "DoubleType", "CaseFields": [] }, { "CaseName": "IntType", "CaseFields": [] }, { "CaseName": "JsonType", "CaseFields": [] }, { "CaseName": "ListType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.DataType"] }] }, { "CaseName": "OptionType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.DataType"] }] }, { "CaseName": "SequenceType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.DataType"] }] }, { "CaseName": "StringDictType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.DataType"] }] }, { "CaseName": "StringType", "CaseFields": [] }, { "CaseName": "TupleType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.DataType"]] }] }, { "CaseName": "TypeReference", "CaseFields": [{ "FieldName": "Item", "FieldType": ["StringType"] }] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.Parameter", "RecordFields": [{ "FieldName": "ParameterName", "FieldType": ["StringType"] }, { "FieldName": "ParameterType", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.DataType"] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.Method", "RecordFields": [{ "FieldName": "CallingConvention", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.CallingConvention"] }, { "FieldName": "MethodName", "FieldType": ["StringType"] }, { "FieldName": "MethodParameters", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.Parameter"]] }, { "FieldName": "MethodReturnType", "FieldType": ["OptionType", ["TypeReference", "Tachyus.Gluon.Schema.DataType"]] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.EnumCase", "RecordFields": [{ "FieldName": "EnumCaseName", "FieldType": ["StringType"] }, { "FieldName": "EnumCaseValue", "FieldType": ["IntType"] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.Enum", "RecordFields": [{ "FieldName": "EnumName", "FieldType": ["StringType"] }, { "FieldName": "EnumCases", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.EnumCase"]] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.Field", "RecordFields": [{ "FieldName": "FieldName", "FieldType": ["StringType"] }, { "FieldName": "FieldType", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.DataType"] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.Record", "RecordFields": [{ "FieldName": "RecordName", "FieldType": ["StringType"] }, { "FieldName": "RecordFields", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.Field"]] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.UnionCase", "RecordFields": [{ "FieldName": "CaseName", "FieldType": ["StringType"] }, { "FieldName": "CaseFields", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.Field"]] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.Union", "RecordFields": [{ "FieldName": "UnionName", "FieldType": ["StringType"] }, { "FieldName": "UnionCases", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.UnionCase"]] }] }], ["DefineUnion", { "UnionName": "Tachyus.Gluon.Schema.TypeDefinition", "UnionCases": [{ "CaseName": "DefineEnum", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.Enum"] }] }, { "CaseName": "DefineRecord", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.Record"] }] }, { "CaseName": "DefineUnion", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Tachyus.Gluon.Schema.Union"] }] }] }], ["DefineRecord", { "RecordName": "Tachyus.Gluon.Schema.Service", "RecordFields": [{ "FieldName": "Methods", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.Method"]] }, { "FieldName": "TypeDefinitions", "FieldType": ["ListType", ["TypeReference", "Tachyus.Gluon.Schema.TypeDefinition"]] }] }]]);
+Gluon.Internals.registerTypeDefinitions([["DefineUnion",{"UnionName":"Gluon.Schema.HttpMethod","UnionCases":[{"CaseName":"Delete","CaseFields":[]},{"CaseName":"Get","CaseFields":[]},{"CaseName":"Post","CaseFields":[]},{"CaseName":"Put","CaseFields":[]}]}],["DefineUnion",{"UnionName":"Gluon.Schema.CallingConvention","UnionCases":[{"CaseName":"HttpCallingConvention","CaseFields":[{"FieldName":"Item1","FieldType":["TypeReference","Gluon.Schema.HttpMethod"]},{"FieldName":"path","FieldType":["StringType"]}]}]}],["DefineUnion",{"UnionName":"Gluon.Schema.DataType","UnionCases":[{"CaseName":"ArrayType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"BooleanType","CaseFields":[]},{"CaseName":"BytesType","CaseFields":[]},{"CaseName":"DateTimeType","CaseFields":[]},{"CaseName":"DoubleType","CaseFields":[]},{"CaseName":"IntType","CaseFields":[]},{"CaseName":"JsonType","CaseFields":[]},{"CaseName":"ListType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"OptionType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"SequenceType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"StringDictType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"StringType","CaseFields":[]},{"CaseName":"TupleType","CaseFields":[{"FieldName":"Item","FieldType":["ListType",["TypeReference","Gluon.Schema.DataType"]]}]},{"CaseName":"TypeReference","CaseFields":[{"FieldName":"Item","FieldType":["StringType"]}]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Parameter","RecordFields":[{"FieldName":"ParameterName","FieldType":["StringType"]},{"FieldName":"ParameterType","FieldType":["TypeReference","Gluon.Schema.DataType"]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Method","RecordFields":[{"FieldName":"CallingConvention","FieldType":["TypeReference","Gluon.Schema.CallingConvention"]},{"FieldName":"MethodName","FieldType":["StringType"]},{"FieldName":"MethodParameters","FieldType":["ListType",["TypeReference","Gluon.Schema.Parameter"]]},{"FieldName":"MethodReturnType","FieldType":["OptionType",["TypeReference","Gluon.Schema.DataType"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.EnumCase","RecordFields":[{"FieldName":"EnumCaseName","FieldType":["StringType"]},{"FieldName":"EnumCaseValue","FieldType":["IntType"]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Enum","RecordFields":[{"FieldName":"EnumName","FieldType":["StringType"]},{"FieldName":"EnumCases","FieldType":["ListType",["TypeReference","Gluon.Schema.EnumCase"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Field","RecordFields":[{"FieldName":"FieldName","FieldType":["StringType"]},{"FieldName":"FieldType","FieldType":["TypeReference","Gluon.Schema.DataType"]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Record","RecordFields":[{"FieldName":"RecordName","FieldType":["StringType"]},{"FieldName":"RecordFields","FieldType":["ListType",["TypeReference","Gluon.Schema.Field"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.UnionCase","RecordFields":[{"FieldName":"CaseName","FieldType":["StringType"]},{"FieldName":"CaseFields","FieldType":["ListType",["TypeReference","Gluon.Schema.Field"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Union","RecordFields":[{"FieldName":"UnionName","FieldType":["StringType"]},{"FieldName":"UnionCases","FieldType":["ListType",["TypeReference","Gluon.Schema.UnionCase"]]}]}],["DefineUnion",{"UnionName":"Gluon.Schema.TypeDefinition","UnionCases":[{"CaseName":"DefineEnum","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.Enum"]}]},{"CaseName":"DefineRecord","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.Record"]}]},{"CaseName":"DefineUnion","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.Union"]}]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Service","RecordFields":[{"FieldName":"Methods","FieldType":["ListType",["TypeReference","Gluon.Schema.Method"]]},{"FieldName":"TypeDefinitions","FieldType":["ListType",["TypeReference","Gluon.Schema.TypeDefinition"]]}]}]]);
 // </BOOTSTRAP-INIT>

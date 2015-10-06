@@ -12,9 +12,9 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-module Tachyus.Gluon.TypeScript.CodeGen
+module Gluon.TypeScript.CodeGen
 
-open Tachyus.Gluon
+open Gluon
 module S = Syntax
 
 let splitName (name: string) =
@@ -39,8 +39,8 @@ let rec typeLiteral sch =
     | Schema.DoubleType | Schema.IntType -> makeType "number"
     | Schema.JsonType -> makeType "any"
     | Schema.StringType -> makeType "string"
-    | Schema.OptionType t -> S.TypeReference ("Tachyus.Gluon.Option", [!t])
-    | Schema.StringDictType t -> S.TypeReference ("Tachyus.Gluon.Dict", [!t])
+    | Schema.OptionType t -> S.TypeReference ("Gluon.Option", [!t])
+    | Schema.StringDictType t -> S.TypeReference ("Gluon.Dict", [!t])
     | Schema.TypeReference n -> makeType n
     | Schema.TupleType ts -> S.TupleType (List.map (!) ts)
 
@@ -96,7 +96,7 @@ let generateSignature (m: Schema.Method) =
 let generateMethodStub (m: Schema.Method) =
     let (ns, name) = splitName m.MethodName
     let signature = generateSignature m
-    let body = S.Call (S.Var "Tachyus.Gluon.Internals.remoteMethod", [signature], [S.LiteralString m.MethodName])
+    let body = S.Call (S.Var "Gluon.Internals.remoteMethod", [signature], [S.LiteralString m.MethodName])
     let main = S.DeclareVar (name, body)
     match ns with
     | None -> main
@@ -108,11 +108,11 @@ let literalJson (value: 'T) =
 
 let registerTypeDefinitions (typeDefs: seq<Schema.TypeDefinition>) =
     let typeDefs = Seq.toArray typeDefs
-    S.Call (S.Var "Tachyus.Gluon.Internals.registerTypeDefinitions", [], [literalJson typeDefs])
+    S.Call (S.Var "Gluon.Internals.registerTypeDefinitions", [], [literalJson typeDefs])
     |> S.Action
 
 let registerService (svc: Schema.Service) =
-    S.Call (S.Var "Tachyus.Gluon.Internals.registerService", [], [literalJson svc])
+    S.Call (S.Var "Gluon.Internals.registerService", [], [literalJson svc])
     |> S.Action
 
 let properName name =
@@ -120,7 +120,7 @@ let properName name =
 
 let generateFromJsonMethod typeRef : S.FunctionDefinition =
     let json = "json"
-    let body = S.Return (S.Call (S.Var "Tachyus.Gluon.Internals.fromJSON", [], [S.LiteralString typeRef; S.Var json]))
+    let body = S.Return (S.Call (S.Var "Gluon.Internals.fromJSON", [], [S.LiteralString typeRef; S.Var json]))
     let rt = makeType (properName typeRef)
     S.FunctionDefinition.Create("fromJSON", body, rt, parameters = [(json, makeType "any")])
 
@@ -129,7 +129,7 @@ let generateRecordLike tRef name (fields: list<Schema.Field>) : S.ClassDefinitio
     let fields = [for f in fields -> S.ClassField.Create(f.FieldName, typeLiteral f.FieldType)]
     let ctor = S.SimpleConstructor (fields, S.EmptyStatement)
     let toJson =
-        let body = S.Return (S.Call (S.Var "Tachyus.Gluon.Internals.toJSON", [], [S.LiteralString tRef; S.This]))
+        let body = S.Return (S.Call (S.Var "Gluon.Internals.toJSON", [], [S.LiteralString tRef; S.This]))
         S.FunctionDefinition.Create("toJSON", body, makeType "any")
     let tag =
         let body = S.Return (S.LiteralString name)
@@ -207,7 +207,7 @@ let registerActivators typeDefs =
                             | Some ns -> sprintf "%s.%s" ns c.CaseName
                         yield (name, builderLambda name c.CaseFields.Length)
         ]
-    S.Call (S.Var "Tachyus.Gluon.Internals.registerActivators", [], [args])
+    S.Call (S.Var "Gluon.Internals.registerActivators", [], [args])
     |> S.Action
 
 let typeDefinitions typeDefs =

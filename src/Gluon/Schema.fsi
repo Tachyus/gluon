@@ -13,7 +13,7 @@
 // permissions and limitations under the License.
 
 /// Defines metadata types for describing a Gluon service schema.
-namespace Tachyus.Gluon.Schema
+namespace Gluon.Schema
 
 open System
 

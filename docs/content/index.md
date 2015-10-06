@@ -4,9 +4,7 @@ and a TypeScript client. For example:
 ```fsharp
 module My.Service
 
-open Tachyus.Gluon
-
-[<Remote(Verb="GET")>]
+[<Gluon.Remote(Verb="GET")>]
 let increment (x: int) =
     x + 1
 ```
@@ -15,7 +13,7 @@ Gluon can take this and build plumbing that lets you call this code
 from TypeScript:
 
 ```typescript
-var c = new Tachyus.Gluon.Client();
+var c = new Gluon.Client();
 My.Service.increment(c)(1).then(x => console.log(x));
 ```
 

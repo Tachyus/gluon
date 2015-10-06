@@ -22,7 +22,7 @@ let info =
     "project-author", "Tachyus"
     "project-summary", "Typed F# to TypeScript connector"
     "project-github", githubLink
-    "project-nuget", "http://nuget.org/packages/Tachyus.Gluon" ]
+    "project-nuget", "http://nuget.org/packages/Gluon" ]
 
 // --------------------------------------------------------------------------------------
 // For typical project, no changes are needed below
@@ -78,7 +78,7 @@ let copyFiles () =
 
 let binaries =
     [
-        src @@ "Gluon/bin/Release/Tachyus.Gluon.dll"
+        src @@ "Gluon/bin/Release/Gluon.dll"
     ]
 
 let libDirs =

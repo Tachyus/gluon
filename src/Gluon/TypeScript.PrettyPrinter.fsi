@@ -13,8 +13,8 @@
 // permissions and limitations under the License.
 
 /// Converts Syntax trees to PrettyPrint terms.
-module internal Tachyus.Gluon.TypeScript.PrettyPrinter
+module internal Gluon.TypeScript.PrettyPrinter
 
-open Tachyus.Gluon
+open Gluon
 
 val definitions : Syntax.Definitions -> PrettyPrint.Layout

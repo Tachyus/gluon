@@ -1,13 +1,13 @@
-﻿// This little scripts generates some definitions in Tachyus.Gluon.ts to dog-food the type projection.
+﻿// This little scripts generates some definitions in Gluon.ts to dog-food the type projection.
 
 #r "bin/Debug/Microsoft.Owin.dll"
 #r "bin/Debug/Newtonsoft.Json.dll"
-#r "bin/Debug/Tachyus.Gluon.dll"
+#r "bin/Debug/Gluon.dll"
 
 open System
 open System.IO
 open System.Text.RegularExpressions
-open Tachyus.Gluon
+open Gluon
 
 let substitute (path: string) (tag: string) (code: string) =
     let pattern = sprintf @"[/][/][ ][<]%s[>].*[/][/][ ][<][/]%s[>]" tag tag
@@ -28,7 +28,7 @@ let bootstrap () =
         let svc = Service.FromMethod m
         svc.Schema.TypeDefinitions
     let prog = TypeScript.Generator.Create().GenerateTypeCode(types)
-    let path = Path.Combine(__SOURCE_DIRECTORY__, "../Gluon.Client/Tachyus.Gluon.ts")
+    let path = Path.Combine(__SOURCE_DIRECTORY__, "../Gluon.Client/Gluon.ts")
     prog.Definitions.WriteString()
     |> substitute path "BOOTSTRAP-DEFS"
     prog.Initializer.WriteString()
