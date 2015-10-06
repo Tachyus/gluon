@@ -1,0 +1,29 @@
+source https://nuget.org/api/v2
+
+nuget Argu
+nuget FSharp.Core
+nuget FSharp.Formatting
+nuget Fake
+nuget FsCheck
+nuget FsCheck.Xunit
+nuget Microsoft.AspNet.WebApi 5.2.3
+nuget Microsoft.AspNet.WebApi.Client 5.2.3
+nuget Microsoft.AspNet.WebApi.Core 5.2.3
+nuget Microsoft.AspNet.WebApi.Owin 5.2.3
+nuget Microsoft.AspNet.WebApi.OwinSelfHost 5.2.3
+nuget Microsoft.AspNet.WebApi.WebHost 5.2.3
+nuget Microsoft.Owin 3.0.1 framework: >= net45
+nuget Microsoft.Owin.Diagnostics 3.0.1
+nuget Microsoft.Owin.FileSystems 3.0.1
+nuget Microsoft.Owin.Host.HttpListener 3.0.1
+nuget Microsoft.Owin.Host.SystemWeb 3.0.1
+nuget Microsoft.Owin.Hosting 3.0.1
+nuget Microsoft.Owin.SelfHost 3.0.1
+nuget Microsoft.Owin.StaticFiles 3.0.1
+nuget Newtonsoft.Json 6.0.8
+nuget Owin 1.0
+nuget jQuery 2.1.4
+nuget jquery.TypeScript.DefinitelyTyped 2.2.1
+nuget xunit < 2
+nuget xunit.runner.console
+nuget xunit.runner.visualstudio version_in_path: true

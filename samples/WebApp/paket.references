@@ -1,0 +1,14 @@
+Microsoft.AspNet.WebApi
+Microsoft.AspNet.WebApi.Client
+Microsoft.AspNet.WebApi.Core
+Microsoft.AspNet.WebApi.Owin
+Microsoft.AspNet.WebApi.OwinSelfHost
+Microsoft.AspNet.WebApi.WebHost
+Microsoft.Owin
+Microsoft.Owin.Host.HttpListener
+Microsoft.Owin.Host.SystemWeb
+Microsoft.Owin.Hosting
+Newtonsoft.Json
+Owin
+jQuery.TypeScript.DefinitelyTyped
+jQuery

@@ -1,0 +1,87 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "^", "^", "{F8613B10-030D-4253-943F-A0D0CE8C2C70}"
+	ProjectSection(SolutionItems) = preProject
+		tools\appveyor.ps1 = tools\appveyor.ps1
+		appveyor.yml = appveyor.yml
+		tools\clr-build.ps1 = tools\clr-build.ps1
+		tools\lib.ps1 = tools\lib.ps1
+		tools\local-build.ps1 = tools\local-build.ps1
+		meta.json = meta.json
+		tools\pack.ps1 = tools\pack.ps1
+		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{55836903-C800-4B5A-B20D-23E9C25D5131}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9EE20BDB-FEA9-411E-9311-1DEECD1F02BC}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.Tests", "tests\Gluon.Tests\Gluon.Tests.fsproj", "{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon", "src\Gluon\Gluon.fsproj", "{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gluon.Client", "src\Gluon.Client\Gluon.Client.csproj", "{7688009E-EC87-418C-8B53-5C7D8478EF54}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.exe", "src\Gluon.exe\Gluon.exe.fsproj", "{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{603A6B73-7725-48F8-870D-50685AC95C96}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SampleApp", "samples\SampleApp\SampleApp.fsproj", "{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "samples\WebApp\WebApp.csproj", "{D137BEC5-3BD3-421F-94EB-47F6A8A63859}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C3DE5E72-8B3E-47FF-9E18-45853B08F0A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{A0F699D3-A4C8-4975-8A77-D06DE7B11D60}"
+	ProjectSection(SolutionItems) = preProject
+		docs\tools\generate.fsx = docs\tools\generate.fsx
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7688009E-EC87-418C-8B53-5C7D8478EF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7688009E-EC87-418C-8B53-5C7D8478EF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7688009E-EC87-418C-8B53-5C7D8478EF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7688009E-EC87-418C-8B53-5C7D8478EF54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D137BEC5-3BD3-421F-94EB-47F6A8A63859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D137BEC5-3BD3-421F-94EB-47F6A8A63859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D137BEC5-3BD3-421F-94EB-47F6A8A63859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D137BEC5-3BD3-421F-94EB-47F6A8A63859}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F} = {9EE20BDB-FEA9-411E-9311-1DEECD1F02BC}
+		{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800} = {55836903-C800-4B5A-B20D-23E9C25D5131}
+		{7688009E-EC87-418C-8B53-5C7D8478EF54} = {55836903-C800-4B5A-B20D-23E9C25D5131}
+		{72FDBA6E-CE61-4811-9F18-39FAA585B5EA} = {55836903-C800-4B5A-B20D-23E9C25D5131}
+		{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD} = {603A6B73-7725-48F8-870D-50685AC95C96}
+		{D137BEC5-3BD3-421F-94EB-47F6A8A63859} = {603A6B73-7725-48F8-870D-50685AC95C96}
+		{A0F699D3-A4C8-4975-8A77-D06DE7B11D60} = {C3DE5E72-8B3E-47FF-9E18-45853B08F0A1}
+	EndGlobalSection
+EndGlobal

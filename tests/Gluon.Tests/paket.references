@@ -1,0 +1,7 @@
+FsCheck
+FsCheck.Xunit
+Newtonsoft.Json
+xunit
+xunit.runner.visualstudio
+FSharp.Core
+Microsoft.Owin

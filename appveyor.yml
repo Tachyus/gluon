@@ -1,0 +1,8 @@
+os: Visual Studio 2015
+version: '{build}'
+clone_depth: 10
+build_script:
+- ps: .\tools\appveyor.ps1
+artifacts:
+  - path: 'bin\*.nupkg'
+    name: Gluon
