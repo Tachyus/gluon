@@ -12,11 +12,11 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-module Tachyus.Gluon.TypeScript.PrettyPrinter
+module Gluon.TypeScript.PrettyPrinter
 
 open System
 open System.Web
-open Tachyus.Gluon
+open Gluon
 module PP = PrettyPrint
 open PP.Operators
 module S = Syntax

@@ -13,9 +13,9 @@
 // permissions and limitations under the License.
 
 /// Converts Gluon Entities into Syntax trees.
-module internal Tachyus.Gluon.TypeScript.CodeGen
+module internal Gluon.TypeScript.CodeGen
 
-open Tachyus.Gluon
+open Gluon
 
 val methodStubs : Schema.Service -> Syntax.Definitions
 val typeDefinitions : seq<Schema.TypeDefinition> -> Syntax.Definitions

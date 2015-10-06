@@ -1,4 +1,4 @@
-# Tachyus.Gluon
+# Gluon
 
 [![Build status](https://ci.appveyor.com/api/projects/status/hh9l9464qjvpj1uq/branch/master?svg=true)](https://ci.appveyor.com/project/Tachyus/gluon/branch/master)
 

@@ -12,7 +12,7 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-module internal Tachyus.Gluon.AssemblyResolvers
+module internal Gluon.CLI.AssemblyResolvers
 
 open System
 open System.Reflection
@@ -54,7 +54,7 @@ let memoized (d: Dictionary<'A,'B>) (f: 'A -> 'B) (x: 'A) : 'B =
 let localAssemblies =
     [
         typedefof<list<_>>.Assembly // FSharp.Core.dll
-        typeof<Tachyus.Gluon.Schema.Service>.Assembly // Gluon.dll
+        typeof<Gluon.Schema.Service>.Assembly // Gluon.dll
     ]
 
 let tryFindLocalAssembly (asm: AssemblyName) =

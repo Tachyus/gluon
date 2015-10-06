@@ -12,15 +12,14 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-namespace Tachyus.Gluon.Tests
+namespace Gluon.Tests
 
 open System
 open System.Collections.Generic
 open Xunit
 open FsCheck
 open FsCheck.Xunit
-open Tachyus
-open Tachyus.Gluon
+open Gluon
 
 [<Trait("Kind", "UnitTest")>]
 module JsonProtocolTests =

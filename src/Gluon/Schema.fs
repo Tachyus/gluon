@@ -12,7 +12,7 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-namespace Tachyus.Gluon.Schema
+namespace Gluon.Schema
 
 open System
 open System.Text

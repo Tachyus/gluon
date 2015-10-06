@@ -12,8 +12,9 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-module internal Tachyus.Gluon.Main
+module internal Gluon.CLI.Main
 
+open Gluon
 module AR = AssemblyResolvers
 
 [<EntryPoint>]

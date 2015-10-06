@@ -1,11 +1,11 @@
 type file
-id Tachyus.Gluon
+id Gluon
 authors Tachyus
 description TypeScript to FSharp connector
 files
-    bin\Release\Tachyus.Gluon.dll ==> lib\net45
-    ..\Gluon.Client\Tachyus.Gluon.ts ==> content\Scripts
-    ..\Gluon.exe\bin\Release\*.* ==> tools
+    bin\Release\Gluon.dll ==> lib\net45
+    ..\Gluon.Client\Gluon.ts ==> content\Scripts
+    ..\Gluon.CLI\bin\Release\*.* ==> tools
 dependencies
     FSharp.Core >= 4.0.0.1
     Newtonsoft.Json >= 6.0.8

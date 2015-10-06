@@ -1,14 +1,14 @@
-﻿namespace Tachyus.SampleApp
+﻿namespace SampleApp
 
 open System
 open System.Collections.Generic
 open global.Owin
 open Microsoft.Owin
-open Tachyus.Gluon
+open Gluon
 
 module private Services =
 
-    type M = Tachyus.Gluon.Method
+    type M = Gluon.Method
 
     type Marker = class end
 
@@ -21,7 +21,7 @@ module private Services =
         "SIMPLE"
 
     [<Remote(Verb="GET")>]
-    let addWithContext (ctx: Tachyus.Gluon.Context) (input: int) =
+    let addWithContext (ctx: Gluon.Context) (input: int) =
         ctx.OwinContext.Response.StatusCode <- 403
         ctx.OwinContext.Response.Headers.Add("X-STUFF", [| "STUFF" |])
         input + 1

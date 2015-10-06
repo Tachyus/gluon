@@ -13,7 +13,7 @@
 // permissions and limitations under the License.
 
 /// Simple syntax tree to assist with code generation.
-module internal Tachyus.Gluon.TypeScript.Syntax
+module internal Gluon.TypeScript.Syntax
 
 type TypeLiteral =
     | ArrayType of TypeLiteral

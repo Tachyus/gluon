@@ -1,11 +1,11 @@
 ﻿/// <reference path="../Scripts/typings/jquery/jquery.d.ts" />
-/// <reference path="../../../src/Gluon.Client/Tachyus.Gluon.ts" />
-/// <reference path="../Gen/Tachyus.Gluon.Generated.ts" />
+/// <reference path="../../../src/Gluon.Client/Gluon.ts" />
+/// <reference path="../Gen/Gluon.Generated.ts" />
 
-module Tachyus.WebApp {
+module WebApp {
 
-    import P = Tachyus.Gluon;
-    import S = Tachyus.SampleApp.Services;
+    import P = Gluon;
+    import S = SampleApp.Services;
 
     var p1 = new S.Person(new Date(), new S.Phone(12345), "Anton", 30);
     var p2 = new S.Person(new Date(), new S.Address("San Mateo"), "Lida", 1);
@@ -77,7 +77,7 @@ module Tachyus.WebApp {
         console.log("reverseBytes => ", x);
     });
 
-    var dictExample = new Tachyus.Gluon.Dict<number>();
+    var dictExample = new Gluon.Dict<number>();
     dictExample.setAt("one", 1);
     dictExample.setAt("two", 2);
     dictExample.setAt("three", 13);

@@ -12,14 +12,14 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-namespace Tachyus.Gluon
+namespace Gluon
 
 open System
 open System.Collections.Generic
 open System.Threading.Tasks
 open Owin
 open Microsoft.Owin
-open Tachyus.Gluon
+open Gluon
 
 /// Options for adapting Gluon services to OWIN using HTTP transport.
 [<Sealed>]
