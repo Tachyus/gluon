@@ -17,6 +17,11 @@ var c = new Gluon.Client();
 My.Service.increment(c)(1).then(x => console.log(x));
 ```
 
+## Installing
+
+We will soon publish to http://nuget.org, but for now you can use the
+public AppVeyor NuGet feed at https://ci.appveyor.com/nuget/gluon.
+
 ## Building
 
 TBD.

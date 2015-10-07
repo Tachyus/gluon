@@ -5,3 +5,5 @@
 Provides a type-safe remoting connector between F# and TypeScript.
 
 See [docs](http://www.tachyus.com/gluon/) and [samples](samples/).
+
+Get it from our public AppVeyor feed at https://ci.appveyor.com/nuget/gluon.
