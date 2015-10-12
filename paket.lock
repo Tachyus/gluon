@@ -42,6 +42,7 @@ NUGET
       Owin (>= 1.0)
     Newtonsoft.Json (6.0.8)
     Owin (1.0)
+    SourceLink.Fake (1.1.0)
     xunit (1.9.2)
     xunit.runner.console (2.0.0)
     xunit.runner.visualstudio (2.0.1) - version_in_path: true

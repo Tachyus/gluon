@@ -1,6 +1,8 @@
 *.nupkg
 *.suo
+*.swp
 *.user
+*.userprefs
 packages
 paket.exe
 samples/*/bin
@@ -14,8 +16,11 @@ samples/WebApp/Scripts/Gluon.js
 samples/WebApp/Scripts/WebApp.js
 src/*/bin
 src/*/obj
+src/*/AssemblyInfo.*
 src/Gluon.Client/Gluon.js
 src/Gluon.Client/Gluon.js.map
 tests/*/bin
 tests/*/obj
 .vs/
+.fake/
+bin/
