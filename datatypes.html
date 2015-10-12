@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Datatypes
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Typed F# to TypeScript connector"/>
+    <meta name="author" content="Tachyus"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="http://www.tachyus.com/gluon/content/style.css" />
+    <script type="text/javascript" src="http://www.tachyus.com/gluon/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/Tachyus/gluon">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="http://www.tachyus.com/gluon/index.html">Gluon</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1><a name="Datatypes" class="anchor" href="#Datatypes">Datatypes</a></h1>
+
+<p>Gluon allows correct and consistent automatic serialization and
+deserialization for a specific universe of datatypes. For every type
+in this universe, Gluon defines an F# representation, a TypeScript
+representation, a serialized JSON representation, and automatic
+converters between in-memory and serialized representations. The
+grammar for the type set is given below:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="t">Type</span> <span class="o">=</span>
+    | <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="p">Boolean</span>
+    | <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="p">String</span>
+    | <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="p">Bytes</span>
+    | <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="p">Json</span>
+    | <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="p">Int</span>
+    | <span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="p">Double</span>
+    | <span onmouseout="hideTip(event, 'fs8', 8)" onmouseover="showTip(event, 'fs8', 8)" class="p">DateTime</span>
+    | <span onmouseout="hideTip(event, 'fs9', 9)" onmouseover="showTip(event, 'fs9', 9)" class="p">Record</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 10)" onmouseover="showTip(event, 'fs10', 10)" class="t">list</span><span class="o">&lt;</span><span class="i">Field</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs1', 11)" onmouseover="showTip(event, 'fs1', 11)" class="t">Type</span><span class="o">&gt;</span>
+    | <span onmouseout="hideTip(event, 'fs11', 12)" onmouseover="showTip(event, 'fs11', 12)" class="p">Union</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 13)" onmouseover="showTip(event, 'fs10', 13)" class="t">list</span><span class="o">&lt;</span><span class="i">Case</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs10', 14)" onmouseover="showTip(event, 'fs10', 14)" class="t">list</span><span class="o">&lt;</span><span class="i">Field</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs1', 15)" onmouseover="showTip(event, 'fs1', 15)" class="t">Type</span><span class="o">&gt;</span><span class="o">&gt;</span>
+    | <span onmouseout="hideTip(event, 'fs12', 16)" onmouseover="showTip(event, 'fs12', 16)" class="p">Tuple</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 17)" onmouseover="showTip(event, 'fs10', 17)" class="t">list</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs1', 18)" onmouseover="showTip(event, 'fs1', 18)" class="t">Type</span><span class="o">&gt;</span>
+    | <span onmouseout="hideTip(event, 'fs13', 19)" onmouseover="showTip(event, 'fs13', 19)" class="p">Option</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 20)" onmouseover="showTip(event, 'fs1', 20)" class="t">Type</span>
+    | <span onmouseout="hideTip(event, 'fs14', 21)" onmouseover="showTip(event, 'fs14', 21)" class="p">Array</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 22)" onmouseover="showTip(event, 'fs1', 22)" class="t">Type</span>
+    | <span onmouseout="hideTip(event, 'fs15', 23)" onmouseover="showTip(event, 'fs15', 23)" class="p">Sequence</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 24)" onmouseover="showTip(event, 'fs1', 24)" class="t">Type</span>
+    | <span onmouseout="hideTip(event, 'fs16', 25)" onmouseover="showTip(event, 'fs16', 25)" class="p">List</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 26)" onmouseover="showTip(event, 'fs1', 26)" class="t">Type</span>   
+    | <span onmouseout="hideTip(event, 'fs17', 27)" onmouseover="showTip(event, 'fs17', 27)" class="p">StringDict</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 28)" onmouseover="showTip(event, 'fs1', 28)" class="t">Type</span>
+</code></pre></td>
+</tr>
+</table>
+
+<p>JSON (or other serialized format) representations should be considered
+Gluon internal implementation detail and may change without notice.
+Gluon will never need to discriminate on values to infer the type of
+the represented objects, since type information is always available
+statically. This allows distinct types use similar JSON
+representations (such as a string) without confusion.</p>
+
+<p>Boolean, String, Int, Double have intuitive representations. Gluon
+should preserve the complete range of values (including NaN, Infinity,
+null strings).</p>
+
+<h2><a name="DateTime" class="anchor" href="#DateTime">DateTime</a></h2>
+
+<p>Since version 0.4.2, Gluon supports two semantics for DateTime values:
+the "physical" interpretation of DateTime is a time-point in universal
+time coordinates, and the "calendar" interpretation:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">x</span> <span class="o">=</span> <span class="i">y</span> <span class="o">&lt;=&gt;</span> <span class="i">ymdhms</span>(<span class="i">x</span>) <span class="o">=</span> <span class="i">ymdhmx</span>(<span class="i">y</span>)
+</code></pre></td>
+</tr>
+</table>
+
+<p>For convenience, both interpretations use the same types (the
+distinction is not tracked in the type system). On the F# side the
+type is <code>System.DateTime</code>, and on the TypeScript side it is <code>Date</code>.</p>
+
+<h2><a name="Physical-datetimes" class="anchor" href="#Physical-datetimes">Physical datetimes</a></h2>
+
+<p>On CLR, physical datetimes are represented as <code>DateTime</code> object with
+<code>Kind</code> being either <code>DateTimeKind.Local</code> or <code>DateTimeKind.Utc</code>. In
+TypeScript, these are represented as vanilla <code>Date</code> objects. During
+interop, zone conversions happen to preserve the universal coordinate
+meaning of the datetime. Note that the browser always displays <code>Date</code>
+objects in user-local zone, which might be different from the server
+timezone; server timezone information is lost.</p>
+
+<h2><a name="Calendar-datetimes" class="anchor" href="#Calendar-datetimes">Calendar datetimes</a></h2>
+
+<p>Calendar semantics are useful when displaying dates as-is, bypassing
+timezone conversions. Two dates are considered calendar-equivalent if
+they have the same year, month, day, hour, minute and second. Time
+zone information is not tracked and must be implied.</p>
+
+<p>On CLR, calendar datetimes are <code>DateTime</code> objects with
+<code>DateTimeKind.Unspecified</code>. In TypeScript, these are represented as a
+<code>Date</code> object that is extended to have an extra tag <code>x.unspecified ==
+true</code>. Browsers ignores the tag and treat the <code>Date</code> objects as if
+they were in browser-local timezone, however the tag is used by Gluon
+to make sure these values roundtrip to the server using calendar
+semantics.</p>
+
+<h2><a name="Records-and-unions" class="anchor" href="#Records-and-unions">Records and unions</a></h2>
+
+<p>Records and unions use the WebSharper serialization convention, where
+the internal representation of the type is considered, regardless of
+public/internal/private declarations. This is unlike some other
+conventions such as JSON.NET or other CLR serializers, that use public
+properties or opt-in and opt-out attributes. This limits flexibility
+but greatly simplifies constructing equivalent types in TypeScript,
+and ensuring turnaround. Records will map to TypeScript classes in an
+intuitive manner.</p>
+
+<p>Unions currently generate a TypeScript class for each case and an
+untagged TypeScript union type alias for the union itself. This scheme
+has runtime efficiency and allows to discriminate values with the
+<code>instanceof</code> operator. This representation may change in the future,
+an alternative here is to provide a match construct that enforces
+completeness check in the type system.</p>
+
+<p>Since 0.4.x, Gluon also generates a typed pattern-matching helper for
+unions.</p>
+
+<h2><a name="Tuples" class="anchor" href="#Tuples">Tuples</a></h2>
+
+<p>Tuples will map to JavaScript records and anonymous object types in
+TypeScript.</p>
+
+<h2><a name="Collections" class="anchor" href="#Collections">Collections</a></h2>
+
+<p>Array, sequence and list types will all map to TypeScript arrays.</p>
+
+<h2><a name="Options" class="anchor" href="#Options">Options</a></h2>
+
+<p>Options will map to a newly introduced Option<T> TypeScript type, and
+StringDict will use a newly introduced Dict<T> TypeScript type
+logically equivalent to F# Dictionary<string,T>, implemented
+efficiently using object keys in JavaScript.</p>
+
+<h2><a name="Unstructured-data" class="anchor" href="#Unstructured-data">Unstructured data</a></h2>
+
+<p>Finally, there are some rare situations where absolute type safety is
+not feasible or counter-productive. In these cases it is nice to have
+an escape hatch that allows to communicate data without specifying its
+structure entirely. String is one such escape hatch; Gluon provides
+two more: Bytes type to transfer byte sequences, represented as packed
+typed arrays in TypeScript, and a black-box JSON type that allows
+embedding any value in the JSON grammar <a href="http://www.json.org/">http://www.json.org/</a> -
+represented as a corresponding JavaScript object, and typed "any" in
+TypeScript.</p>
+
+<div class="tip" id="fs1">type Type =<br />&#160;&#160;| Boolean<br />&#160;&#160;| String<br />&#160;&#160;| Bytes<br />&#160;&#160;| Json<br />&#160;&#160;| Int<br />&#160;&#160;| Double<br />&#160;&#160;| DateTime<br />&#160;&#160;| Record of (obj * Type) list<br />&#160;&#160;| Union of (obj * (obj * Type) list) list<br />&#160;&#160;| Tuple of Type list<br />&#160;&#160;...<br /><br />Full name: datatypes.Type</div>
+<div class="tip" id="fs2">union case Type.Boolean: Type</div>
+<div class="tip" id="fs3">Multiple items<br />union case Type.String: Type<br /><br />--------------------<br />module String<br /><br />from Microsoft.FSharp.Core</div>
+<div class="tip" id="fs4">union case Type.Bytes: Type</div>
+<div class="tip" id="fs5">union case Type.Json: Type</div>
+<div class="tip" id="fs6">union case Type.Int: Type</div>
+<div class="tip" id="fs7">union case Type.Double: Type</div>
+<div class="tip" id="fs8">union case Type.DateTime: Type</div>
+<div class="tip" id="fs9">union case Type.Record: (obj * Type) list -&gt; Type</div>
+<div class="tip" id="fs10">type &#39;T list = List&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Collections.list&lt;_&gt;</div>
+<div class="tip" id="fs11">union case Type.Union: (obj * (obj * Type) list) list -&gt; Type</div>
+<div class="tip" id="fs12">union case Type.Tuple: Type list -&gt; Type</div>
+<div class="tip" id="fs13">Multiple items<br />union case Type.Option: Type -&gt; Type<br /><br />--------------------<br />module Option<br /><br />from Microsoft.FSharp.Core</div>
+<div class="tip" id="fs14">Multiple items<br />union case Type.Array: Type -&gt; Type<br /><br />--------------------<br />module Array<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs15">union case Type.Sequence: Type -&gt; Type</div>
+<div class="tip" id="fs16">Multiple items<br />union case Type.List: Type -&gt; Type<br /><br />--------------------<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;interface IEnumerable<br />&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;member GetSlice : startIndex:int option * endIndex:int option -&gt; &#39;T list<br />&#160;&#160;member Head : &#39;T<br />&#160;&#160;member IsEmpty : bool<br />&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;member Length : int<br />&#160;&#160;member Tail : &#39;T list<br />&#160;&#160;static member Cons : head:&#39;T * tail:&#39;T list -&gt; &#39;T list<br />&#160;&#160;static member Empty : &#39;T list<br /><br />Full name: Microsoft.FSharp.Collections.List&lt;_&gt;</div>
+<div class="tip" id="fs17">union case Type.StringDict: Type -&gt; Type</div>
+
+        </div>
+        <div class="span3">
+          <!-- <img src="http://www.tachyus.com/gluon/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />   -->
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">Gluon</li>
+            <li><a href="http://www.tachyus.com/gluon/index.html">Home</a></li>
+	    <li><a href="http://www.tachyus.com/gluon/datatypes.html">Datatypes</a></li>
+	    <li><a href="http://www.tachyus.com/gluon/related.html">Related</a></li>
+            <li class="divider"></li>
+            <li><a href="http://www.tachyus.com/gluon/nuget.html">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/Tachyus/gluon">Source Code on GitHub</a></li>
+            <li><a href="http://www.tachyus.com/gluon/license.html">License</a></li>
+            <!-- <li><a href="http://www.tachyus.com/gluon/release-notes.html">Release Notes</a></li> -->
+            
+            <li class="nav-header">Getting Started</li>
+            <li><a href="http://www.tachyus.com/gluon/tutorial.html">Tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://www.tachyus.com/gluon/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/Tachyus/gluon"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+</html>
+  
