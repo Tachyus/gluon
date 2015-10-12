@@ -104,7 +104,7 @@ Target "CleanDocs" <| fun _ ->
 // Build library & test project
 
 Target "Build" <| fun _ ->
-    for projFile in [ "src/Gluon/Gluon.fsproj"; "src/Gluon.CLI/Gluon.CLI.fsproj" ] do
+    for projFile in [ "src/Gluon/Gluon.fsproj"; "src/Gluon.CLI/Gluon.CLI.fsproj"; "tests/Gluon.Tests/Gluon.Tests.fsproj" ] do
         build (fun x ->
             { x with
                 Properties =
