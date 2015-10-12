@@ -66,10 +66,10 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
 let nugetVersion = 
     if isAppVeyorBuild then
-        // If `release.NugetVersion` includes a pre-release suffix, just append the `buildVersion`.
-        if release.NugetVersion.Contains("-") then
-            sprintf "%s%s" release.NugetVersion buildVersion
-        else sprintf "%s.%s" release.NugetVersion buildVersion
+        if environVar "APPVEYOR_REPO_TAG" <> null then
+            environVar "APPVEYOR_REPO_TAG_NAME"
+        else
+            sprintf "%s-b%s" release.NugetVersion (Int32.Parse(buildVersion).ToString("000"))
     else release.NugetVersion
 
 // Generate assembly info files with the right version & up-to-date information
