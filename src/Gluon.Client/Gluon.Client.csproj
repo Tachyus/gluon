@@ -21,6 +21,7 @@
     <AssemblyName>Gluon.Client</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" Condition="Exists('Properties\AssemblyInfo.cs')" />
     <Content Include="Scripts\typings\jquery\jquery.d.ts">
       <Paket>True</Paket>
     </Content>

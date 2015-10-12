@@ -88,6 +88,13 @@ Target "AssemblyInfo" <| fun _ ->
           Attribute.Version release.AssemblyVersion
           Attribute.FileVersion release.AssemblyVersion ]
 
+    CreateCSharpAssemblyInfo "src/Gluon.Client/Properties/AssemblyInfo.cs"
+        [ Attribute.Title "Gluon.Client"
+          Attribute.Product "Gluon.Client"
+          Attribute.Description summary
+          Attribute.Version release.AssemblyVersion
+          Attribute.FileVersion release.AssemblyVersion ]
+
 Target "BuildVersion" <| fun _ ->
     Shell.Exec("appveyor", sprintf "Update-AppveyorBuild -Version \"%s\"" nugetVersion) |> ignore
 
@@ -104,7 +111,14 @@ Target "CleanDocs" <| fun _ ->
 // Build library & test project
 
 Target "Build" <| fun _ ->
-    for projFile in [ "src/Gluon/Gluon.fsproj"; "src/Gluon.CLI/Gluon.CLI.fsproj"; "tests/Gluon.Tests/Gluon.Tests.fsproj" ] do
+    let projects =
+        [
+            "src/Gluon/Gluon.fsproj"
+            "src/Gluon.CLI/Gluon.CLI.fsproj"
+            "src/Gluon.Client/Gluon.Client.csproj"
+            "tests/Gluon.Tests/Gluon.Tests.fsproj"
+        ]
+    for projFile in projects do
         build (fun x ->
             { x with
                 Properties =
@@ -119,14 +133,11 @@ Target "Build" <| fun _ ->
 // Run the unit tests using test runner
 
 Target "RunTests" <| fun _ ->
-    try
-        !! testAssemblies
-        |> xUnit2 (fun p ->
-            { p with
-                TimeOut = TimeSpan.FromMinutes 20.
-                XmlOutputPath = Some "bin/TestResults.xml" })
-    finally
-        AppVeyor.UploadTestResultsXml AppVeyor.TestResultsType.Xunit "bin"
+    !! testAssemblies
+    |> xUnit2 (fun p ->
+        { p with
+            TimeOut = TimeSpan.FromMinutes 20.
+            XmlOutputPath = Some "bin/TestResults.xml" })
 
 #if MONO
 #else

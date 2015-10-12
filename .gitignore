@@ -17,6 +17,7 @@ samples/WebApp/Scripts/WebApp.js
 src/*/bin
 src/*/obj
 src/*/AssemblyInfo.*
+src/*/Properties/AssemblyInfo.*
 src/Gluon.Client/Gluon.js
 src/Gluon.Client/Gluon.js.map
 tests/*/bin
