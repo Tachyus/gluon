@@ -96,7 +96,7 @@ Target "AssemblyInfo" <| fun _ ->
           Attribute.FileVersion release.AssemblyVersion ]
 
 Target "BuildVersion" <| fun _ ->
-    Shell.Exec("appveyor", sprintf "Update-AppveyorBuild -Version \"%s\"" nugetVersion) |> ignore
+    Shell.Exec("appveyor", sprintf "UpdateBuild -Version \"%s\"" nugetVersion) |> ignore
 
 // --------------------------------------------------------------------------------------
 // Clean build results & restore NuGet packages
