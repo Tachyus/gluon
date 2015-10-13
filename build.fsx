@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------
 // FAKE build script
 // --------------------------------------------------------------------------------------
-#I "packages/FAKE/tools/"
 #I "packages/FAKE/tools"
 #r "NuGet.Core.dll"
 #r "FakeLib.dll"
@@ -46,7 +45,7 @@ let tags = "F# fsharp web typescript webapi"
 let solutionFile = "Gluon.sln"
 
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/*Tests*dll"
+let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted 
@@ -72,22 +71,18 @@ let nugetVersion =
             sprintf "%s-b%s" release.NugetVersion (Int32.Parse(buildVersion).ToString("000"))
     else release.NugetVersion
 
+let fsharpAssemblyInfo proj =
+    CreateFSharpAssemblyInfo (sprintf "src/%s/AssemblyInfo.fs" proj)
+        [ Attribute.Title proj
+          Attribute.Product proj
+          Attribute.Description summary
+          Attribute.Version release.AssemblyVersion
+          Attribute.FileVersion release.AssemblyVersion ]
+
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" <| fun _ ->
-    CreateFSharpAssemblyInfo "src/Gluon/AssemblyInfo.fs"
-        [ Attribute.Title "Gluon"
-          Attribute.Product "Gluon"
-          Attribute.Description summary
-          Attribute.Version release.AssemblyVersion
-          Attribute.FileVersion release.AssemblyVersion ]
-
-    CreateFSharpAssemblyInfo "src/Gluon.CLI/AssemblyInfo.fs"
-        [ Attribute.Title "Gluon.CLI"
-          Attribute.Product "Gluon.CLI"
-          Attribute.Description summary
-          Attribute.Version release.AssemblyVersion
-          Attribute.FileVersion release.AssemblyVersion ]
-
+    fsharpAssemblyInfo "Gluon"
+    fsharpAssemblyInfo "Gluon.CLI"
     CreateCSharpAssemblyInfo "src/Gluon.Client/Properties/AssemblyInfo.cs"
         [ Attribute.Title "Gluon.Client"
           Attribute.Product "Gluon.Client"
@@ -176,13 +171,52 @@ Target "PublishNuGet" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Generate the documentation
 
+// --------------------------------------------------------------------------------------
+// Generate the documentation
+
 Target "GenerateReferenceDocs" <| fun _ ->
     if not <| executeFSIWithArgs "docs/tools" "generate.fsx" ["--define:RELEASE"; "--define:REFERENCE"] [] then
       failwith "generating reference documentation failed"
 
+let generateHelp' fail debug =
+    let args =
+        if debug then ["--define:HELP"]
+        else ["--define:RELEASE"; "--define:HELP"]
+    if executeFSIWithArgs "docs/tools" "generate.fsx" args [] then
+        traceImportant "Help generated"
+    else
+        if fail then
+            failwith "generating help documentation failed"
+        else
+            traceImportant "generating help documentation failed"
+
+let generateHelp fail =
+    generateHelp' fail false
+
 Target "GenerateHelp" <| fun _ ->
-    if not <| executeFSIWithArgs "docs/tools" "generate.fsx" ["--define:RELEASE"; "--define:HELP"] [] then
-      failwith "generating help documentation failed"
+    DeleteFile "docs/content/release-notes.md"
+    CopyFile "docs/content/" "RELEASE_NOTES.md"
+    Rename "docs/content/release-notes.md" "docs/content/RELEASE_NOTES.md"
+
+    generateHelp true
+
+Target "GenerateHelpDebug" <| fun _ ->
+    DeleteFile "docs/content/release-notes.md"
+    CopyFile "docs/content/" "RELEASE_NOTES.md"
+    Rename "docs/content/release-notes.md" "docs/content/RELEASE_NOTES.md"
+
+    generateHelp' true true
+
+Target "KeepRunning" <| fun _ ->
+    use watcher = !! "docs/content/**/*.*" |> WatchChanges (fun changes ->
+         generateHelp false
+    )
+
+    traceImportant "Waiting for help edits. Press any key to stop."
+
+    System.Console.ReadKey() |> ignore
+
+    watcher.Dispose()
 
 Target "GenerateDocs" DoNothing
 

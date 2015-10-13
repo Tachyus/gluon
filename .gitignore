@@ -5,6 +5,9 @@
 *.userprefs
 packages
 paket.exe
+docs/content/release-notes.md
+docs/output/
+docs/tools/*.svclog
 samples/*/bin
 samples/*/obj
 samples/WebApp/App/*.js
