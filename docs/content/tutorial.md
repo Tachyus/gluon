@@ -2,7 +2,7 @@
 
 The setup is a little tricky, but see the `samples` folder. You would
 typically use two projects, one for the F# APIs and web setup, and one
-for the C# applcication.
+for the C# application.
 
 ## F# Project
 
