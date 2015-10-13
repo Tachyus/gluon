@@ -4,8 +4,11 @@ branches:
   except:
     - gh-pages
 clone_depth: 10
+build:
+  verbosity: minimal
 build_script:
   - ps: .\build.ps1 BuildPackage
+test: off
 artifacts:
   - path: 'bin\*.nupkg'
     name: Gluon
