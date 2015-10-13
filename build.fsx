@@ -65,10 +65,11 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
 let nugetVersion = 
     if isAppVeyorBuild then
-        if environVar "APPVEYOR_REPO_TAG" <> null then
+        let isTagged = Boolean.Parse(environVar "APPVEYOR_REPO_TAG")
+        if isTagged then
             environVar "APPVEYOR_REPO_TAG_NAME"
         else
-            sprintf "%s-b%s" release.NugetVersion (Int32.Parse(buildVersion).ToString("000"))
+            sprintf "%s-b%03i" release.NugetVersion (int buildVersion)
     else release.NugetVersion
 
 let fsharpAssemblyInfo proj =
