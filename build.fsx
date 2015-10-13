@@ -161,7 +161,6 @@ Target "NuGet" <| fun _ ->
     Paket.Pack <| fun x ->
         { x with
             OutputPath = "bin"
-            ReleaseNotes = String.concat Environment.NewLine release.Notes
             Version = nugetVersion }
 
 Target "PublishNuGet" <| fun _ ->
