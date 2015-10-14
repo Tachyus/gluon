@@ -28,3 +28,4 @@ tests/*/obj
 .vs/
 .fake/
 bin/
+temp/
