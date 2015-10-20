@@ -6,6 +6,7 @@ nuget FSharp.Formatting
 nuget Fake
 nuget FsCheck
 nuget FsCheck.Xunit
+nuget SourceLink.Fake
 nuget Microsoft.Owin 3.0.1 framework: >= net45
 nuget Microsoft.Owin.Diagnostics 3.0.1
 nuget Microsoft.Owin.FileSystems 3.0.1

@@ -1,8 +1,13 @@
 *.nupkg
 *.suo
+*.swp
 *.user
+*.userprefs
 packages
 paket.exe
+docs/content/release-notes.md
+docs/output/
+docs/tools/*.svclog
 samples/*/bin
 samples/*/obj
 samples/WebApp/App/*.js
@@ -14,8 +19,13 @@ samples/WebApp/Scripts/Gluon.js
 samples/WebApp/Scripts/WebApp.js
 src/*/bin
 src/*/obj
+src/*/AssemblyInfo.*
+src/*/Properties/AssemblyInfo.*
 src/Gluon.Client/Gluon.js
 src/Gluon.Client/Gluon.js.map
 tests/*/bin
 tests/*/obj
 .vs/
+.fake/
+bin/
+temp/

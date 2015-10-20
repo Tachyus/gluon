@@ -1,21 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>72fdba6e-ce61-4811-9f18-39faa585b5ea</ProjectGuid>
+    <ProjectGuid>{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <Name>Gluon.CLI</Name>
-    <RootNamespace>$(Name)</RootNamespace>
+    <RootNamespace>Gluon.CLI</RootNamespace>
     <AssemblyName>$(Name)</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
     <OutputPath>bin\Debug\</OutputPath>
@@ -31,6 +29,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
@@ -49,6 +48,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" Condition="Exists('AssemblyInfo.fs')" />
     <Compile Include="AssemblyResolvers.fsi" />
     <Compile Include="AssemblyResolvers.fs" />
     <Compile Include="CommandLine.fs" />
@@ -65,8 +65,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Gluon\Gluon.fsproj">
       <Name>Gluon</Name>
-      <Project>{a49bbfb6-98a6-42ca-a5b3-35c89a7c3800}</Project>
-      <Private>True</Private>
+      <Project>{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}</Project>
     </ProjectReference>
   </ItemGroup>
   <Choose>
