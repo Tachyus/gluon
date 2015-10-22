@@ -1,6 +1,10 @@
 type file
 id Gluon
 authors Tachyus
+owners
+    ctaggart
+    panesofglass
+    t0yv0
 description TypeScript to FSharp connector
 files
     bin\Release\Gluon.dll ==> lib\net45
