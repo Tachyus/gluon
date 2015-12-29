@@ -11,6 +11,7 @@
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />

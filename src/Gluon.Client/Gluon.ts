@@ -1144,7 +1144,7 @@ module Gluon {
         (client: Client): T;
     }
 
-    interface IHttpClient {
+    export interface IHttpClient {
         httpGet(url: string, queryParams: any, parseJsonResponse: (json: any) => any): JQueryPromise<any>;
         httpCall(httpMethod: string, url: string, jsonRequest: string, parseJsonResponse: (json: any) => any): JQueryPromise<any>;
     }

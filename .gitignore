@@ -23,6 +23,7 @@ src/*/AssemblyInfo.*
 src/*/Properties/AssemblyInfo.*
 src/Gluon.Client/Gluon.js
 src/Gluon.Client/Gluon.js.map
+src/Gluon.Client/Gluon.d.ts
 tests/*/bin
 tests/*/obj
 .vs/
