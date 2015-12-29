@@ -58,7 +58,7 @@ module OwinSupport =
                 localPath = localPath
             }
         else
-            failwith "The given URI [%O] does not have the expected prefix %s"
+            failwithf "The given URI [%O] does not have the expected prefix %s"
                 uri server.prefix
 
     let pickMethod server (req: MethodKey) =
@@ -146,7 +146,7 @@ module OwinSupport =
             && req.Uri.LocalPath = server.schemaJsonPrefix
         if isMatch then Some () else None
 
-    let handleRequest server (ctx: IOwinContext) =
+    let handleRequestAsync server (ctx: IOwinContext) =
         async {
             match ctx.Request with
             | SchemaRequest server () ->
@@ -156,7 +156,11 @@ module OwinSupport =
                 let m = pickMethod server req
                 return! wrapMethodInvocation server ctx req m
         }
-        |> Async.StartAsTask :> Task
+
+    let handleRequest server ctx =
+        let work = handleRequestAsync server ctx
+        let ct = ctx.Request.CallCancelled
+        Async.StartAsTask(work, cancellationToken = ct) :> Task
 
 [<Sealed>]
 type OwinOptions(prefix: string, server: OwinSupport.Server) =
