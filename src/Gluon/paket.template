@@ -8,7 +8,6 @@ owners
 description TypeScript to FSharp connector
 files
     bin\Release\Gluon.dll ==> lib\net45
-    ..\Gluon.Client\Gluon.ts ==> content\Scripts
     ..\Gluon.Client\Gluon.js ==> content\Scripts
     ..\Gluon.Client\Gluon.d.ts ==> content\Scripts    
     ..\Gluon.CLI\bin\Release\*.* ==> tools
