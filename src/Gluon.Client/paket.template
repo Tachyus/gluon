@@ -10,7 +10,6 @@ description TypeScript to FSharp connector
 licenseUrl https://raw.githubusercontent.com/Tachyus/gluon/master/LICENSE.txt
 projectUrl http://www.tachyus.com/gluon/
 files
-    Gluon.ts ==> content\Scripts
     Gluon.js ==> content\Scripts
     Gluon.d.ts ==> content\Scripts    
 dependencies
