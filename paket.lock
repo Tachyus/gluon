@@ -1,8 +1,8 @@
 NUGET
-  remote: https://nuget.org/api/v2
+  remote: https://www.nuget.org/api/v2
   specs:
     Argu (1.0.0)
-    FAKE (4.4.2)
+    FAKE (4.19.0)
     FsCheck (2.0.7)
       FSharp.Core (>= 3.1.2.5)
     FsCheck.Xunit (2.0.7)
@@ -17,7 +17,7 @@ NUGET
       FSharp.Compiler.Service (>= 0.0.90)
     jQuery (2.1.4)
     jquery.TypeScript.DefinitelyTyped (2.2.1)
-    Microsoft.Owin (3.0.1) - framework: >= net45
+    Microsoft.Owin (3.0.1)
       Owin (>= 1.0)
     Microsoft.Owin.Diagnostics (3.0.1)
       Microsoft.Owin (>= 3.0.1)

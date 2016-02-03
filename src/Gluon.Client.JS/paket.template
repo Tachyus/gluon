@@ -10,7 +10,9 @@ description TypeScript to FSharp connector
 licenseUrl https://raw.githubusercontent.com/Tachyus/gluon/master/LICENSE.txt
 projectUrl http://www.tachyus.com/gluon/
 files
-    Gluon.js ==> content\Scripts
-    Gluon.d.ts ==> content\Scripts    
+    dist/Gluon.d.ts ==> content\Scripts\typings
+    dist/Gluon.js ==> content\Scripts
+    dist/Gluon.min.js ==> content\Scripts
+    dist/Gluon.min.js.map ==> content\Scripts
 dependencies
     jQuery.TypeScript.DefinitelyTyped >= 2.2.1

@@ -1,0 +1,13 @@
+﻿{
+    "compilerOptions": {
+        "declaration": true,
+        "module": "umd",
+        "target": "es5",
+        "noImplicitAny": false,
+        "outDir": "./dist",
+        "removeComments": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
