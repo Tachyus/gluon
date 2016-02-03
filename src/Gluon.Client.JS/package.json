@@ -1,19 +1,30 @@
 {
   "name": "Gluon.Client.JS",
   "version": "1.0.3",
+  "description": "JavaScript client library for the Gluon F# to TypeScript remoting connector.",
+  "author": "Tachyus",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tachyus/gluon"
+  },
+  "bugs": {
+    "url": "https://github.com/Tachyus/gluon/issues"
+  },
   "devDependencies": {
     "rimraf": "^2.5.1",
     "tsd": "^0.6.5",
     "typescript": "^1.7.5",
     "uglify-js": "^2.6.1"
   },
-    "scripts": {
-        "prestart": "npm run remove-dist",
-        "clean-dist": "npm run remove-dist && mkdir dist",
-        "remove-dist": "node_modules/.bin/rimraf ./dist",
-        "install-tsd": "node_modules/.bin/tsd install",
-        "prebuild": "npm run clean-dist && npm run install-tsd",
-        "build": "node_modules/.bin/tsc --project ./",
-        "postbuild": "node_modules/.bin/uglifyjs dist/Gluon.js --output dist/Gluon.min.js --source-map dist/Gluon.min.js.map --mangle"
-    }
+  "scripts": {
+    "prestart": "npm run remove-dist",
+    "clean-dist": "npm run remove-dist && mkdir dist",
+    "remove-dist": "node_modules/.bin/rimraf ./dist",
+    "install-tsd": "node_modules/.bin/tsd install",
+    "prebuild": "npm run clean-dist && npm run install-tsd",
+    "build": "node_modules/.bin/tsc --project ./",
+    "postbuild": "node_modules/.bin/uglifyjs dist/Gluon.js --output dist/Gluon.min.js --source-map dist/Gluon.min.js.map --mangle"
+  },
+  "private": "true",
+  "license": "Apache-2"
 }
