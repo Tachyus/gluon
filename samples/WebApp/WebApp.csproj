@@ -106,8 +106,8 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Target Name="CopyGluonClient" AfterTargets="Build">
-    <Copy SourceFiles="../../src/Gluon.Client.JS/dist/Gluon.js" DestinationFolder="Scripts" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="../../src/Gluon.Client.JS/dist/Gluon.d.ts" DestinationFolder="Scripts\typings" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="../../src/Gluon.Client/dist/Gluon.js" DestinationFolder="Scripts" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="../../src/Gluon.Client/dist/Gluon.d.ts" DestinationFolder="Scripts\typings" SkipUnchangedFiles="true" />
   </Target>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

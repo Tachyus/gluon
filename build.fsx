@@ -172,10 +172,10 @@ let npm task workingDir timeout =
     nodeRun node (npmRun task) workingDir (TimeSpan.FromMinutes 5.)
 
 Target "NpmInstall" <| fun _ ->
-    npm "install" "src/Gluon.Client.JS/" (TimeSpan.FromMinutes 5.)
+    npm "install" "src/Gluon.Client/" (TimeSpan.FromMinutes 5.)
 
 Target "BuildClientJS" <| fun _ ->
-    npm "run build" "src/Gluon.Client.JS/" (TimeSpan.FromMinutes 5.)
+    npm "run build" "src/Gluon.Client/" (TimeSpan.FromMinutes 5.)
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
