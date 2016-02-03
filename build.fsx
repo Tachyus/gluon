@@ -177,6 +177,11 @@ Target "NpmInstall" <| fun _ ->
 Target "BuildClientJS" <| fun _ ->
     npm "run build" "src/Gluon.Client/" (TimeSpan.FromMinutes 5.)
 
+Target "RemoveNodeModules" <| fun _ -> 
+    let node = findNode()
+    npm "install rimraf" "." (TimeSpan.FromMinutes 5.)
+    nodeRun node "./node_modules/rimraf/bin.js ./src/Gluon.Client/node_modules" "" (TimeSpan.FromMinutes 5.)
+
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
 

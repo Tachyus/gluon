@@ -28,7 +28,7 @@ tests/*/obj
 .fake/
 bin/
 temp/
-src/Gluon.Client/node_modules/
+node_modules/
 src/Gluon.Client/typings/
 src/Gluon.Client/dist/
 src/Gluon.Client/Gluon.js
