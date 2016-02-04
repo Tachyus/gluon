@@ -1,4 +1,7 @@
-### New in 1.0.3 - (TBD)
+### New in 1.0.4 - (TBD)
+
+### New in 1.0.3 - (Released 2016-02-04)
+Include Gluon.min.js and Gluon.min.js.map in Gluon.Client package.
 
 ### New in 1.0.2 - (Released 2016-02-02)
 Split packages into Gluon (library and CLI) and Gluon.Client (TS and JS files).
