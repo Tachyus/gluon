@@ -1,3 +1,5 @@
+### New in 1.0.5 - (TBD)
+
 ### New in 1.0.4 - (Released 2016-02-04)
 Fix path in source map file.
 
