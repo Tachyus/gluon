@@ -1,6 +1,4 @@
-﻿/// <reference path="../Scripts/typings/jquery/jquery.d.ts" />
-/// <reference path="../../../src/Gluon.Client/Gluon.ts" />
-/// <reference path="../Gen/Gluon.Generated.ts" />
+﻿/// <reference path="../Gen/Gluon.Generated.ts" />
 
 module WebApp {
 

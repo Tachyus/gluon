@@ -5,8 +5,9 @@
 #r "NuGet.Core.dll"
 #r "FakeLib.dll"
 open System
+open System.Diagnostics
 open System.IO
-open Fake 
+open Fake
 open Fake.Git
 open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
@@ -84,12 +85,6 @@ let fsharpAssemblyInfo proj =
 Target "AssemblyInfo" <| fun _ ->
     fsharpAssemblyInfo "Gluon"
     fsharpAssemblyInfo "Gluon.CLI"
-    CreateCSharpAssemblyInfo "src/Gluon.Client/Properties/AssemblyInfo.cs"
-        [ Attribute.Title "Gluon.Client"
-          Attribute.Product "Gluon.Client"
-          Attribute.Description summary
-          Attribute.Version release.AssemblyVersion
-          Attribute.FileVersion release.AssemblyVersion ]
 
 Target "BuildVersion" <| fun _ ->
     Shell.Exec("appveyor", sprintf "UpdateBuild -Version \"%s\"" nugetVersion) |> ignore
@@ -111,7 +106,6 @@ Target "Build" <| fun _ ->
         [
             "src/Gluon/Gluon.fsproj"
             "src/Gluon.CLI/Gluon.CLI.fsproj"
-            "src/Gluon.Client/Gluon.Client.csproj"
             "tests/Gluon.Tests/Gluon.Tests.fsproj"
         ]
     for projFile in projects do
@@ -124,6 +118,69 @@ Target "Build" <| fun _ ->
                 Targets =
                     [ "Rebuild" ]
                 Verbosity = Some Quiet }) projFile
+
+let tryFindApp (app: string) (dirs: string seq) =
+    dirs |> Seq.map (fun dir -> dir </> app) |> Seq.tryFind File.Exists
+
+let findApp app dirs =
+    match tryFindApp app dirs with
+    | Some path -> path
+    | None -> failwithf "unable to find app `%s` in %A" app dirs
+
+let runApp configProcessStartInfo timeout =
+    ExecProcess (fun p ->
+        configProcessStartInfo p
+        logfn "%s> \"%s\" %s" p.WorkingDirectory p.FileName p.Arguments
+    ) timeout
+
+let getProgramFiles() =
+    seq {
+        match Environment.Is64BitOperatingSystem, Environment.Is64BitProcess with
+        | true, true ->
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles // C:\Program Files
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFilesX86 // C:\Program Files (x86)
+        | true, false ->
+            yield Environment.GetEnvironmentVariable "ProgramW6432" // C:\Program Files
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles // C:\Program Files (x86)
+        | false, _ ->
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
+    }
+
+let findNode() =
+    let programFiles = getProgramFiles() |> List.ofSeq
+    let subdirs name = programFiles |> Seq.map (fun dir -> Path.Combine(dir, name))
+    Seq.append
+        (subdirs "iojs")
+        (subdirs "nodejs")
+    |> (findApp "node.exe")
+
+let nodeRun node task workingDir timeout =
+    let config (p : ProcessStartInfo) =
+        p.FileName <- node
+        p.WorkingDirectory <- p.WorkingDirectory </> workingDir
+        p.Arguments <- task
+    if runApp config timeout <> 0 then
+        failwithf "%s failed" task
+
+let findNpm node =
+    (Path.GetDirectoryName node) </> @"node_modules/npm/bin/npm-cli.js"
+
+let npm task workingDir timeout =
+    let node = findNode()
+    let npm = findNpm node
+    let npmRun task = sprintf "\"%s\" %s" npm task
+    nodeRun node (npmRun task) workingDir (TimeSpan.FromMinutes 5.)
+
+Target "NpmInstall" <| fun _ ->
+    npm "install" "src/Gluon.Client/" (TimeSpan.FromMinutes 5.)
+
+Target "BuildClientJS" <| fun _ ->
+    npm "run build" "src/Gluon.Client/" (TimeSpan.FromMinutes 5.)
+
+Target "RemoveNodeModules" <| fun _ -> 
+    let node = findNode()
+    npm "install rimraf" "." (TimeSpan.FromMinutes 5.)
+    nodeRun node "./node_modules/rimraf/bin.js ./src/Gluon.Client/node_modules" "" (TimeSpan.FromMinutes 5.)
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
@@ -145,7 +202,7 @@ open SourceLink
 
 Target "SourceLink" <| fun _ ->
     let baseUrl = sprintf "%s/%s/{0}/%%var2%%" gitRaw project
-    !! "src/**/*.??proj"
+    !! "src/**/*.fsproj"
     |> Seq.iter (fun projFile ->
         let proj = VsProj.LoadRelease projFile 
         SourceLink.Index proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ baseUrl)
@@ -155,7 +212,7 @@ Target "SourceLink" <| fun _ ->
 // Build a NuGet package
 
 let referenceDependencies dependencies =
-    let packagesDir = __SOURCE_DIRECTORY__  @@ "packages"
+    let packagesDir = __SOURCE_DIRECTORY__  </> "packages"
     [ for dependency in dependencies -> dependency, GetPackageVersion packagesDir dependency ]
 
 Target "NuGet" <| fun _ ->
@@ -253,6 +310,8 @@ Target "All" DoNothing
   =?> ("BuildVersion", isAppVeyorBuild)
   ==> "AssemblyInfo"
   ==> "Build"
+  ==> "NpmInstall"
+  ==> "BuildClientJS"
   ==> "RunTests"
   ==> "All"
   =?> ("GenerateReferenceDocs",isLocalBuild && not isMono)
