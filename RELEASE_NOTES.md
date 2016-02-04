@@ -1,4 +1,5 @@
-### New in 1.0.4 - (TBD)
+### New in 1.0.4 - (Released 2016-02-04)
+Fix path in source map file.
 
 ### New in 1.0.3 - (Released 2016-02-04)
 Include Gluon.min.js and Gluon.min.js.map in Gluon.Client package.

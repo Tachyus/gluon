@@ -23,7 +23,7 @@
     "install-tsd": "node_modules/.bin/tsd install",
     "prebuild": "npm run clean-dist && npm run install-tsd",
     "build": "node_modules/.bin/tsc --project ./",
-    "postbuild": "node_modules/.bin/uglifyjs dist/Gluon.js --output dist/Gluon.min.js --source-map dist/Gluon.min.js.map --mangle"
+    "postbuild": "node_modules/.bin/uglifyjs dist/Gluon.js -o dist/Gluon.min.js --source-map dist/Gluon.min.js.map -p 1 -m"
   },
   "private": "true",
   "license": "Apache-2"
