@@ -2,7 +2,7 @@
 
 The setup is a little tricky, but see the `samples` folder. You would
 typically use two projects, one for the F# APIs and web setup, and one
-for the C# application.
+for the C# or TypeScript web application.
 
 ## F# Project
 
@@ -33,6 +33,17 @@ type Startup() =
 do ()
 ```
 
+Lastly, you need to make sure Gluon added a target to your `fsproj` file to get the `Gluon.CLI.exe` to copy the generated TypeScript client to your web project:
+
+```xml
+<PropertyGroup>
+  <GluonToolPath>..\packages\Gluon\tools\Gluon.CLI.exe</GluonToolPath>
+</PropertyGroup>
+<Target Name="GluonCompiler" AfterTargets="Build">
+  <Exec Command="&quot;$(GluonToolPath)&quot; --out &quot;..\WebProject\Scripts\$(Name).ts&quot; --reflect &quot;$(TargetPath)&quot;" ContinueOnError="false" WorkingDirectory="$(MSBuildThisFileDirectory)" />
+</Target>
+```
+
 ## Web Project
 
 Reference a bunch of packages, namely:
@@ -48,15 +59,17 @@ Reference a bunch of packages, namely:
 Add TypeScript compilation to the project, if it does not have it
 already.  This typically takes this form in `.csproj`:
 
-    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets"
-            Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+```xml
+<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets"
+        Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+```
 
 In your `Scripts/app.ts`, write something like this:
 
 ```typescript
-/// <reference path="Gluon.ts" />
-/// <reference path="Gluon.Generated.ts" />
 /// <reference path="typings/jquery/jquery.d.ts" />
+/// <reference path="typings/Gluon.d.ts" />
+/// <reference path="Gluon.Generated.ts" />
 
 jQuery(() => {
     console.log('start');
