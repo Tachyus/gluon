@@ -26,9 +26,6 @@ My.Service.increment(c)(1).then(x => console.log(x));
       The Gluon library can be <a href="http://www.nuget.org/packages/Gluon">installed from NuGet</a>:
       <pre>PM> Install-Package Gluon</pre>
     </div>
-  </div>
-  <div class="span1"></div>
-  <div class="span6">
     <div class="well well-small" id="nuget">
       The Gluon.Client library can be <a href="http://www.nuget.org/packages/Gluon.Client">installed from NuGet</a>:
       <pre>PM> Install-Package Gluon.Client</pre>
