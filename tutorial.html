@@ -37,7 +37,7 @@
 
 <p>The setup is a little tricky, but see the <code>samples</code> folder. You would
 typically use two projects, one for the F# APIs and web setup, and one
-for the C# application.</p>
+for the C# or TypeScript web application.</p>
 
 <h2><a name="F-Project" class="anchor" href="#F-Project">F# Project</a></h2>
 
@@ -88,6 +88,23 @@ for the C# application.</p>
 </tr>
 </table>
 
+<p>Lastly, you need to make sure Gluon added a target to your <code>fsproj</code> file to get the <code>Gluon.CLI.exe</code> to copy the generated TypeScript client to your web project:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="xml"><span class="k">&lt;</span><span class="i">PropertyGroup</span><span class="k">&gt;</span>
+  <span class="k">&lt;</span><span class="i">GluonToolPath</span><span class="k">&gt;</span>..\packages\Gluon\tools\Gluon.CLI.exe<span class="k">&lt;/</span><span class="i">GluonToolPath</span><span class="k">&gt;</span>
+<span class="k">&lt;/</span><span class="i">PropertyGroup</span><span class="k">&gt;</span>
+<span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="GluonCompiler"</span> <span class="o">AfterTargets</span><span class="k">="Build"</span><span class="k">&gt;</span>
+  <span class="k">&lt;</span><span class="i">Exec</span> <span class="o">Command</span><span class="k">="&amp;quot;$(GluonToolPath)&amp;quot; --out &amp;quot;..\WebProject\Scripts\$(Name).ts&amp;quot; --reflect &amp;quot;$(TargetPath)&amp;quot;"</span> <span class="o">ContinueOnError</span><span class="k">="false"</span> <span class="o">WorkingDirectory</span><span class="k">="$(MSBuildThisFileDirectory)"</span> <span class="k">/&gt;</span>
+<span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
+</code></pre></td></tr></table>
+
 <h2><a name="Web-Project" class="anchor" href="#Web-Project">Web Project</a></h2>
 
 <p>Reference a bunch of packages, namely:</p>
@@ -117,11 +134,9 @@ already.  This typically takes this form in <code>.csproj</code>:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">&lt;</span><span class="i">Import</span> <span class="i">Project</span><span class="o">=</span><span class="s">&quot;$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets&quot;</span>
-        <span class="i">Condition</span><span class="o">=</span><span class="s">&quot;Exists(&#39;$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets&#39;)&quot;</span> <span class="o">/&gt;</span>
-</code></pre></td>
-</tr>
-</table>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="xml"><span class="k">&lt;</span><span class="i">Import</span> <span class="o">Project</span><span class="k">="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets"</span>
+        <span class="o">Condition</span><span class="k">="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')"</span> <span class="k">/&gt;</span>
+</code></pre></td></tr></table>
 
 <p>In your <code>Scripts/app.ts</code>, write something like this:</p>
 
@@ -138,9 +153,9 @@ already.  This typically takes this form in <code>.csproj</code>:</p>
 <span class="l">11: </span>
 <span class="l">12: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="typescript">/// &lt;reference path="Gluon.ts" /&gt;
+<td class="snippet"><pre class="fssnip"><code lang="typescript">/// &lt;reference path="typings/jquery/jquery.d.ts" /&gt;
+/// &lt;reference path="typings/Gluon.d.ts" /&gt;
 /// &lt;reference path="Gluon.Generated.ts" /&gt;
-/// &lt;reference path="typings/jquery/jquery.d.ts" /&gt;
 
 jQuery(() =&gt; {
     console.log('start');
