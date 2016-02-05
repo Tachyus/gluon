@@ -19,15 +19,28 @@ My.Service.increment(c)(1).then(x => console.log(x));
 
 ## Installing
 
-We will soon publish to http://nuget.org, but for now you can use the
-public AppVeyor NuGet feed at https://ci.appveyor.com/nuget/gluon.
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      The Gluon library can be <a href="http://www.nuget.org/packages/Gluon">installed from NuGet</a>:
+      <pre>PM> Install-Package Gluon</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      The Gluon.Client library can be <a href="http://www.nuget.org/packages/Gluon.Client">installed from NuGet</a>:
+      <pre>PM> Install-Package Gluon.Client</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+</div>
 
 ## Building
 
-TBD.
+Checkout the project from [GitHub](https://github.com/Tachyus/gluon) and then run the `build.ps1` (Windows) or `build.sh` (*nix) script to build the projects. You will need .NET 4.5 or Mono and node.js installed.
 
 ## Contributing
 
-The project is at an early stage but is actively used at Tachyus. We
-welcome contributions, please use the GitHub issue tracker to
-coordinate.
+The project is at an early stage but is actively used at Tachyus. We welcome contributions. Please use the [GitHub issue tracker](https://github.com/Tachyus/gluon/issues) to coordinate.
