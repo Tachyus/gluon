@@ -62,18 +62,31 @@ My.Service.increment(c)(1).then(x =&gt; console.log(x));
 
 <h2><a name="Installing" class="anchor" href="#Installing">Installing</a></h2>
 
-<p>We will soon publish to <a href="http://nuget.org,">http://nuget.org,</a> but for now you can use the
-public AppVeyor NuGet feed at <a href="https://ci.appveyor.com/nuget/gluon.">https://ci.appveyor.com/nuget/gluon.</a></p>
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      The Gluon library can be <a href="http://www.nuget.org/packages/Gluon">installed from NuGet</a>:
+      <pre>PM> Install-Package Gluon</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      The Gluon.Client library can be <a href="http://www.nuget.org/packages/Gluon.Client">installed from NuGet</a>:
+      <pre>PM> Install-Package Gluon.Client</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+</div>
 
 <h2><a name="Building" class="anchor" href="#Building">Building</a></h2>
 
-<p>TBD.</p>
+<p>Checkout the project from <a href="https://github.com/Tachyus/gluon">GitHub</a> and then run the <code>build.ps1</code> (Windows) or <code>build.sh</code> (*nix) script to build the projects. You will need .NET 4.5 or Mono and node.js installed.</p>
 
 <h2><a name="Contributing" class="anchor" href="#Contributing">Contributing</a></h2>
 
-<p>The project is at an early stage but is actively used at Tachyus. We
-welcome contributions, please use the GitHub issue tracker to
-coordinate.</p>
+<p>The project is at an early stage but is actively used at Tachyus. We welcome contributions. Please use the <a href="https://github.com/Tachyus/gluon/issues">GitHub issue tracker</a> to coordinate.</p>
 
 <div class="tip" id="fs1">Multiple items<br />val int : value:&#39;T -&gt; int (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.int<br /><br />--------------------<br />type int = int32<br /><br />Full name: Microsoft.FSharp.Core.int<br /><br />--------------------<br />type int&lt;&#39;Measure&gt; = int<br /><br />Full name: Microsoft.FSharp.Core.int&lt;_&gt;</div>
 
