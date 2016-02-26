@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}</ProjectGuid>
+    <ProjectGuid>{a49bbfb6-98a6-42ca-a5b3-35c89a7c3800}</ProjectGuid>
     <OutputType>Library</OutputType>
     <Name>Gluon</Name>
     <RootNamespace>Gluon</RootNamespace>

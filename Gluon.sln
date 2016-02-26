@@ -40,8 +40,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{A0F699D3
 		docs\tools\generate.fsx = docs\tools\generate.fsx
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gluon.Client.JS", "src\Gluon.Client.JS\Gluon.Client.JS.csproj", "{DDE1011A-6059-4A36-B46F-9F821FADFB70}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,10 +66,6 @@ Global
 		{D137BEC5-3BD3-421F-94EB-47F6A8A63859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D137BEC5-3BD3-421F-94EB-47F6A8A63859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D137BEC5-3BD3-421F-94EB-47F6A8A63859}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDE1011A-6059-4A36-B46F-9F821FADFB70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDE1011A-6059-4A36-B46F-9F821FADFB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDE1011A-6059-4A36-B46F-9F821FADFB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDE1011A-6059-4A36-B46F-9F821FADFB70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +77,5 @@ Global
 		{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD} = {603A6B73-7725-48F8-870D-50685AC95C96}
 		{D137BEC5-3BD3-421F-94EB-47F6A8A63859} = {603A6B73-7725-48F8-870D-50685AC95C96}
 		{A0F699D3-A4C8-4975-8A77-D06DE7B11D60} = {C3DE5E72-8B3E-47FF-9E18-45853B08F0A1}
-		{DDE1011A-6059-4A36-B46F-9F821FADFB70} = {55836903-C800-4B5A-B20D-23E9C25D5131}
 	EndGlobalSection
 EndGlobal

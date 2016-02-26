@@ -2,6 +2,7 @@ NUGET
   remote: https://www.nuget.org/api/v2
   specs:
     Argu (1.0.0)
+    EcmaScript.Net (1.0.1)
     FAKE (4.19.0)
     FsCheck (2.0.7)
       FSharp.Core (>= 3.1.2.5)
@@ -16,7 +17,7 @@ NUGET
     FSharpVSPowerTools.Core (1.9.0)
       FSharp.Compiler.Service (>= 0.0.90)
     jQuery (2.1.4)
-    jquery.TypeScript.DefinitelyTyped (2.2.1)
+    jquery.TypeScript.DefinitelyTyped (3.0.3)
     Microsoft.Owin (3.0.1)
       Owin (>= 1.0)
     Microsoft.Owin.Diagnostics (3.0.1)
@@ -40,9 +41,16 @@ NUGET
       Microsoft.Owin (>= 3.0.1)
       Microsoft.Owin.FileSystems (>= 3.0.1)
       Owin (>= 1.0)
+    Microsoft.TypeScript.Compiler (1.8.4)
+    Microsoft.TypeScript.MSBuild (1.8.4)
     Newtonsoft.Json (6.0.8)
     Owin (1.0)
     SourceLink.Fake (1.1.0)
     xunit (1.9.2)
     xunit.runner.console (2.0.0)
     xunit.runner.visualstudio (2.0.1) - version_in_path: true
+    YUICompressor.NET (2.7.0)
+      EcmaScript.Net (>= 1.0.1.0)
+    YUICompressor.NET.MSBuild (2.7.0)
+      EcmaScript.Net (>= 1.0.1.0)
+      YUICompressor.NET (>= 2.0.0.0 < 3.0.0.0)

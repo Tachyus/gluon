@@ -1,6 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -17,7 +16,6 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
     <NuGetPackageImportStamp>f4d92798</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
@@ -39,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Scripts\Gluon.js" />
+    <Content Include="Scripts\*.js" />
     <Content Include="Scripts\jquery-2.1.4-vsdoc.js">
       <Paket>True</Paket>
     </Content>
@@ -50,9 +48,6 @@
       <Paket>True</Paket>
     </Content>
     <Content Include="Scripts\jquery-2.1.4.min.map">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\typings\jquery\jquery.d.ts">
       <Paket>True</Paket>
     </Content>
     <Reference Include="Microsoft.CSharp" />
@@ -91,11 +86,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="App\WebApp.ts" />
-    <TypeScriptCompile Include="Gen\Gluon.Generated.ts" />
-    <TypeScriptCompile Include="Scripts\typings\Gluon.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SampleApp\SampleApp.fsproj">
       <Project>{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}</Project>
       <Name>SampleApp</Name>
@@ -105,14 +95,10 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <Target Name="CopyGluonClient" AfterTargets="Build">
-    <Copy SourceFiles="../../src/Gluon.Client/dist/Gluon.js" DestinationFolder="Scripts" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="../../src/Gluon.Client/dist/Gluon.d.ts" DestinationFolder="Scripts\typings" SkipUnchangedFiles="true" />
-  </Target>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="Gluon.targets" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">

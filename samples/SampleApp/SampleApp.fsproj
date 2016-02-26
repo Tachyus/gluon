@@ -11,7 +11,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
     <Name>SampleApp</Name>
-    <GluonToolPath>$(MSBuildProjectDirectory)\..\..\src\Gluon.CLI\bin\$(Configuration)\Gluon.CLI.exe</GluonToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,25 +47,6 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
-  <ItemGroup>
-    <Compile Include="Startup.fs" />
-    <Content Include="paket.references" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Gluon\Gluon.fsproj">
-      <Name>Gluon</Name>
-      <Project>{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <Target Name="GluonCompiler" AfterTargets="Build">
-    <Exec Command="&quot;$(GluonToolPath)&quot; --out &quot;..\WebApp\Gen\Gluon.Generated.ts&quot; --reflect &quot;$(TargetPath)&quot;" ContinueOnError="false" WorkingDirectory="$(MSBuildThisFileDirectory)" />
-  </Target>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0' Or $(TargetFrameworkVersion) == 'v3.5')">
       <ItemGroup>
@@ -219,4 +199,20 @@
       </ItemGroup>
     </When>
   </Choose>
+  <ItemGroup>
+    <Compile Include="Startup.fs" />
+    <Content Include="paket.references" />
+    <None Include="Gluon.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <ProjectReference Include="..\..\src\Gluon\Gluon.fsproj">
+      <Name>Gluon</Name>
+      <Project>{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="Gluon.targets" />
 </Project>
