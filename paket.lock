@@ -1,5 +1,5 @@
 NUGET
-  remote: https://www.nuget.org/api/v2
+  remote: https://nuget.org/api/v2
   specs:
     Argu (1.0.0)
     EcmaScript.Net (1.0.1)
@@ -18,7 +18,7 @@ NUGET
       FSharp.Compiler.Service (>= 0.0.90)
     jQuery (2.1.4)
     jquery.TypeScript.DefinitelyTyped (3.0.3)
-    Microsoft.Owin (3.0.1)
+    Microsoft.Owin (3.0.1) - framework: >= net45
       Owin (>= 1.0)
     Microsoft.Owin.Diagnostics (3.0.1)
       Microsoft.Owin (>= 3.0.1)

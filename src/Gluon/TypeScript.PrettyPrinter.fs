@@ -74,8 +74,28 @@ let spaces layouts =
     let combine x y = x +/ y
     PP.group (many combine layouts)
 
-let rec typeLiteral tl =
+let rec expression e =
+    let ( ! ) x = expression x
+    let ( !! ) xs = xs |> Seq.map expression |> Seq.toArray
+    match e with
+    | S.GetField (a, S.Var v) -> !a +. t "." +. t v
+    | S.GetField (a, b) -> !a +. brackets !b
+    | S.New (x, args) -> t "new" ++ !x +. parens (commasTight !!args)
+    | S.InstanceOf (a, b) -> !a ++ t "instanceof" ++ !b
+    | S.Call (func, [], args) -> !func +. parens (commasTight !!args)
+    | S.Call (func, gen, args) -> !func +. angular (commasTight [for g in gen -> typeLiteral g]) +. parens (commasTight !!args)
+    | S.Invoke (o, m, args) -> !o +. t "." +. t m +. parens (commasTight !!args)
+    | S.LiteralString str -> HttpUtility.JavaScriptStringEncode(str, addDoubleQuotes = true) |> t
+    | S.Var v -> t v
+    | S.LiteralJson x -> t x
+    | S.LiteralObject fields -> braces (commas [for (n, v) in fields -> !(S.LiteralString n) +. t ":" ++ !v])
+    | S.SimpleLambda (args, body) -> parens (commasTight [for a in args -> t a]) ++ t "=>" ++ !body
+    | S.This -> t "this"
+
+and typeLiteral tl =
     match tl with
+    | S.LiteralStringType str ->
+        expression (S.LiteralString str)
     | S.FunctionType ft ->
         let argTypes =
             commas [
@@ -96,24 +116,6 @@ let rec typeLiteral tl =
         many combine (List.map typeLiteral ts)
     | S.TupleType ts ->
         brackets (commas (List.map typeLiteral ts))
-
-let rec expression e =
-    let ( ! ) x = expression x
-    let ( !! ) xs = xs |> Seq.map expression |> Seq.toArray
-    match e with
-    | S.GetField (a, S.Var v) -> !a +. t "." +. t v
-    | S.GetField (a, b) -> !a +. brackets !b
-    | S.New (x, args) -> t "new" ++ !x +. parens (commasTight !!args)
-    | S.InstanceOf (a, b) -> !a ++ t "instanceof" ++ !b
-    | S.Call (func, [], args) -> !func +. parens (commasTight !!args)
-    | S.Call (func, gen, args) -> !func +. angular (commasTight [for g in gen -> typeLiteral g]) +. parens (commasTight !!args)
-    | S.Invoke (o, m, args) -> !o +. t "." +. t m +. parens (commasTight !!args)
-    | S.LiteralString str -> HttpUtility.JavaScriptStringEncode(str, addDoubleQuotes = true) |> t
-    | S.Var v -> t v
-    | S.LiteralJson x -> t x
-    | S.LiteralObject fields -> braces (commas [for (n, v) in fields -> !(S.LiteralString n) +. t ":" ++ !v])
-    | S.SimpleLambda (args, body) -> parens (commasTight [for a in args -> t a]) ++ t "=>" ++ !body
-    | S.This -> t "this"
 
 let rec statement (s: S.Statement) : PP.Layout =
     match s with

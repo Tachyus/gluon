@@ -31,7 +31,7 @@
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-    var cli = new P.Client();
+     var cli = new P.Client();
 
     S.incr(cli)(1).then(x => {
         console.log("incr(1) ==> ", x);
@@ -126,5 +126,8 @@
     S.tupleTurnaround(cli)([[1, "a"], [2, "b"]]).then(results => {
         console.log("tupleTurnaround =>", results);
     });
+    
+    S.unionTurnaround(cli)(new S.C1("A")).then(results => console.log("unionTurnaround => ", results))
+    
 }
 
