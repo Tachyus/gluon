@@ -17,4 +17,5 @@
     </ItemGroup>
     <JavaScriptCompressorTask SourceFiles="@(JavaScriptFiles)" OutputFile="dist/Gluon.min.js" />
   </Target>
+  <Target Name="Rebuild" DependsOnTargets="Build" />
 </Project>

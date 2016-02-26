@@ -5,4 +5,5 @@
   </ItemGroup>
   <Import Project="..\..\packages\Microsoft.TypeScript.MSBuild\tools\Microsoft.TypeScript.targets" />
   <Target Name="Build" DependsOnTargets="CompileTypeScriptWithTSConfig" />
+  <Target Name="Rebuild" DependsOnTargets="Build" />
 </Project>
