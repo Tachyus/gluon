@@ -1,5 +1,3 @@
-/// <reference path="typings/jquery/jquery.d.ts" />
-
 // Copyright 2015 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you

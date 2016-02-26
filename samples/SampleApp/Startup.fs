@@ -150,6 +150,18 @@ module private Services =
     let tupleTurnaround (tuples: list<int*string>) =
         [for (a, b) in tuples -> (b, a)]
 
+    type Union =
+        | C1 of string
+        | C2 of string []
+        | C3 of string
+
+    [<Remote>]
+    let unionTurnaround x =
+        match x with
+        | C1 x -> C3 x
+        | C3 x -> C1 x
+        | C2 xs -> C2 xs
+
 type Startup() =
     member x.Configuration(app: IAppBuilder) =
         app.MapGluon() |> ignore

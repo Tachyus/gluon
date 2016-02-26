@@ -1,0 +1,10 @@
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <GluonDist>$(MSBuildThisFileDirectory)../../src/Gluon.Client/dist</GluonDist>
+  </PropertyGroup>
+  <Target Name="CopyGluonFiles" BeforeTargets="Build">    
+    <Copy SourceFiles="$(GluonDist)/Gluon.js"
+	  DestinationFolder="Scripts"
+	  SkipUnchangedFiles="true" />
+  </Target>
+</Project>

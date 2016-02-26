@@ -133,7 +133,7 @@ let generateRecordLike tRef name (fields: list<Schema.Field>) : S.ClassDefinitio
         S.FunctionDefinition.Create("toJSON", body, makeType "any")
     let tag =
         let body = S.Return (S.LiteralString name)
-        S.FunctionDefinition.Create("tag", body, makeType "string")
+        S.FunctionDefinition.Create("tag", body, S.LiteralStringType name)
     let methods =
         [
             S.ClassMethod.Create(tag)

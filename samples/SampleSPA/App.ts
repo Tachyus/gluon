@@ -1,10 +1,8 @@
-﻿/// <reference path="../Gen/Gluon.Generated.ts" />
-
-module WebApp {
+﻿module WebApp {
 
     import P = Gluon;
     import S = SampleApp.Services;
-
+    
     var p1 = new S.Person(new Date(), new S.Phone(12345), "Anton", 30);
     var p2 = new S.Person(new Date(), new S.Address("San Mateo"), "Lida", 1);
 
@@ -33,7 +31,7 @@ module WebApp {
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-    var cli = new P.Client();
+     var cli = new P.Client();
 
     S.incr(cli)(1).then(x => {
         console.log("incr(1) ==> ", x);
@@ -128,5 +126,8 @@ module WebApp {
     S.tupleTurnaround(cli)([[1, "a"], [2, "b"]]).then(results => {
         console.log("tupleTurnaround =>", results);
     });
+    
+    S.unionTurnaround(cli)(new S.C1("A")).then(results => console.log("unionTurnaround => ", results))
+    
 }
 

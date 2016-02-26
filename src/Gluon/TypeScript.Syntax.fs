@@ -18,6 +18,7 @@ module internal Gluon.TypeScript.Syntax
 type TypeLiteral =
     | ArrayType of TypeLiteral
     | FunctionType of FunctionTypeLiteral
+    | LiteralStringType of string
     | ObjectType of list<string * TypeLiteral>
     | TupleType of list<TypeLiteral>
     | TypeReference of string * list<TypeLiteral>

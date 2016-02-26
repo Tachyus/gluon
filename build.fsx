@@ -36,8 +36,10 @@ let summary = "Type-safe remoting connector between F# and TypeScript."
 let description = """
     Gluon provides a type-safe remoting connector between an F# backend
     and a TypeScript client."""
+
 // List of author names (for NuGet package)
 let authors = [ "Tachyus Corp" ]
+
 // Tags for your project (for NuGet package)
 let tags = "F# fsharp web typescript webapi"
 
@@ -51,8 +53,10 @@ let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted 
 let gitHome = "https://github.com/Tachyus"
+
 // The name of the project on GitHub
 let gitName = "gluon"
+
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/Tachyus"
 
 // --------------------------------------------------------------------------------------
@@ -61,10 +65,14 @@ let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/Tachyus"
 
 // Read additional information from the release notes document
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
-let (!!) includes = (!! includes).SetBaseDirectory __SOURCE_DIRECTORY__
+
+let (!!) includes =
+    (!! includes).SetBaseDirectory __SOURCE_DIRECTORY__
+
 let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
-let nugetVersion = 
+
+let nugetVersion =
     if isAppVeyorBuild then
         let isTagged = Boolean.Parse(environVar "APPVEYOR_REPO_TAG")
         if isTagged then
@@ -106,7 +114,11 @@ Target "Build" <| fun _ ->
         [
             "src/Gluon/Gluon.fsproj"
             "src/Gluon.CLI/Gluon.CLI.fsproj"
+            "src/Gluon.Client/Gluon.Client.proj"
             "tests/Gluon.Tests/Gluon.Tests.fsproj"
+            "samples/SampleApp/SampleApp.fsproj"
+            "samples/SampleSPA/SampleSPA.proj"
+            "samples/WebApp/WebApp.csproj"
         ]
     for projFile in projects do
         build (fun x ->
@@ -118,69 +130,6 @@ Target "Build" <| fun _ ->
                 Targets =
                     [ "Rebuild" ]
                 Verbosity = Some Quiet }) projFile
-
-let tryFindApp (app: string) (dirs: string seq) =
-    dirs |> Seq.map (fun dir -> dir </> app) |> Seq.tryFind File.Exists
-
-let findApp app dirs =
-    match tryFindApp app dirs with
-    | Some path -> path
-    | None -> failwithf "unable to find app `%s` in %A" app dirs
-
-let runApp configProcessStartInfo timeout =
-    ExecProcess (fun p ->
-        configProcessStartInfo p
-        logfn "%s> \"%s\" %s" p.WorkingDirectory p.FileName p.Arguments
-    ) timeout
-
-let getProgramFiles() =
-    seq {
-        match Environment.Is64BitOperatingSystem, Environment.Is64BitProcess with
-        | true, true ->
-            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles // C:\Program Files
-            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFilesX86 // C:\Program Files (x86)
-        | true, false ->
-            yield Environment.GetEnvironmentVariable "ProgramW6432" // C:\Program Files
-            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles // C:\Program Files (x86)
-        | false, _ ->
-            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
-    }
-
-let findNode() =
-    let programFiles = getProgramFiles() |> List.ofSeq
-    let subdirs name = programFiles |> Seq.map (fun dir -> Path.Combine(dir, name))
-    Seq.append
-        (subdirs "iojs")
-        (subdirs "nodejs")
-    |> (findApp "node.exe")
-
-let nodeRun node task workingDir timeout =
-    let config (p : ProcessStartInfo) =
-        p.FileName <- node
-        p.WorkingDirectory <- p.WorkingDirectory </> workingDir
-        p.Arguments <- task
-    if runApp config timeout <> 0 then
-        failwithf "%s failed" task
-
-let findNpm node =
-    (Path.GetDirectoryName node) </> @"node_modules/npm/bin/npm-cli.js"
-
-let npm task workingDir timeout =
-    let node = findNode()
-    let npm = findNpm node
-    let npmRun task = sprintf "\"%s\" %s" npm task
-    nodeRun node (npmRun task) workingDir (TimeSpan.FromMinutes 5.)
-
-Target "NpmInstall" <| fun _ ->
-    npm "install" "src/Gluon.Client/" (TimeSpan.FromMinutes 5.)
-
-Target "BuildClientJS" <| fun _ ->
-    npm "run build" "src/Gluon.Client/" (TimeSpan.FromMinutes 5.)
-
-Target "RemoveNodeModules" <| fun _ -> 
-    let node = findNode()
-    npm "install rimraf" "." (TimeSpan.FromMinutes 5.)
-    nodeRun node "./node_modules/rimraf/bin.js ./src/Gluon.Client/node_modules" "" (TimeSpan.FromMinutes 5.)
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
@@ -255,25 +204,19 @@ Target "GenerateHelp" <| fun _ ->
     DeleteFile "docs/content/release-notes.md"
     CopyFile "docs/content/" "RELEASE_NOTES.md"
     Rename "docs/content/release-notes.md" "docs/content/RELEASE_NOTES.md"
-
     generateHelp true
 
 Target "GenerateHelpDebug" <| fun _ ->
     DeleteFile "docs/content/release-notes.md"
     CopyFile "docs/content/" "RELEASE_NOTES.md"
     Rename "docs/content/release-notes.md" "docs/content/RELEASE_NOTES.md"
-
     generateHelp' true true
 
 Target "KeepRunning" <| fun _ ->
     use watcher = !! "docs/content/**/*.*" |> WatchChanges (fun changes ->
-         generateHelp false
-    )
-
+        generateHelp false)
     traceImportant "Waiting for help edits. Press any key to stop."
-
     System.Console.ReadKey() |> ignore
-
     watcher.Dispose()
 
 Target "GenerateDocs" DoNothing
@@ -285,7 +228,6 @@ Target "ReleaseDocs" <| fun _ ->
     let tempDocsDir = "temp/gh-pages"
     CleanDir tempDocsDir
     Repository.cloneSingleBranch "" (gitHome + "/" + gitName + ".git") "gh-pages" tempDocsDir
-
     CopyRecursive "docs/output" tempDocsDir true |> tracefn "%A"
     StageAll tempDocsDir
     Commit tempDocsDir (sprintf "Update generated documentation for version %s" release.NugetVersion)
@@ -295,7 +237,6 @@ Target "Release" <| fun _ ->
     StageAll ""
     Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     Branches.push ""
-
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
 
@@ -310,8 +251,6 @@ Target "All" DoNothing
   =?> ("BuildVersion", isAppVeyorBuild)
   ==> "AssemblyInfo"
   ==> "Build"
-  ==> "NpmInstall"
-  ==> "BuildClientJS"
   ==> "RunTests"
   ==> "All"
   =?> ("GenerateReferenceDocs",isLocalBuild && not isMono)
@@ -339,4 +278,3 @@ Target "All" DoNothing
   ==> "Release"
 
 RunTargetOrDefault "All"
-
