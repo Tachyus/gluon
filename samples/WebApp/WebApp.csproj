@@ -38,18 +38,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Scripts\*.js" />
-    <Content Include="Scripts\jquery-2.1.4-vsdoc.js">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\jquery-2.1.4.js">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\jquery-2.1.4.min.js">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="Scripts\jquery-2.1.4.min.map">
-      <Paket>True</Paket>
-    </Content>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
@@ -71,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="paket.references" />
+    <Content Include="Gluon.targets" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -87,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SampleApp\SampleApp.fsproj">
-      <Project>{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}</Project>
+      <Project>{f0c775be-25a2-48f0-ba2f-03a36aad4dbd}</Project>
       <Name>SampleApp</Name>
     </ProjectReference>
   </ItemGroup>
@@ -103,7 +92,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16765</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

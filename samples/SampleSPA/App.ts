@@ -2,7 +2,7 @@
 
     import P = Gluon;
     import S = SampleApp.Services;
-    
+
     var p1 = new S.Person(new Date(), new S.Phone(12345), "Anton", 30);
     var p2 = new S.Person(new Date(), new S.Address("San Mateo"), "Lida", 1);
 

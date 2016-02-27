@@ -114,10 +114,10 @@ Target "Build" <| fun _ ->
         [
             "src/Gluon/Gluon.fsproj"
             "src/Gluon.CLI/Gluon.CLI.fsproj"
-            "src/Gluon.Client/Gluon.Client.proj"
+            "src/Gluon.Client/Gluon.Client.csproj"
             "tests/Gluon.Tests/Gluon.Tests.fsproj"
             "samples/SampleApp/SampleApp.fsproj"
-            "samples/SampleSPA/SampleSPA.proj"
+            "samples/SampleSPA/SampleSPA.csproj"
             "samples/WebApp/WebApp.csproj"
         ]
     for projFile in projects do
