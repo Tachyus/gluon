@@ -25,7 +25,7 @@ type RemoteAttribute() =
 
     /// Preferred path for the HTTP convention.
     /// Example: "/MyController/MyMethod".
-    /// If null, it is inferred from method and enclosnig class name.
+    /// If null, it is inferred from method and enclosing class name.
     member val Path : string = null with get, set
 
     /// Preferred HTTP method or verb.
