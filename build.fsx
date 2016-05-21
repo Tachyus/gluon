@@ -60,6 +60,45 @@ let gitName = "gluon"
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/Tachyus"
 
 // --------------------------------------------------------------------------------------
+// npm helpers
+// --------------------------------------------------------------------------------------
+
+let getProgramFiles() =
+    seq {
+        match Environment.Is64BitOperatingSystem, Environment.Is64BitProcess with
+        | true, true ->
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles // C:\Program Files
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFilesX86 // C:\Program Files (x86)
+        | true, false ->
+            yield Environment.GetEnvironmentVariable "ProgramW6432" // C:\Program Files
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles // C:\Program Files (x86)
+        | false, _ ->
+            yield Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
+    }
+
+let tryFindApp (app: string) (dirs: string seq) =
+    dirs |> Seq.map (fun dir -> dir </> app) |> Seq.tryFind File.Exists
+
+let npm workingDir task =
+    let fileName, arguments =
+        let programFiles = getProgramFiles() |> List.ofSeq
+        let subdirs = programFiles |> Seq.map (fun dir -> dir </> "nodejs")
+        match tryFindApp "node.exe" subdirs with
+        | Some path ->
+            let npmPath = (Path.GetDirectoryName path) </> @"node_modules/npm/bin/npm-cli.js"
+            path, sprintf "\"%s\" %s" npmPath task
+        | None -> "npm", task // try to run npm directly
+    let result =
+        ExecProcess (fun p ->
+            p.FileName <- fileName
+            p.Arguments <- arguments
+            if not (String.IsNullOrEmpty workingDir) then
+                p.WorkingDirectory <- p.WorkingDirectory @@ workingDir
+            logfn "%s> \"%s\" %s" p.WorkingDirectory p.FileName p.Arguments
+        ) (TimeSpan.FromMinutes 5.)
+    if result <> 0 then failwithf "npm %s failed" task
+
+// --------------------------------------------------------------------------------------
 // The rest of the file includes standard build steps 
 // --------------------------------------------------------------------------------------
 
@@ -102,6 +141,8 @@ Target "BuildVersion" <| fun _ ->
 
 Target "Clean" <| fun _ ->
     CleanDirs ["bin"; "temp"]
+    npm "src/Gluon.Client" "run clean"
+    DeleteDir "src/Gluon.Client/node_modules"
 
 Target "CleanDocs" <| fun _ ->
     CleanDirs ["docs/output"]
@@ -109,16 +150,12 @@ Target "CleanDocs" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
-Target "Build" <| fun _ ->
+Target "Compile" <| fun _ ->
     let projects =
         [
             "src/Gluon/Gluon.fsproj"
             "src/Gluon.CLI/Gluon.CLI.fsproj"
-            "src/Gluon.Client/Gluon.Client.csproj"
             "tests/Gluon.Tests/Gluon.Tests.fsproj"
-            "samples/SampleApp/SampleApp.fsproj"
-            "samples/SampleSPA/SampleSPA.csproj"
-            "samples/WebApp/WebApp.csproj"
         ]
     for projFile in projects do
         build (fun x ->
@@ -128,8 +165,14 @@ Target "Build" <| fun _ ->
                       "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
                       "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
                 Targets =
-                    [ "Rebuild" ]
+                    [ "Build" ]
                 Verbosity = Some Quiet }) projFile
+
+Target "Npm" <| fun _ ->
+    npm "src/Gluon.Client" "install"
+    npm "src/Gluon.Client" "run build"
+
+Target "Build" DoNothing
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
@@ -159,10 +202,6 @@ Target "SourceLink" <| fun _ ->
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
-
-let referenceDependencies dependencies =
-    let packagesDir = __SOURCE_DIRECTORY__  </> "packages"
-    [ for dependency in dependencies -> dependency, GetPackageVersion packagesDir dependency ]
 
 Target "NuGet" <| fun _ ->
     Paket.Pack <| fun x ->
@@ -247,17 +286,18 @@ Target "BuildPackage" DoNothing
 
 Target "All" DoNothing
 
-"Clean"
+"AssemblyInfo"
   =?> ("BuildVersion", isAppVeyorBuild)
-  ==> "AssemblyInfo"
-  ==> "Build"
+  ==> "Compile"
+  ==> "Npm"
+  ==> "Build" 
   ==> "RunTests"
   ==> "All"
   =?> ("GenerateReferenceDocs",isLocalBuild && not isMono)
   =?> ("GenerateDocs",isLocalBuild && not isMono)
   =?> ("ReleaseDocs",isLocalBuild && not isMono)
 
-"All" 
+"All"
 #if MONO
 #else
   =?> ("SourceLink", Pdbstr.tryFind().IsSome )
