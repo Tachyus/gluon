@@ -10,7 +10,6 @@
   },
   "scripts": {
     "clean": "node_modules/.bin/rimraf ./dist && mkdir dist",
-    "postinstall": "npm dedupe",
     "tsc": "node_modules/.bin/tsc -p ./",
     "minify": "node_modules/.bin/uglifyjs dist/Gluon.js -o dist/Gluon.min.js --source-map dist/Gluon.min.js.map -p 1 -m",
     "prebuild": "npm run clean",
