@@ -98,6 +98,18 @@ let npm workingDir task =
         ) (TimeSpan.FromMinutes 5.)
     if result <> 0 then failwithf "npm %s failed" task
 
+let msBuildRelease target projects =
+    for projFile in projects do
+        build (fun x ->
+            { x with
+                Properties =
+                    [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
+                      "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
+                      "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
+                Targets =
+                    [ target ]
+                Verbosity = Some Quiet }) projFile
+
 // --------------------------------------------------------------------------------------
 // The rest of the file includes standard build steps 
 // --------------------------------------------------------------------------------------
@@ -141,8 +153,13 @@ Target "BuildVersion" <| fun _ ->
 
 Target "Clean" <| fun _ ->
     CleanDirs ["bin"; "temp"]
-    npm "src/Gluon.Client" "run clean"
-    DeleteDir "src/Gluon.Client/node_modules"
+    !! "src/Gluon/Gluon.fsproj"
+    ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
+    ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
+    |> msBuildRelease "Clean"
+    if (Directory.Exists "src/Gluon.Client/node_modules") then
+        npm "src/Gluon.Client" "run clean"
+        DeleteDir "src/Gluon.Client/node_modules"
 
 Target "CleanDocs" <| fun _ ->
     CleanDirs ["docs/output"]
@@ -151,22 +168,10 @@ Target "CleanDocs" <| fun _ ->
 // Build library & test project
 
 Target "Compile" <| fun _ ->
-    let projects =
-        [
-            "src/Gluon/Gluon.fsproj"
-            "src/Gluon.CLI/Gluon.CLI.fsproj"
-            "tests/Gluon.Tests/Gluon.Tests.fsproj"
-        ]
-    for projFile in projects do
-        build (fun x ->
-            { x with
-                Properties =
-                    [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
-                      "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
-                      "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
-                Targets =
-                    [ "Build" ]
-                Verbosity = Some Quiet }) projFile
+    !! "src/Gluon/Gluon.fsproj"
+    ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
+    ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
+    |> msBuildRelease "Build"
 
 Target "Npm" <| fun _ ->
     npm "src/Gluon.Client" "install"
