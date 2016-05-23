@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <JavaScriptFiles Include="$(GluonDist)/Gluon.js" />
-    <JavaScriptFiles Include="../SampleSPA/bin/SampleSPA/App.js" />
+    <JavaScriptFiles Include="../SampleSPA/bin/SampleSPA/bin/App.js" />
     <JavaScriptFiles Include="../SampleSPA/bin/SampleApp/bin/Generated.js" />
     <JavaScriptFiles Include="../../packages/jQuery/Content/Scripts/jquery-2.1.4.js" />
   </ItemGroup>
