@@ -18,6 +18,7 @@ src/*/Properties/AssemblyInfo.*
 src/*/bin
 src/*/obj
 src/Gluon.Client/dist/
+src/*/node_modules/
 temp/
 tests/*/bin
 tests/*/obj

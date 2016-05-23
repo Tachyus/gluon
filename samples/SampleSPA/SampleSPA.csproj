@@ -54,4 +54,16 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CoreBuildDependsOn>
+    </CoreBuildDependsOn>
+  </PropertyGroup>
 </Project>
