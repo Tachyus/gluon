@@ -146,11 +146,14 @@ Target "Build" DoNothing
 // Run the unit tests using test runner
 
 Target "RunTests" <| fun _ ->
-    !! testAssemblies
-    |> xUnit2 (fun p ->
-        { p with
-            TimeOut = TimeSpan.FromMinutes 20.
-            XmlOutputPath = Some "bin/TestResults.xml" })
+    try
+        !! testAssemblies
+        |> xUnit2 (fun p ->
+            { p with
+                TimeOut = TimeSpan.FromMinutes 20.
+                XmlOutputPath = Some "bin/TestResults.xml" })
+    with e ->
+        printfn "%O" e
 
 #if MONO
 #else
