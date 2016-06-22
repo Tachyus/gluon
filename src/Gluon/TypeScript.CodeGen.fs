@@ -183,7 +183,12 @@ let typeDef def =
 
 let builderLambda (name: string) (n: int) =
     let alphabet = "abcdefghijklmnopqrstuvwxyz"
-    let letter i = string alphabet.[i]
+    let letter i =
+        let o = i % alphabet.Length
+        let n = (i - o) / alphabet.Length
+        match n with
+        | 0 -> string alphabet.[o]
+        | n -> sprintf "%c%i" alphabet.[o] n
     let letters = [for i in 0 .. n - 1 -> letter i]
     S.SimpleLambda (letters, S.New (S.Var name, [for l in letters -> S.Var l]))
 
