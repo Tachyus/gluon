@@ -16,8 +16,6 @@ NUGET
       FSharpVSPowerTools.Core (1.9)
     FSharpVSPowerTools.Core (1.9)
       FSharp.Compiler.Service (>= 0.0.90)
-    jQuery (2.1.4)
-    jquery.TypeScript.DefinitelyTyped (3.0.3)
     Microsoft.Owin (3.0.1)
       Owin (>= 1.0)
     Microsoft.Owin.Diagnostics (3.0.1)

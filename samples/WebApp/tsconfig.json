@@ -1,15 +1,16 @@
 ﻿{
     "compilerOptions": {
-        "declaration": true,
+        "declaration": false,
         "module": "umd",
         "target": "es5",
         "noImplicitAny": false,
-        "outDir": "./dist",
         "removeComments": true,
         "sourceMap": true
     },
     "files": [
-        "typings/index.d.ts",
-        "Gluon.ts"
+        "Scripts/typings/index.d.ts",
+        "Scripts/typings/Gluon.d.ts",
+        "Scripts/Generated.ts",
+        "Scripts/App.ts"
     ]
 }

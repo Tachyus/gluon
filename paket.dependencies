@@ -21,8 +21,6 @@ nuget Microsoft.TypeScript.MSBuild ~> 1.8.4
 nuget Newtonsoft.Json 6.0.8
 nuget Owin 1.0
 nuget SourceLink.Fake
-nuget jQuery 2.1.4
-nuget jquery.TypeScript.DefinitelyTyped = 3.0.3
 nuget xunit < 2
 nuget xunit.runner.console
 nuget xunit.runner.visualstudio version_in_path: true
