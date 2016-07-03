@@ -4,22 +4,20 @@
   "description": "Gluon sample web application",
   "main": "Scripts/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-
     "clean-server": "mono ../../packages/FAKE/tools/FAKE.exe build.fsx Clean",
     "clean-webapp": "node_modules/.bin/rimraf ./bin && mkdir bin",
     "clean": "npm run clean-server && npm run clean-webapp",
 
     "build-server": "mono ../../packages/FAKE/tools/FAKE.exe build.fsx Build",
-    "generate-client": "mono '../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.dll'",
+    "generate-client": "mono '../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.exe'",
     "gluon": "npm run build-server && npm run generate-client",
-
     "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js Scripts",
     "copy-gluon": "cp ../../src/Gluon.Client/dist/Gluon.min.js Scripts && cp ../../src/Gluon.Client/dist/Gluon.d.ts Scripts/typings",
     "prebuild": "typings install && npm run copy-jquery && npm run copy-gluon && npm run gluon",
-
     "compile": "node_modules/.bin/tsc -p ./",
-    "build": "npm run compile"
+    "build": "npm run compile",
+    "start": "mono bin/SampleApp.exe",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
