@@ -4,20 +4,18 @@
 open System
 open Fake
 
-Target "Clean" <| fun _ ->
+let msbuild target projects =
     try
-        CleanDirs ["bin"]
-        !! "../SampleApp/SampleApp.fsproj"
-        |> MSBuildReleaseExt "bin" ["Verbosity","Quiet"] "Clean" |> ignore
+        MSBuildReleaseExt "bin" ["Verbosity","Quiet"] target projects |> ignore
     finally
         killMSBuild()
 
+Target "Clean" <| fun _ ->
+    CleanDirs ["bin"]
+    msbuild "Clean" !!"../SampleApp/SampleApp.fsproj"
+
 Target "Build" <| fun _ ->
-    try
-        !! "../SampleApp/SampleApp.fsproj"
-        |> MSBuildReleaseExt "bin" ["Verbosity","Quiet"] "Build" |> ignore
-    finally
-        killMSBuild()
+    msbuild "Build" !!"../SampleApp/SampleApp.fsproj"
 
 Target "Help" <| fun _ ->
     printfn "------------------------------"
