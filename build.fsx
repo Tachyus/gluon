@@ -131,10 +131,13 @@ Target "CleanDocs" <| fun _ ->
 // Build library & test project
 
 Target "Compile" <| fun _ ->
-    !! "src/Gluon/Gluon.fsproj"
-    ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
-    ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
-    |> msBuildRelease "Build"
+    try
+        !! "src/Gluon/Gluon.fsproj"
+        ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
+        ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
+        |> msBuildRelease "Build"
+    finally
+        killMSBuild()
 
 Target "Npm" <| fun _ ->
     Node.npm "src/Gluon.Client" "install"
