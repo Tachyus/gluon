@@ -32,8 +32,6 @@ let buildApp staticFilesLocation : WebPart =
 [<EntryPoint>]
 let main argv =
 
-    printfn "w00t"
-
     let port, staticFilesLocation =
         match argv with
         | [| port; path |] -> uint16 port, Some path
@@ -50,3 +48,4 @@ let main argv =
     startWebServer config app
 
     0
+
