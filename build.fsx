@@ -61,10 +61,16 @@ let gitName = "gluon"
 
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/Tachyus"
 
+let projects =
+    !! "src/Gluon/Gluon.fsproj"
+    ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
+    ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
+
 let msBuildRelease target projects =
     for projFile in projects do
         build (fun x ->
             { x with
+                NodeReuse = false
                 Properties =
                     [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
                       "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
@@ -116,10 +122,7 @@ Target "BuildVersion" <| fun _ ->
 
 Target "Clean" <| fun _ ->
     CleanDirs ["bin"; "temp"]
-    !! "src/Gluon/Gluon.fsproj"
-    ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
-    ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
-    |> msBuildRelease "Clean"
+    projects |> msBuildRelease "Clean"
     if (Directory.Exists "src/Gluon.Client/node_modules") then
         Node.npm "src/Gluon.Client" "run clean"
         DeleteDir "src/Gluon.Client/node_modules"
@@ -131,13 +134,7 @@ Target "CleanDocs" <| fun _ ->
 // Build library & test project
 
 Target "Compile" <| fun _ ->
-    try
-        !! "src/Gluon/Gluon.fsproj"
-        ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
-        ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
-        |> msBuildRelease "Build"
-    finally
-        killMSBuild()
+    projects |> msBuildRelease "Build"
 
 Target "Npm" <| fun _ ->
     Node.npm "src/Gluon.Client" "install"

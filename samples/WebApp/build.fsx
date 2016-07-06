@@ -5,10 +5,17 @@ open System
 open Fake
 
 let msbuild target projects =
-    try
-        MSBuildReleaseExt "bin" ["Verbosity","Quiet"] target projects |> ignore
-    finally
-        killMSBuild()
+    for projFile in projects do
+        build (fun x ->
+            { x with
+                NodeReuse = false
+                Properties =
+                    [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
+                      "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
+                      "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
+                Targets =
+                    [ target ]
+                Verbosity = Some Quiet }) projFile
 
 Target "Clean" <| fun _ ->
     CleanDirs ["bin"]
