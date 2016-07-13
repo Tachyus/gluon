@@ -5,16 +5,17 @@ open System
 open Fake
 
 let msbuild target projects =
+    let properties =
+        [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
+          "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
+          "Configuration", environVarOrDefault "Build.Configuration" "Release"
+          "OutputPath",    environVarOrDefault "Build.OutputPath"    "bin" |> FullName |> trimSeparator ]
     for projFile in projects do
         build (fun x ->
             { x with
                 NodeReuse = false
-                Properties =
-                    [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
-                      "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
-                      "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
-                Targets =
-                    [ target ]
+                Properties = properties
+                Targets = [ target ]
                 Verbosity = Some Quiet }) projFile
 
 Target "Clean" <| fun _ ->
