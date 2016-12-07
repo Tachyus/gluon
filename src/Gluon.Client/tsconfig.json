@@ -9,7 +9,9 @@
         "sourceMap": true
     },
     "files": [
-        "typings/index.d.ts",
         "Gluon.ts"
+    ],
+    "typeRoots": [
+        "./node_modules/@types"
     ]
 }

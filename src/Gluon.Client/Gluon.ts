@@ -1,4 +1,4 @@
-// Copyright 2015 Tachyus Corp.
+// Copyright 2015-2016 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -12,298 +12,230 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
+import * as $ from "jquery";
+
 // <BOOTSTRAP-DEFS>
 module Gluon.Schema {
   
-    export class Delete {
-      
-        constructor() { }
-         tag(): string { return "Delete";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
+    class HttpMethodBase {
+        toJson() {
+            return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
         }
     }
-    export class Get {
-      
-        constructor() { }
-         tag(): string { return "Get";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
+    export class Delete extends HttpMethodBase {
+        tag: "Delete";
     }
-    export class Post {
-      
-        constructor() { }
-         tag(): string { return "Post";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
+    export class Get extends HttpMethodBase {
+        tag: "Get";
     }
-    export class Put {
-      
-        constructor() { }
-         tag(): string { return "Put";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
+    export class Post extends HttpMethodBase {
+        tag: "Post";
+    }
+    export class Put extends HttpMethodBase {
+        tag: "Put";
     }
     export type HttpMethod = Delete | Get | Post | Put;
+
     export class HttpCallingConvention {
-      
-        constructor(public Item1: Gluon.Schema.HttpMethod,
-        public path: string) { }
-         tag(): string { return "HttpCallingConvention";}
-         toJSON(): any {
-          
+        tag: "HttpCallingConvention";
+        constructor(public Item1: Gluon.Schema.HttpMethod, public path: string) { }
+        toJson() {
             return Gluon.Internals.toJSON("Gluon.Schema.CallingConvention", this);
         }
     }
     export type CallingConvention = HttpCallingConvention;
-    export class ArrayType {
-      
-        constructor(public Item: Gluon.Schema.DataType) { }
-         tag(): string { return "ArrayType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+
+    class DataTypeBase {
+        toJson() {
+            return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
         }
     }
-    export class BooleanType {
-      
-        constructor() { }
-         tag(): string { return "BooleanType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+    export class ArrayType extends DataTypeBase {
+        tag: "ArrayType";
+        constructor(public Item: Gluon.Schema.DataType) {
+            super();
         }
     }
-    export class BytesType {
-      
-        constructor() { }
-         tag(): string { return "BytesType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+    export class BooleanType extends DataTypeBase {
+        tag: "BooleanType";
+    }
+    export class BytesType extends DataTypeBase {
+        tag: "BytesType";
+    }
+    export class DateTimeType extends DataTypeBase {
+        tag: "DateTimeType";
+    }
+    export class DoubleType extends DataTypeBase {
+        tag: "DoubleType";
+    }
+    export class IntType extends DataTypeBase {
+        tag: "IntType";
+    }
+    export class JsonType extends DataTypeBase {
+        tag: "JsonType";
+    }
+    export class ListType extends DataTypeBase {
+        tag: "ListType";
+        constructor(public Item: Gluon.Schema.DataType) {
+            super();
         }
     }
-    export class DateTimeType {
-      
-        constructor() { }
-         tag(): string { return "DateTimeType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+    export class OptionType extends DataTypeBase {
+        tag: "OptionType";
+        constructor(public Item: Gluon.Schema.DataType) {
+            super();
         }
     }
-    export class DoubleType {
-      
-        constructor() { }
-         tag(): string { return "DoubleType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+    export class SequenceType extends DataTypeBase {
+        tag: "SequenceType";
+        constructor(public Item: Gluon.Schema.DataType) {
+            super();
         }
     }
-    export class IntType {
-      
-        constructor() { }
-         tag(): string { return "IntType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+    export class StringDictType extends DataTypeBase {
+        tag: "StringDictType";
+        constructor(public Item: Gluon.Schema.DataType) {
+            super();
         }
     }
-    export class JsonType {
-      
-        constructor() { }
-         tag(): string { return "JsonType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+    export class StringType extends DataTypeBase {
+        tag: "StringType";
+    }
+    export class TupleType extends DataTypeBase {
+        tag: "TupleType";
+        constructor(public Item: Gluon.Schema.DataType []) {
+            super();
         }
     }
-    export class ListType {
-      
-        constructor(public Item: Gluon.Schema.DataType) { }
-         tag(): string { return "ListType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
-        }
-    }
-    export class OptionType {
-      
-        constructor(public Item: Gluon.Schema.DataType) { }
-         tag(): string { return "OptionType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
-        }
-    }
-    export class SequenceType {
-      
-        constructor(public Item: Gluon.Schema.DataType) { }
-         tag(): string { return "SequenceType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
-        }
-    }
-    export class StringDictType {
-      
-        constructor(public Item: Gluon.Schema.DataType) { }
-         tag(): string { return "StringDictType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
-        }
-    }
-    export class StringType {
-      
-        constructor() { }
-         tag(): string { return "StringType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
-        }
-    }
-    export class TupleType {
-      
-        constructor(public Item: Gluon.Schema.DataType []) { }
-         tag(): string { return "TupleType";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
-        }
-    }
-    export class TypeReference {
-      
-        constructor(public Item: string) { }
-         tag(): string { return "TypeReference";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
+    export class TypeReference extends DataTypeBase {
+        tag: "TypeReference";
+        constructor(public Item: string) {
+            super();
         }
     }
     export type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
+
     export class Parameter {
       
-        constructor(public ParameterName: string,
-        public ParameterType: Gluon.Schema.DataType) { }
+        constructor(public ParameterName: string, public ParameterType: Gluon.Schema.DataType) { }
         static fromJSON(json: any): Parameter {
            return Gluon.Internals.fromJSON("Gluon.Schema.Parameter", json);
         }
-         tag(): string { return "Parameter";}
-         toJSON(): any {
+        tag: "Parameter";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Parameter", this);
         }
     }
     export class Method {
       
-        constructor(public CallingConvention: Gluon.Schema.CallingConvention,
-        public MethodName: string,
-        public MethodParameters: Gluon.Schema.Parameter [],
-        public MethodReturnType: Gluon.Option<Gluon.Schema.DataType>) { }
+        constructor(public CallingConvention: Gluon.Schema.CallingConvention, public MethodName: string, public MethodParameters: Gluon.Schema.Parameter [], public MethodReturnType: Gluon.Option<Gluon.Schema.DataType>) { }
         static fromJSON(json: any): Method {
            return Gluon.Internals.fromJSON("Gluon.Schema.Method", json);
         }
-         tag(): string { return "Method";}
-         toJSON(): any {
+        tag: "Method";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Method", this);
         }
     }
     export class EnumCase {
       
-        constructor(public EnumCaseName: string,
-        public EnumCaseValue: number) { }
+        constructor(public EnumCaseName: string, public EnumCaseValue: number) { }
         static fromJSON(json: any): EnumCase {
            return Gluon.Internals.fromJSON("Gluon.Schema.EnumCase", json);
         }
-         tag(): string { return "EnumCase";}
-         toJSON(): any {
+        tag: "EnumCase";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.EnumCase", this);
         }
     }
     export class Enum {
       
-        constructor(public EnumName: string,
-        public EnumCases: Gluon.Schema.EnumCase []) { }
+        constructor(public EnumName: string, public EnumCases: Gluon.Schema.EnumCase []) { }
         static fromJSON(json: any): Enum {
            return Gluon.Internals.fromJSON("Gluon.Schema.Enum", json);
         }
-         tag(): string { return "Enum";}
-         toJSON(): any {
+        tag: "Enum";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Enum", this);
         }
     }
     export class Field {
       
-        constructor(public FieldName: string,
-        public FieldType: Gluon.Schema.DataType) { }
+        constructor(public FieldName: string, public FieldType: Gluon.Schema.DataType) { }
         static fromJSON(json: any): Field {
            return Gluon.Internals.fromJSON("Gluon.Schema.Field", json);
         }
-         tag(): string { return "Field";}
-         toJSON(): any {
+        tag: "Field";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Field", this);
         }
     }
     export class Record {
       
-        constructor(public RecordName: string,
-        public RecordFields: Gluon.Schema.Field []) { }
+        constructor(public RecordName: string, public RecordFields: Gluon.Schema.Field []) { }
         static fromJSON(json: any): Record {
            return Gluon.Internals.fromJSON("Gluon.Schema.Record", json);
         }
-         tag(): string { return "Record";}
-         toJSON(): any {
+        tag: "Record";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Record", this);
         }
     }
     export class UnionCase {
       
-        constructor(public CaseName: string,
-        public CaseFields: Gluon.Schema.Field []) { }
+        constructor(public CaseName: string, public CaseFields: Gluon.Schema.Field []) { }
         static fromJSON(json: any): UnionCase {
            return Gluon.Internals.fromJSON("Gluon.Schema.UnionCase", json);
         }
-         tag(): string { return "UnionCase";}
-         toJSON(): any {
+        tag: "UnionCase";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.UnionCase", this);
         }
     }
     export class Union {
       
-        constructor(public UnionName: string,
-        public UnionCases: Gluon.Schema.UnionCase []) { }
+        constructor(public UnionName: string, public UnionCases: Gluon.Schema.UnionCase []) { }
         static fromJSON(json: any): Union {
            return Gluon.Internals.fromJSON("Gluon.Schema.Union", json);
         }
-         tag(): string { return "Union";}
-         toJSON(): any {
+        tag: "Union";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Union", this);
         }
     }
     export class DefineEnum {
       
         constructor(public Item: Gluon.Schema.Enum) { }
-         tag(): string { return "DefineEnum";}
-         toJSON(): any {
+        tag: "DefineEnum";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
         }
     }
     export class DefineRecord {
       
         constructor(public Item: Gluon.Schema.Record) { }
-         tag(): string { return "DefineRecord";}
-         toJSON(): any {
+        tag: "DefineRecord";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
         }
     }
     export class DefineUnion {
       
         constructor(public Item: Gluon.Schema.Union) { }
-         tag(): string { return "DefineUnion";}
-         toJSON(): any {
+        tag: "DefineUnion";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
         }
     }
     export type TypeDefinition = DefineEnum | DefineRecord | DefineUnion;
     export class Service {
       
-        constructor(public Methods: Gluon.Schema.Method [],
-        public TypeDefinitions: Gluon.Schema.TypeDefinition []) { }
+        constructor(public Methods: Gluon.Schema.Method [], public TypeDefinitions: Gluon.Schema.TypeDefinition []) { }
         static fromJSON(json: any): Service {
            return Gluon.Internals.fromJSON("Gluon.Schema.Service", json);
         }
-         tag(): string { return "Service";}
-         toJSON(): any {
+        tag: "Service";
+        toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Service", this);
         }
     }
@@ -317,12 +249,12 @@ module Gluon.Schema {
     cont: {
       Delete: (() => T), Get: (() => T), Post: (() => T), Put: (() => T)
     }): T {
-      
-        if (value instanceof Delete) { return cont.Delete();}
-        else if (value instanceof Get) { return cont.Get();}
-        else if (value instanceof Post) { return cont.Post();}
-        else if (value instanceof Put) { return cont.Put();} else {
-           throw new Error("match failed");
+        switch (value.tag) {
+            case "Delete": return cont.Delete();
+            case "Get": return cont.Get();
+            case "Post": return cont.Post();
+            case "Put": return cont.Put();
+            default: throw new Error("match failed");
         }
     }
 }
@@ -336,10 +268,12 @@ module Gluon.Schema {
       HttpCallingConvention: ((Item1:  Gluon.Schema.HttpMethod,
       path:  string) => T)
     }): T {
-      
-        if (value instanceof HttpCallingConvention) {
-           return cont.HttpCallingConvention(value.Item1, value.path);
-        } else { throw new Error("match failed");}
+        switch (value.tag) {
+            case "HttpCallingConvention":
+                return cont.HttpCallingConvention(value.Item1, value.path);
+            default:
+                throw new Error("match failed");
+        }
     }
 }
  module Gluon.Schema.DataType {
@@ -364,33 +298,23 @@ module Gluon.Schema {
       TupleType: ((Item:  Gluon.Schema.DataType []) => T),
       TypeReference: ((Item:  string) => T)
     }): T {
-      
-        if (value instanceof ArrayType) { return cont.ArrayType(value.Item);}
-        else if (value instanceof BooleanType) { return cont.BooleanType();}
-        else if (value instanceof BytesType) { return cont.BytesType();}
-        else if (value instanceof DateTimeType) { return cont.DateTimeType();}
-        else if (value instanceof DoubleType) { return cont.DoubleType();}
-        else if (value instanceof IntType) { return cont.IntType();}
-        else if (value instanceof JsonType) { return cont.JsonType();}
-        else if (value instanceof ListType) {
-           return cont.ListType(value.Item);
+        switch (value.tag) {
+            case "ArrayType": return cont.ArrayType(value.Item);
+            case "BooleanType": return cont.BooleanType();
+            case "BytesType": return cont.BytesType();
+            case "DateTimeType": return cont.DateTimeType();
+            case "DoubleType": return cont.DoubleType();
+            case "IntType": return cont.IntType();
+            case "JsonType": return cont.JsonType();
+            case "ListType": return cont.ListType(value.Item);
+            case "OptionType": return cont.OptionType(value.Item);
+            case "SequenceType": return cont.SequenceType(value.Item);
+            case "StringDictType": return cont.StringDictType(value.Item);
+            case "StringType": return cont.StringType();
+            case "TupleType": return cont.TupleType(value.Item);
+            case "TypeReference": return cont.TypeReference(value.Item);
+            default: throw new Error("match failed");
         }
-        else if (value instanceof OptionType) {
-           return cont.OptionType(value.Item);
-        }
-        else if (value instanceof SequenceType) {
-           return cont.SequenceType(value.Item);
-        }
-        else if (value instanceof StringDictType) {
-           return cont.StringDictType(value.Item);
-        }
-        else if (value instanceof StringType) { return cont.StringType();}
-        else if (value instanceof TupleType) {
-           return cont.TupleType(value.Item);
-        }
-        else if (value instanceof TypeReference) {
-           return cont.TypeReference(value.Item);
-        } else { throw new Error("match failed");}
     }
 }
  module Gluon.Schema.TypeDefinition {
@@ -666,7 +590,7 @@ module Gluon {
     // Serialization ----------------------------------------------------------
 
     interface SerializerFactory {
-        getSerializer(dataType: S.DataType): Serializer<any>;
+        getSerializer<T>(dataType: S.DataType): Serializer<T>;
     }
 
     interface Serializer<T> {
@@ -675,16 +599,12 @@ module Gluon {
         fromJSON(json: any): T;
     }
 
-    function idSerializer(): Serializer<any> {
-        return {
-            init: f => { },
-            toJSON: v => v,
-            fromJSON: v => v
-        };
-    }
-
     var booleanSerializer: Serializer<boolean> =
-        idSerializer();
+        {
+            init: f => { },
+            toJSON: x => x,
+            fromJSON: x => x
+        };
 
     function serializeNumber(n: number): any {
         if (isFinite(n)) {
@@ -759,7 +679,11 @@ module Gluon {
         };
 
     var stringSerializer: Serializer<string> =
-        idSerializer();
+        {
+            init: f => { },
+            toJSON: x => x,
+            fromJSON: x => x
+        };
 
     class ArraySerializer {
         private inner: Serializer<any>;
@@ -1012,7 +936,7 @@ module Gluon {
         }
 
         toJSON(value: any): any {
-            var tag: string = value.tag();
+            var tag: string = value.tag;
             var uCase = this.findCase(tag);
             var res = new Array(uCase.fields.length + 1);
             res[0] = tag;
@@ -1088,7 +1012,7 @@ module Gluon {
                 }
             }
             vis.visitDataType = dt => {
-                if (!(dt instanceof S.TypeReference)) {
+                if (dt.tag !== "TypeReference") {
                     add(dt);
                 }
             };
@@ -1125,17 +1049,13 @@ module Gluon {
         /** URL prefix to direct method calls to. */
         public prefix: string;
 
-        /** HTTP client to use, defaults to JQuery. */
-        public httpClient: IHttpClient;
-
         /** Constructs a client, with an optional URL prefix. */
-        constructor(prefix?: string) {
+        constructor(public httpClient: IHttpClient = new JQueryClient(), prefix?: string) {
             if (!prefix) {
                 this.prefix = "/gluon-api";
             } else {
                 this.prefix = prefix;
             }
-            this.httpClient = new JQueryClient();
         }
     }
 
@@ -1145,29 +1065,29 @@ module Gluon {
     }
 
     export interface IHttpClient {
-        httpGet(url: string, queryParams: any, parseJsonResponse: (json: any) => any): JQueryPromise<any>;
-        httpCall(httpMethod: string, url: string, jsonRequest: string, parseJsonResponse: (json: any) => any): JQueryPromise<any>;
+        httpGet(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => any): Promise<any>;
+        httpCall(httpMethod: string, url: string, jsonRequest: string, parseJsonResponse: (json: any) => any): Promise<any>;
     }
 
     class JQueryClient implements IHttpClient {
         constructor() { }
 
         httpGet(url, queryParams, parseJsonResponse) {
-            return jQuery.ajax({
+            return Promise.resolve(jQuery.ajax({
                 "url": url,
                 "type": "get",
                 "data": queryParams
-            }).then(x => parseJsonResponse(x));
+            })).then(x => parseJsonResponse(x));
         }
 
         httpCall(httpMethod, url, jsonRequest, parseJsonResponse) {
-            var ajaxParams: any = { "url": url, "type": httpMethod };
+            let ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
             if (jsonRequest !== null) {
                 ajaxParams.data = jsonRequest;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            return jQuery.ajax(ajaxParams).then(x => parseJsonResponse(x));
+            return Promise.resolve(jQuery.ajax(ajaxParams)).then(x => parseJsonResponse(x));
         }
     }
 
@@ -1218,23 +1138,24 @@ module Gluon {
             return JSON.stringify(proxy.jointParametersSerializer.toJSON(data));
         }
 
-        export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): JQueryPromise<any> {
+        export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): Promise<any> {
             function parseJsonResponse(resp: any) {
                 if (proxy.doesReturn) {
-                    var out = proxy.returnTypeSerializer.fromJSON(resp);
+                    const out = proxy.returnTypeSerializer.fromJSON(resp);
                     return out;
                 } else {
                     return resp;
                 }
             }
-            var url = buildUrl(cli, proxy.innerMethod);
-            var httpMethod = verb(proxy.innerMethod.CallingConvention);
-            if (httpMethod instanceof S.Get) {
-                var queryParams = buildQueryParams(cli, proxy, args);
-                return cli.httpClient.httpGet(url, queryParams, parseJsonResponse);
-            } else {
-                var jsonRequest = buildJsonRequest(cli, proxy, args);
-                return cli.httpClient.httpCall(verbName(httpMethod), url, jsonRequest, parseJsonResponse);
+            const url = buildUrl(cli, proxy.innerMethod);
+            const httpMethod = verb(proxy.innerMethod.CallingConvention);
+            switch (httpMethod.tag) {
+                case "Get":
+                    const queryParams = buildQueryParams(cli, proxy, args);
+                    return cli.httpClient.httpGet(url, queryParams, parseJsonResponse);
+                default:
+                    const jsonRequest = buildJsonRequest(cli, proxy, args);
+                    return cli.httpClient.httpCall(verbName(httpMethod), url, jsonRequest, parseJsonResponse);
             }
         }
 
