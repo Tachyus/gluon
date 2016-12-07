@@ -16,25 +16,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "^", "^", "{F8613B10-030D-42
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{55836903-C800-4B5A-B20D-23E9C25D5131}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon", "src\Gluon\Gluon.fsproj", "{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Gluon", "src\Gluon\Gluon.fsproj", "{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.CLI", "src\Gluon.CLI\Gluon.CLI.fsproj", "{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Gluon.CLI", "src\Gluon.CLI\Gluon.CLI.fsproj", "{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9EE20BDB-FEA9-411E-9311-1DEECD1F02BC}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.Tests", "tests\Gluon.Tests\Gluon.Tests.fsproj", "{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Gluon.Tests", "tests\Gluon.Tests\Gluon.Tests.fsproj", "{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{603A6B73-7725-48F8-870D-50685AC95C96}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SampleApp", "samples\SampleApp\SampleApp.fsproj", "{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{72FDBA6E-CE61-4811-9F18-39FAA585B5EA} = {72FDBA6E-CE61-4811-9F18-39FAA585B5EA}
-	EndProjectSection
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "SampleApp", "samples\SampleApp\SampleApp.fsproj", "{F0C775BE-25A2-48F0-BA2F-03A36AAD4DBD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "samples\WebApp\WebApp.csproj", "{D137BEC5-3BD3-421F-94EB-47F6A8A63859}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DBE1B11B-6059-4A36-B46F-9F821FADFB70} = {DBE1B11B-6059-4A36-B46F-9F821FADFB70}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C3DE5E72-8B3E-47FF-9E18-45853B08F0A1}"
 EndProject
@@ -44,11 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{A0F699D3
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gluon.Client", "src\Gluon.Client\Gluon.Client.csproj", "{DDE1011A-6059-4A36-B46F-9F821FADFB70}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSPA", "samples\SampleSPA\SampleSPA.csproj", "{DBE1B11B-6059-4A36-B46F-9F821FADFB70}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DDE1011A-6059-4A36-B46F-9F821FADFB70} = {DDE1011A-6059-4A36-B46F-9F821FADFB70}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,10 +69,6 @@ Global
 		{DDE1011A-6059-4A36-B46F-9F821FADFB70}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{DDE1011A-6059-4A36-B46F-9F821FADFB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDE1011A-6059-4A36-B46F-9F821FADFB70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBE1B11B-6059-4A36-B46F-9F821FADFB70}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{DBE1B11B-6059-4A36-B46F-9F821FADFB70}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{DBE1B11B-6059-4A36-B46F-9F821FADFB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBE1B11B-6059-4A36-B46F-9F821FADFB70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +81,5 @@ Global
 		{D137BEC5-3BD3-421F-94EB-47F6A8A63859} = {603A6B73-7725-48F8-870D-50685AC95C96}
 		{A0F699D3-A4C8-4975-8A77-D06DE7B11D60} = {C3DE5E72-8B3E-47FF-9E18-45853B08F0A1}
 		{DDE1011A-6059-4A36-B46F-9F821FADFB70} = {55836903-C800-4B5A-B20D-23E9C25D5131}
-		{DBE1B11B-6059-4A36-B46F-9F821FADFB70} = {603A6B73-7725-48F8-870D-50685AC95C96}
 	EndGlobalSection
 EndGlobal

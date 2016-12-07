@@ -1,0 +1,41 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "Gluon sample web application",
+  "main": "Scripts/app.js",
+  "scripts": {
+    "clean-server": "mono ../../packages/FAKE/tools/FAKE.exe build.fsx Clean",
+    "clean-webapp": "node_modules/.bin/rimraf ./bin && mkdir bin",
+    "clean": "npm run clean-server && npm run clean-webapp",
+
+    "build-server": "mono ../../packages/FAKE/tools/FAKE.exe build.fsx Build",
+    "generate-client": "mono '../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.exe'",
+    "gluon": "npm run build-server && npm run generate-client",
+    "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js Scripts",
+    "copy-gluon": "cp ../../src/Gluon.Client/dist/Gluon.min.js Scripts && cp ../../src/Gluon.Client/dist/Gluon.d.ts Scripts/typings",
+    "prebuild": "typings install && npm run copy-jquery && npm run copy-gluon && npm run gluon",
+    "compile": "node_modules/.bin/tsc -p ./",
+    "build": "npm run compile",
+    "start": "mono bin/SampleApp.exe",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tachyus/gluon.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Tachyus/gluon/issues"
+  },
+  "homepage": "https://github.com/Tachyus/gluon#readme",
+  "dependencies": {
+    "jquery": "^3.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.5.2",
+    "typescript": "^1.8.10",
+    "typings": "^1.3.1",
+    "uglify-js": "^2.6.4"
+  }
+}

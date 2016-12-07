@@ -44,6 +44,8 @@ Lastly, you need to make sure Gluon added a target to your `fsproj` file to get 
 </Target>
 ```
 
+See sample projects for an example using `Gluon.targets` files to manage these targets.
+
 ## Web Project
 
 Reference a bunch of packages, namely:

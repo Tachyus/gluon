@@ -4,6 +4,8 @@
 #I "packages/FAKE/tools"
 #r "NuGet.Core.dll"
 #r "FakeLib.dll"
+#load "Node.fsx"
+
 open System
 open System.Diagnostics
 open System.IO
@@ -59,6 +61,24 @@ let gitName = "gluon"
 
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/Tachyus"
 
+let projects =
+    !! "src/Gluon/Gluon.fsproj"
+    ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
+    ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
+
+let msBuildRelease target projects =
+    for projFile in projects do
+        build (fun x ->
+            { x with
+                NodeReuse = false
+                Properties =
+                    [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
+                      "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
+                      "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
+                Targets =
+                    [ target ]
+                Verbosity = Some Quiet }) projFile
+
 // --------------------------------------------------------------------------------------
 // The rest of the file includes standard build steps 
 // --------------------------------------------------------------------------------------
@@ -102,6 +122,10 @@ Target "BuildVersion" <| fun _ ->
 
 Target "Clean" <| fun _ ->
     CleanDirs ["bin"; "temp"]
+    projects |> msBuildRelease "Clean"
+    if (Directory.Exists "src/Gluon.Client/node_modules") then
+        Node.npm "src/Gluon.Client" "run clean"
+        DeleteDir "src/Gluon.Client/node_modules"
 
 Target "CleanDocs" <| fun _ ->
     CleanDirs ["docs/output"]
@@ -109,32 +133,20 @@ Target "CleanDocs" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
-Target "Build" <| fun _ ->
-    let projects =
-        [
-            "src/Gluon/Gluon.fsproj"
-            "src/Gluon.CLI/Gluon.CLI.fsproj"
-            "src/Gluon.Client/Gluon.Client.csproj"
-            "tests/Gluon.Tests/Gluon.Tests.fsproj"
-            "samples/SampleApp/SampleApp.fsproj"
-            "samples/SampleSPA/SampleSPA.csproj"
-            "samples/WebApp/WebApp.csproj"
-        ]
-    for projFile in projects do
-        build (fun x ->
-            { x with
-                Properties =
-                    [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
-                      "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
-                      "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
-                Targets =
-                    [ "Rebuild" ]
-                Verbosity = Some Quiet }) projFile
+Target "Compile" <| fun _ ->
+    projects |> msBuildRelease "Build"
+
+Target "Npm" <| fun _ ->
+    Node.npm "src/Gluon.Client" "install"
+    Node.npm "src/Gluon.Client" "run build"
+
+Target "Build" DoNothing
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
 
 Target "RunTests" <| fun _ ->
+    CreateDir "bin"
     !! testAssemblies
     |> xUnit2 (fun p ->
         { p with
@@ -160,11 +172,8 @@ Target "SourceLink" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
-let referenceDependencies dependencies =
-    let packagesDir = __SOURCE_DIRECTORY__  </> "packages"
-    [ for dependency in dependencies -> dependency, GetPackageVersion packagesDir dependency ]
-
 Target "NuGet" <| fun _ ->
+    CreateDir "bin"
     Paket.Pack <| fun x ->
         { x with
             OutputPath = "bin"
@@ -247,17 +256,18 @@ Target "BuildPackage" DoNothing
 
 Target "All" DoNothing
 
-"Clean"
+"AssemblyInfo"
   =?> ("BuildVersion", isAppVeyorBuild)
-  ==> "AssemblyInfo"
-  ==> "Build"
+  ==> "Compile"
+  ==> "Npm"
+  ==> "Build" 
   ==> "RunTests"
   ==> "All"
   =?> ("GenerateReferenceDocs",isLocalBuild && not isMono)
   =?> ("GenerateDocs",isLocalBuild && not isMono)
   =?> ("ReleaseDocs",isLocalBuild && not isMono)
 
-"All" 
+"All"
 #if MONO
 #else
   =?> ("SourceLink", Pdbstr.tryFind().IsSome )
