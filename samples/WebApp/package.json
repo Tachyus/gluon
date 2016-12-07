@@ -31,7 +31,7 @@
   "dependencies": {
     "@types/es6-promise": "0.0.32",
     "@types/jquery": "^2.0.34",
-    "jquery": "^3.0.0"
+    "jquery": "^3.1.1"
   },
   "devDependencies": {
     "rimraf": "^2.5.2",
