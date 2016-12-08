@@ -15,101 +15,63 @@
 // <BOOTSTRAP-DEFS>
 module Gluon.Schema {
   
-    export class HttpMethodBase {
-        toJson() {
-            return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
-    }
-    export class Delete extends HttpMethodBase {
-        tag: "Delete";
-    }
-    export class Get extends HttpMethodBase {
-        tag: "Get";
-    }
-    export class Post extends HttpMethodBase {
-        tag: "Post";
-    }
-    export class Put extends HttpMethodBase {
-        tag: "Put";
-    }
-    export type HttpMethod = Delete | Get | Post | Put;
+    export type HttpMethod = "Delete" | "Get" | "Post" | "Put";
 
-    export class HttpCallingConvention {
+    export interface HttpCallingConvention {
         tag: "HttpCallingConvention";
-        constructor(public Item1: Gluon.Schema.HttpMethod, public path: string) { }
-        toJson() {
-            return Gluon.Internals.toJSON("Gluon.Schema.CallingConvention", this);
-        }
+        Item1: Gluon.Schema.HttpMethod;
+        path: string;
     }
     export type CallingConvention = HttpCallingConvention;
 
-    export class DataTypeBase {
-        toJson() {
-            return Gluon.Internals.toJSON("Gluon.Schema.DataType", this);
-        }
-    }
-    export class ArrayType extends DataTypeBase {
+    export interface ArrayType {
         tag: "ArrayType";
-        constructor(public Item: Gluon.Schema.DataType) {
-            super();
-        }
+        Item: Gluon.Schema.DataType;
     }
-    export class BooleanType extends DataTypeBase {
+    export interface BooleanType {
         tag: "BooleanType";
     }
-    export class BytesType extends DataTypeBase {
+    export interface BytesType {
         tag: "BytesType";
     }
-    export class DateTimeType extends DataTypeBase {
+    export interface DateTimeType {
         tag: "DateTimeType";
     }
-    export class DoubleType extends DataTypeBase {
+    export interface DoubleType {
         tag: "DoubleType";
     }
-    export class IntType extends DataTypeBase {
+    export interface IntType {
         tag: "IntType";
     }
-    export class JsonType extends DataTypeBase {
+    export interface JsonType {
         tag: "JsonType";
     }
-    export class ListType extends DataTypeBase {
+    export interface ListType {
         tag: "ListType";
-        constructor(public Item: Gluon.Schema.DataType) {
-            super();
-        }
+        Item: Gluon.Schema.DataType;
     }
-    export class OptionType extends DataTypeBase {
+    export interface OptionType {
         tag: "OptionType";
-        constructor(public Item: Gluon.Schema.DataType) {
-            super();
-        }
+        Item: Gluon.Schema.DataType;
     }
-    export class SequenceType extends DataTypeBase {
+    export interface SequenceType {
         tag: "SequenceType";
-        constructor(public Item: Gluon.Schema.DataType) {
-            super();
-        }
+        Item: Gluon.Schema.DataType;
     }
-    export class StringDictType extends DataTypeBase {
+    export interface StringDictType {
         tag: "StringDictType";
-        constructor(public Item: Gluon.Schema.DataType) {
-            super();
-        }
+        Item: Gluon.Schema.DataType;
     }
-    export class StringType extends DataTypeBase {
+    export interface StringType {
         tag: "StringType";
     }
-    export class TupleType extends DataTypeBase {
+    export interface TupleType {
         tag: "TupleType";
-        constructor(public Item: Gluon.Schema.DataType []) {
-            super();
-        }
+        Item: Gluon.Schema.DataType[];
     }
-    export class TypeReference extends DataTypeBase {
+    export interface TypeReference {
         tag: "TypeReference";
-        constructor(public Item: string) {
-            super();
-        }
+        Item: string;
     }
     export type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
 
@@ -119,7 +81,6 @@ module Gluon.Schema {
         static fromJSON(json: any): Parameter {
            return Gluon.Internals.fromJSON("Gluon.Schema.Parameter", json);
         }
-        tag: "Parameter";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Parameter", this);
         }
@@ -130,7 +91,6 @@ module Gluon.Schema {
         static fromJSON(json: any): Method {
            return Gluon.Internals.fromJSON("Gluon.Schema.Method", json);
         }
-        tag: "Method";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Method", this);
         }
@@ -141,7 +101,6 @@ module Gluon.Schema {
         static fromJSON(json: any): EnumCase {
            return Gluon.Internals.fromJSON("Gluon.Schema.EnumCase", json);
         }
-        tag: "EnumCase";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.EnumCase", this);
         }
@@ -152,7 +111,6 @@ module Gluon.Schema {
         static fromJSON(json: any): Enum {
            return Gluon.Internals.fromJSON("Gluon.Schema.Enum", json);
         }
-        tag: "Enum";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Enum", this);
         }
@@ -163,7 +121,6 @@ module Gluon.Schema {
         static fromJSON(json: any): Field {
            return Gluon.Internals.fromJSON("Gluon.Schema.Field", json);
         }
-        tag: "Field";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Field", this);
         }
@@ -174,7 +131,6 @@ module Gluon.Schema {
         static fromJSON(json: any): Record {
            return Gluon.Internals.fromJSON("Gluon.Schema.Record", json);
         }
-        tag: "Record";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Record", this);
         }
@@ -185,7 +141,6 @@ module Gluon.Schema {
         static fromJSON(json: any): UnionCase {
            return Gluon.Internals.fromJSON("Gluon.Schema.UnionCase", json);
         }
-        tag: "UnionCase";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.UnionCase", this);
         }
@@ -196,43 +151,31 @@ module Gluon.Schema {
         static fromJSON(json: any): Union {
            return Gluon.Internals.fromJSON("Gluon.Schema.Union", json);
         }
-        tag: "Union";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Union", this);
         }
     }
-    export class DefineEnum {
-      
-        constructor(public Item: Gluon.Schema.Enum) { }
+
+    export interface DefineEnum {
         tag: "DefineEnum";
-        toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
-        }
+        Item: Gluon.Schema.Enum;
     }
-    export class DefineRecord {
-      
-        constructor(public Item: Gluon.Schema.Record) { }
+    export interface DefineRecord {
         tag: "DefineRecord";
-        toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
-        }
+        Item: Gluon.Schema.Record;
     }
-    export class DefineUnion {
-      
-        constructor(public Item: Gluon.Schema.Union) { }
+    export interface DefineUnion {
         tag: "DefineUnion";
-        toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", this);
-        }
+        Item: Gluon.Schema.Union;
     }
     export type TypeDefinition = DefineEnum | DefineRecord | DefineUnion;
+
     export class Service {
       
         constructor(public Methods: Gluon.Schema.Method [], public TypeDefinitions: Gluon.Schema.TypeDefinition []) { }
         static fromJSON(json: any): Service {
            return Gluon.Internals.fromJSON("Gluon.Schema.Service", json);
         }
-        tag: "Service";
         toJSON(): any {
            return Gluon.Internals.toJSON("Gluon.Schema.Service", this);
         }
@@ -243,11 +186,19 @@ module Gluon.Schema {
     export function fromJSON(json: any): HttpMethod {
        return Gluon.Internals.fromJSON("Gluon.Schema.HttpMethod", json);
     }
+
+    export function toJSON(httpMethod: HttpMethod): any {
+        return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", httpMethod);
+    }
 }
  module Gluon.Schema.CallingConvention {
   
     export function fromJSON(json: any): CallingConvention {
        return Gluon.Internals.fromJSON("Gluon.Schema.CallingConvention", json);
+    }
+
+    export function toJSON(conv: CallingConvention): any {
+        return Gluon.Internals.toJSON("Gluon.Schema.CallingConvention", conv);
     }
 }
  module Gluon.Schema.DataType {
@@ -255,11 +206,19 @@ module Gluon.Schema {
     export function fromJSON(json: any): DataType {
        return Gluon.Internals.fromJSON("Gluon.Schema.DataType", json);
     }
+
+    export function toJSON(dataType: DataType): any {
+        return Gluon.Internals.toJSON("Gluon.Schema.DataType", dataType);
+    }
 }
  module Gluon.Schema.TypeDefinition {
   
     export function fromJSON(json: any): TypeDefinition {
        return Gluon.Internals.fromJSON("Gluon.Schema.TypeDefinition", json);
+    }
+
+    export function toJSON(typeDef: TypeDefinition): any {
+        return Gluon.Internals.toJSON("Gluon.Schema.TypeDefinition", typeDef);
     }
 }
 // </BOOTSTRAP-DEFS>
@@ -437,6 +396,7 @@ module Gluon {
                 case "DefineUnion": return visitUnion(td.Item);
                 case "DefineRecord": return visitRecord(td.Item);
                 case "DefineEnum": return visitEnum(td.Item)
+                default: throw new Error("match failed");
             }
         }
         types.forEach(visitTD);
@@ -474,8 +434,9 @@ module Gluon {
                 case "SequenceType": return [":seq", key(dataType.Item)];
                 case "StringDictType": return [":sdict", key(dataType.Item)];
                 case "StringType": return ":str";
-                case "TupleType": return [":tup"].concat(dataType.Item.map(key));
+                case "TupleType": return [":tup"].concat(dataType.Item.map(i => key(i)));
                 case "TypeReference": return dataType.Item;
+                default: throw new Error("match failed");
             }
         }
         return JSON.stringify(key(dataType));
@@ -486,6 +447,7 @@ module Gluon {
             case "DefineEnum": return td.Item.EnumName;
             case "DefineRecord": return td.Item.RecordName;
             case "DefineUnion": return td.Item.UnionName;
+            default: throw new Error("match failed");
         }
     }
 
@@ -867,11 +829,11 @@ module Gluon {
     }
 
     function typeReference(typeId: string): S.DataType {
-        return new S.TypeReference(typeId);
+        return { tag: "TypeReference", Item: typeId };
     }
 
     function tupleType(dataTypes: S.DataType[]): S.DataType {
-        return new S.TupleType(dataTypes);
+        return { tag: "TupleType", Item: dataTypes };
     }
 
     class SerializerService {
@@ -930,7 +892,6 @@ module Gluon {
             };
             vis.visitEnum = e => {
                 var dt = typeReference(e.EnumName);
-                console.log("visitEnum", e, dt);
                 this.add(dt, new EnumSerializer());
             };
             return vis;
@@ -998,23 +959,26 @@ module Gluon {
     module Remoting {
 
         function verbName(m: S.HttpMethod) {
-            switch (m.tag) {
+            switch (m) {
                 case "Get": return "get";
                 case "Delete": return "delete";
                 case "Post": return "post";
                 case "Put": return "put";
+                default: throw new Error("match failed");
             }
         }
 
         function verb(conv: S.CallingConvention): S.HttpMethod {
             switch (conv.tag) {
                 case "HttpCallingConvention": return conv.Item1;
+                default: throw new Error("match failed");
             }
         }
 
         function localPath(conv: S.CallingConvention): string {
             switch (conv.tag) {
                 case "HttpCallingConvention": return conv.path;
+                default: throw new Error("match failed");
             }
         }
 
@@ -1053,7 +1017,7 @@ module Gluon {
             }
             const url = buildUrl(cli, proxy.innerMethod);
             const httpMethod = verb(proxy.innerMethod.CallingConvention);
-            switch (httpMethod.tag) {
+            switch (httpMethod) {
                 case "Get":
                     const queryParams = buildQueryParams(cli, proxy, args);
                     return cli.httpClient.httpGet(url, queryParams, parseJsonResponse);
@@ -1151,36 +1115,21 @@ module Gluon {
 
         function dataType(json: any): S.DataType {
             switch (tag(json)) {
-                case "ArrayType":
-                    return new S.ArrayType(dataType(at(json, 0)))
-                case "BooleanType":
-                    return new S.BooleanType();
-                case "BytesType":
-                    return new S.BytesType();
-                case "DateTimeType":
-                    return new S.DateTimeType();
-                case "DoubleType":
-                    return new S.DoubleType();
-                case "IntType":
-                    return new S.IntType();
-                case "JsonType":
-                    return new S.JsonType();
-                case "ListType":
-                    return new S.ListType(dataType(at(json, 0)));
-                case "OptionType":
-                    return new S.OptionType(dataType(at(json, 0)))
-                case "SequenceType":
-                    return new S.SequenceType(dataType(at(json, 0)));
-                case "StringDictType":
-                    return new S.StringDictType(dataType(at(json, 0)));
-                case "StringType":
-                    return new S.StringType();
-                case "TupleType":
-                    return new S.TupleType(at(json, 0).map(dataType));
-                case "TypeReference":
-                    return new S.TypeReference(at(json, 0));
-                default:
-                    throw new Error("failed to parse a data type");
+                case "ArrayType": return { tag: "ArrayType", Item: dataType(at(json, 0)) }
+                case "BooleanType": return { tag: "BooleanType" };
+                case "BytesType": return { tag: "BytesType" };
+                case "DateTimeType": return { tag: "DateTimeType" };
+                case "DoubleType": return { tag: "DoubleType" };
+                case "IntType": return { tag: "IntType" };
+                case "JsonType": return { tag: "JsonType" };
+                case "ListType": return { tag: "ListType", Item: dataType(at(json, 0)) };
+                case "OptionType": return { tag: "OptionType", Item: dataType(at(json, 0)) };
+                case "SequenceType": return { tag: "SequenceType", Item: dataType(at(json, 0)) };
+                case "StringDictType": return { tag: "StringDictType", Item: dataType(at(json, 0)) };
+                case "StringType": return { tag: "StringType" };
+                case "TupleType": return { tag: "TupleType", Item: at(json, 0).map(dataType) };
+                case "TypeReference": return { tag: "TypeReference", Item: at(json, 0) };
+                default: throw new Error("failed to parse a data type");
             }
         }
 
@@ -1210,9 +1159,9 @@ module Gluon {
 
         export function parseTypeDefinition(json: any): S.TypeDefinition {
             switch (tag(json)) {
-                case "DefineRecord": return new S.DefineRecord(record(at(json, 0)));
-                case "DefineUnion": return new S.DefineUnion(union(at(json, 0)));
-                case "DefineEnum": return new S.DefineEnum(parseEnum(at(json, 0)));
+                case "DefineRecord": return { tag: "DefineRecord", Item: record(at(json, 0)) };
+                case "DefineUnion": return { tag: "DefineUnion", Item: union(at(json, 0)) };
+                case "DefineEnum": return { tag: "DefineEnum", Item: parseEnum(at(json, 0)) };
                 default: throw new Error("error parsing type definition");
             }
         }
@@ -1222,19 +1171,26 @@ module Gluon {
         }
 
         function httpMethod(json: any): S.HttpMethod {
-            switch (tag(json)) {
-                case "Delete": return new S.Delete();
-                case "Get": return new S.Get();
-                case "Post": return new S.Post();
-                case "Put": return new S.Put();
-                default: throw new Error("error pasring http method");
+            const httpMethod = tag(json) as S.HttpMethod;
+            switch (httpMethod) {
+                case "Delete": return httpMethod;
+                case "Get": return httpMethod;
+                case "Post": return httpMethod;
+                case "Put": return httpMethod;
+                default: throw new Error("error parsing http method");
             }
         }
 
         function callingConvention(json: any): S.CallingConvention {
             switch (tag(json)) {
-                case "HttpCallingConvention": return new S.HttpCallingConvention(httpMethod(at(json, 0)), at(json, 1));
-                default: throw new Error("error parsing calling convention");
+                case "HttpCallingConvention":
+                    return {
+                        tag: "HttpCallingConvention",
+                        Item1: httpMethod(at(json, 0)),
+                        path: at(json, 1)
+                    };
+                default:
+                    throw new Error("error parsing calling convention");
             }
         }
 
@@ -1267,16 +1223,16 @@ module Gluon {
         var methodBuilder = new MethodBuilder(serializerService);
 
         export function toJSON(typeRef: string, value: any): any {
-            return serializerService.getSerializer(new S.TypeReference(typeRef)).toJSON(value);
+            return serializerService.getSerializer({ tag: "TypeReference", Item: typeRef }).toJSON(value);
         }
 
         export function fromJSON(typeRef: string, json: any): any {
-            return serializerService.getSerializer(new S.TypeReference(typeRef)).fromJSON(json);
+            return serializerService.getSerializer({ tag: "TypeReference", Item: typeRef }).fromJSON(json);
         }
 
-        export function registerActivators(raw: any) {
+        export function registerActivators(raw: {[key: string]: Function}) {
             var activators: IActivator[] = [];
-            function addActivator(typeId: string, func: any) {
+            function addActivator(typeId: string, func: Function) {
                 activators.push({
                     typeId: key,
                     createInstance: args => func.apply(null, args)
@@ -1308,25 +1264,25 @@ module Gluon {
 
 // <BOOTSTRAP-INIT>
 Gluon.Internals.registerActivators({
-  "Gluon.Schema.Delete": () => new Gluon.Schema.Delete(),
-  "Gluon.Schema.Get": () => new Gluon.Schema.Get(),
-  "Gluon.Schema.Post": () => new Gluon.Schema.Post(),
-  "Gluon.Schema.Put": () => new Gluon.Schema.Put(),
-  "Gluon.Schema.HttpCallingConvention": (httpMethod: Gluon.Schema.HttpMethod, path: string) => new Gluon.Schema.HttpCallingConvention(httpMethod, path),
-  "Gluon.Schema.ArrayType": (a: Gluon.Schema.DataType) => new Gluon.Schema.ArrayType(a),
-  "Gluon.Schema.BooleanType": () => new Gluon.Schema.BooleanType(),
-  "Gluon.Schema.BytesType": () => new Gluon.Schema.BytesType(),
-  "Gluon.Schema.DateTimeType": () => new Gluon.Schema.DateTimeType(),
-  "Gluon.Schema.DoubleType": () => new Gluon.Schema.DoubleType(),
-  "Gluon.Schema.IntType": () => new Gluon.Schema.IntType(),
-  "Gluon.Schema.JsonType": () => new Gluon.Schema.JsonType(),
-  "Gluon.Schema.ListType": (a: Gluon.Schema.DataType) => new Gluon.Schema.ListType(a),
-  "Gluon.Schema.OptionType": (a: Gluon.Schema.DataType) => new Gluon.Schema.OptionType(a),
-  "Gluon.Schema.SequenceType": (a: Gluon.Schema.DataType) => new Gluon.Schema.SequenceType(a),
-  "Gluon.Schema.StringDictType": (a: Gluon.Schema.DataType) => new Gluon.Schema.StringDictType(a),
-  "Gluon.Schema.StringType": () => new Gluon.Schema.StringType(),
-  "Gluon.Schema.TupleType": (a: Gluon.Schema.DataType[]) => new Gluon.Schema.TupleType(a),
-  "Gluon.Schema.TypeReference": (a: string) => new Gluon.Schema.TypeReference(a),
+  "Gluon.Schema.Delete": () => <Gluon.Schema.HttpMethod>"Delete",
+  "Gluon.Schema.Get": () => <Gluon.Schema.HttpMethod>"Get",
+  "Gluon.Schema.Post": () => <Gluon.Schema.HttpMethod>"Post",
+  "Gluon.Schema.Put": () => <Gluon.Schema.HttpMethod>"Put",
+  "Gluon.Schema.HttpCallingConvention": (httpMethod: Gluon.Schema.HttpMethod, path: string) => <Gluon.Schema.HttpCallingConvention>{ tag: "HttpCallingConvention", Item1: httpMethod, path: path },
+  "Gluon.Schema.ArrayType": (a: Gluon.Schema.DataType) => <Gluon.Schema.ArrayType>{ tag: "ArrayType", Item: a },
+  "Gluon.Schema.BooleanType": () => <Gluon.Schema.BooleanType>{ tag: "BooleanType" },
+  "Gluon.Schema.BytesType": () => <Gluon.Schema.BytesType>{ tag: "BytesType" },
+  "Gluon.Schema.DateTimeType": () => <Gluon.Schema.DateTimeType>{ tag: "DateTimeType" },
+  "Gluon.Schema.DoubleType": () => <Gluon.Schema.DoubleType>{ tag: "DoubleType" },
+  "Gluon.Schema.IntType": () => <Gluon.Schema.IntType>{ tag: "IntType" },
+  "Gluon.Schema.JsonType": () => <Gluon.Schema.JsonType>{ tag: "JsonType" },
+  "Gluon.Schema.ListType": (a: Gluon.Schema.DataType) => <Gluon.Schema.ListType>{ tag: "ListType", Item: a },
+  "Gluon.Schema.OptionType": (a: Gluon.Schema.DataType) => <Gluon.Schema.OptionType>{ tag: "OptionType", Item: a },
+  "Gluon.Schema.SequenceType": (a: Gluon.Schema.DataType) => <Gluon.Schema.SequenceType>{ tag: "SequenceType", Item: a },
+  "Gluon.Schema.StringDictType": (a: Gluon.Schema.DataType) => <Gluon.Schema.StringDictType>{ tag: "StringDictType", Item: a },
+  "Gluon.Schema.StringType": () => <Gluon.Schema.StringType>{ tag: "StringType" },
+  "Gluon.Schema.TupleType": (a: Gluon.Schema.DataType[]) => <Gluon.Schema.TupleType>{ tag: "TupleType", Item: a },
+  "Gluon.Schema.TypeReference": (a: string) => <Gluon.Schema.TypeReference>{ tag: "TypeReference", Item: a },
   "Gluon.Schema.Parameter": (a: string, b: Gluon.Schema.DataType) => new Gluon.Schema.Parameter(a, b),
   "Gluon.Schema.Method": (a: Gluon.Schema.HttpCallingConvention, b: string, c: Gluon.Schema.Parameter[], d: Gluon.Option<Gluon.Schema.DataType>) => new Gluon.Schema.Method(a, b, c, d),
   "Gluon.Schema.EnumCase": (a: string, b: number) => new Gluon.Schema.EnumCase(a, b),
@@ -1335,9 +1291,9 @@ Gluon.Internals.registerActivators({
   "Gluon.Schema.Record": (a: string, b: Gluon.Schema.Field[]) => new Gluon.Schema.Record(a, b),
   "Gluon.Schema.UnionCase": (a: string, b: Gluon.Schema.Field[]) => new Gluon.Schema.UnionCase(a, b),
   "Gluon.Schema.Union": (a: string, b: Gluon.Schema.UnionCase[]) => new Gluon.Schema.Union(a, b),
-  "Gluon.Schema.DefineEnum": (a: Gluon.Schema.Enum) => new Gluon.Schema.DefineEnum(a),
-  "Gluon.Schema.DefineRecord": (a: Gluon.Schema.Record) => new Gluon.Schema.DefineRecord(a),
-  "Gluon.Schema.DefineUnion": (a: Gluon.Schema.Union) => new Gluon.Schema.DefineUnion(a),
+  "Gluon.Schema.DefineEnum": (a: Gluon.Schema.Enum) => <Gluon.Schema.DefineEnum>{ tag: "DefineEnum", Item: a },
+  "Gluon.Schema.DefineRecord": (a: Gluon.Schema.Record) => <Gluon.Schema.DefineRecord>{ tag: "DefineRecord", Item: a},
+  "Gluon.Schema.DefineUnion": (a: Gluon.Schema.Union) => <Gluon.Schema.DefineUnion>{ tag: "DefineUnion", Item: a },
   "Gluon.Schema.Service": (a: Gluon.Schema.Method[], b: Gluon.Schema.TypeDefinition[]) => new Gluon.Schema.Service(a, b)
 });
 Gluon.Internals.registerTypeDefinitions([["DefineUnion",{"UnionName":"Gluon.Schema.HttpMethod","UnionCases":[{"CaseName":"Delete","CaseFields":[]},{"CaseName":"Get","CaseFields":[]},{"CaseName":"Post","CaseFields":[]},{"CaseName":"Put","CaseFields":[]}]}],["DefineUnion",{"UnionName":"Gluon.Schema.CallingConvention","UnionCases":[{"CaseName":"HttpCallingConvention","CaseFields":[{"FieldName":"Item1","FieldType":["TypeReference","Gluon.Schema.HttpMethod"]},{"FieldName":"path","FieldType":["StringType"]}]}]}],["DefineUnion",{"UnionName":"Gluon.Schema.DataType","UnionCases":[{"CaseName":"ArrayType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"BooleanType","CaseFields":[]},{"CaseName":"BytesType","CaseFields":[]},{"CaseName":"DateTimeType","CaseFields":[]},{"CaseName":"DoubleType","CaseFields":[]},{"CaseName":"IntType","CaseFields":[]},{"CaseName":"JsonType","CaseFields":[]},{"CaseName":"ListType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"OptionType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"SequenceType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"StringDictType","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.DataType"]}]},{"CaseName":"StringType","CaseFields":[]},{"CaseName":"TupleType","CaseFields":[{"FieldName":"Item","FieldType":["ListType",["TypeReference","Gluon.Schema.DataType"]]}]},{"CaseName":"TypeReference","CaseFields":[{"FieldName":"Item","FieldType":["StringType"]}]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Parameter","RecordFields":[{"FieldName":"ParameterName","FieldType":["StringType"]},{"FieldName":"ParameterType","FieldType":["TypeReference","Gluon.Schema.DataType"]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Method","RecordFields":[{"FieldName":"CallingConvention","FieldType":["TypeReference","Gluon.Schema.CallingConvention"]},{"FieldName":"MethodName","FieldType":["StringType"]},{"FieldName":"MethodParameters","FieldType":["ListType",["TypeReference","Gluon.Schema.Parameter"]]},{"FieldName":"MethodReturnType","FieldType":["OptionType",["TypeReference","Gluon.Schema.DataType"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.EnumCase","RecordFields":[{"FieldName":"EnumCaseName","FieldType":["StringType"]},{"FieldName":"EnumCaseValue","FieldType":["IntType"]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Enum","RecordFields":[{"FieldName":"EnumName","FieldType":["StringType"]},{"FieldName":"EnumCases","FieldType":["ListType",["TypeReference","Gluon.Schema.EnumCase"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Field","RecordFields":[{"FieldName":"FieldName","FieldType":["StringType"]},{"FieldName":"FieldType","FieldType":["TypeReference","Gluon.Schema.DataType"]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Record","RecordFields":[{"FieldName":"RecordName","FieldType":["StringType"]},{"FieldName":"RecordFields","FieldType":["ListType",["TypeReference","Gluon.Schema.Field"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.UnionCase","RecordFields":[{"FieldName":"CaseName","FieldType":["StringType"]},{"FieldName":"CaseFields","FieldType":["ListType",["TypeReference","Gluon.Schema.Field"]]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Union","RecordFields":[{"FieldName":"UnionName","FieldType":["StringType"]},{"FieldName":"UnionCases","FieldType":["ListType",["TypeReference","Gluon.Schema.UnionCase"]]}]}],["DefineUnion",{"UnionName":"Gluon.Schema.TypeDefinition","UnionCases":[{"CaseName":"DefineEnum","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.Enum"]}]},{"CaseName":"DefineRecord","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.Record"]}]},{"CaseName":"DefineUnion","CaseFields":[{"FieldName":"Item","FieldType":["TypeReference","Gluon.Schema.Union"]}]}]}],["DefineRecord",{"RecordName":"Gluon.Schema.Service","RecordFields":[{"FieldName":"Methods","FieldType":["ListType",["TypeReference","Gluon.Schema.Method"]]},{"FieldName":"TypeDefinitions","FieldType":["ListType",["TypeReference","Gluon.Schema.TypeDefinition"]]}]}]]);
