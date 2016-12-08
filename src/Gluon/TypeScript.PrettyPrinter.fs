@@ -165,14 +165,20 @@ let layoutConstructor (c: S.Constructor) : PP.Layout =
             |> parens
         t "constructor" +. argsig ++ braces (block (statement body))
 
+let layoutTag ({ FieldName = n; FieldValue = v }: S.TagField) =
+    t n +. t ":" ++ t (HttpUtility.JavaScriptStringEncode(v, addDoubleQuotes = true)) +. t ";"
+
 let layoutClassMethod (cm: S.ClassMethod) =
-    let modif = if cm.IsStatic then t "static" else PP.empty
-    modif ++ methodLike cm.FunctionDefinition
+    if cm.IsStatic
+    then t "static" ++ methodLike cm.FunctionDefinition
+    else methodLike cm.FunctionDefinition
 
 let classDefinition (cl: S.ClassDefinition) =
     let body =
         vertical [
             yield layoutConstructor cl.Constructor
+            if cl.Tag.IsSome then
+                yield layoutTag cl.Tag.Value
             for m in cl.Methods do
                 yield layoutClassMethod m
         ]

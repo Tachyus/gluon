@@ -1,16 +1,14 @@
 ﻿{
     "compilerOptions": {
-        "declaration": false,
-        "module": "umd",
+        "module": "none",
         "target": "es5",
         "noImplicitAny": false,
+        "strictNullChecks": false,
         "removeComments": true,
         "sourceMap": true
     },
-    "files": [
-        "Scripts/typings/Gluon.d.ts",
-        "Scripts/Generated.ts",
-        "Scripts/App.ts"
+    "include": [
+        "Scripts/**/*"
     ],
     "typeRoots": [
         "./node_modules/@types"

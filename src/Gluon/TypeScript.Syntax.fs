@@ -79,6 +79,15 @@ type ClassMethod =
     static member Create(fdef) =
         { FunctionDefinition = fdef; IsStatic = false }
 
+type TagField =
+    {
+        FieldName : string
+        FieldValue : string
+    }
+
+    static member Create(name, value) =
+        { FieldName = name; FieldValue = value }
+
 type ClassField =
     {
         FieldName : string
@@ -88,7 +97,7 @@ type ClassField =
 
     static member Create(name, ty, ?pub) =
         { FieldName = name; FieldType = ty; IsPublic = defaultArg pub true }
-
+    
 type Constructor =
     | SimpleConstructor of list<ClassField> * Statement
 
@@ -109,16 +118,18 @@ type ClassDefinition =
         ClassName : string
         Constructor : Constructor
         Methods : list<ClassMethod>
+        Tag : TagField option
     }
 
     member this.WithMethod(m) =
         { this with Methods = m :: this.Methods }
 
-    static member Create(name, ctor, ?methods) =
+    static member Create(name, ctor, ?methods, ?tag) =
         {
             ClassName = name
             Constructor = ctor
             Methods = defaultArg methods []
+            Tag = defaultArg tag None
         }
 
 type Definitions =

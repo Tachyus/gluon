@@ -131,15 +131,13 @@ let generateRecordLike tRef name (fields: list<Schema.Field>) : S.ClassDefinitio
     let toJson =
         let body = S.Return (S.Call (S.Var "Gluon.Internals.toJSON", [], [S.LiteralString tRef; S.This]))
         S.FunctionDefinition.Create("toJSON", body, makeType "any")
-    let tag =
-        let body = S.Return (S.LiteralString name)
-        S.FunctionDefinition.Create("tag", body, S.LiteralStringType name)
     let methods =
         [
-            S.ClassMethod.Create(tag)
             S.ClassMethod.Create(toJson)
         ]
-    S.ClassDefinition.Create(name, ctor = ctor, methods = methods)
+    let tag =
+        S.TagField.Create("tag", name)
+    S.ClassDefinition.Create(name, ctor = ctor, methods = methods, tag = Some tag)
 
 let generateRecord (recordDef: Schema.Record) : S.Definitions =
     let n = recordDef.RecordName
