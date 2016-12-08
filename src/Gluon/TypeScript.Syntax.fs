@@ -42,6 +42,7 @@ type Expression =
     | SimpleLambda of list<string> * Expression
     | This
     | Var of string
+    | Cast of Expression * Expression
 
 type Statement =
     | EmptyStatement
@@ -79,15 +80,6 @@ type ClassMethod =
     static member Create(fdef) =
         { FunctionDefinition = fdef; IsStatic = false }
 
-type TagField =
-    {
-        FieldName : string
-        FieldValue : string
-    }
-
-    static member Create(name, value) =
-        { FieldName = name; FieldValue = value }
-
 type ClassField =
     {
         FieldName : string
@@ -118,19 +110,36 @@ type ClassDefinition =
         ClassName : string
         Constructor : Constructor
         Methods : list<ClassMethod>
-        Tag : TagField option
     }
 
     member this.WithMethod(m) =
         { this with Methods = m :: this.Methods }
 
-    static member Create(name, ctor, ?methods, ?tag) =
+    static member Create(name, ctor, ?methods) =
         {
             ClassName = name
             Constructor = ctor
             Methods = defaultArg methods []
-            Tag = defaultArg tag None
         }
+
+type UnionCaseField =
+    {
+        FieldName : string
+        FieldType : TypeLiteral
+        IsOptional : bool
+    }
+
+    static member Create(name, ty, ?isOptional) =
+        { FieldName = name; FieldType = ty; IsOptional = defaultArg isOptional false }
+
+type UnionCaseDefinition =
+    {
+        UnionCaseName : string
+        Fields : UnionCaseField list
+    }
+
+    static member Create(name, ?fields) =
+        { UnionCaseName = name; Fields = defaultArg fields [] }
 
 type Definitions =
     | Action of Expression
@@ -141,6 +150,7 @@ type Definitions =
     | DefineEnum of EnumDefinition
     | DefineFunction of FunctionDefinition
     | DefineTypeAlias of string * TypeLiteral
+    | DefineUnionCase of UnionCaseDefinition
     | InModule of string * Definitions
 
     member this.GroupModules() =
