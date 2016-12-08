@@ -5,15 +5,14 @@
   "main": "Scripts/app.js",
   "scripts": {
     "clean-server": "mono ../../packages/FAKE/tools/FAKE.exe build.fsx Clean",
-    "clean-webapp": "node_modules/.bin/rimraf ./bin && mkdir bin",
+    "clean-webapp": "node_modules/.bin/rimraf ./Scripts/*.js* && node_modules/.bin/rimraf ./bin && mkdir bin",
     "clean": "npm run clean-server && npm run clean-webapp",
-
     "build-server": "mono ../../packages/FAKE/tools/FAKE.exe build.fsx Build",
     "generate-client": "mono '../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.exe'",
     "gluon": "npm run build-server && npm run generate-client",
     "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js Scripts",
-    "copy-gluon": "cp ../../src/Gluon.Client/dist/Gluon.min.js Scripts && cp ../../src/Gluon.Client/dist/Gluon.d.ts Scripts/typings",
-    "prebuild": "typings install && npm run copy-jquery && npm run copy-gluon && npm run gluon",
+    "copy-gluon": "cp ../../src/Gluon.Client/Gluon.ts Scripts",
+    "prebuild": "npm run copy-jquery && npm run copy-gluon && npm run gluon",
     "compile": "node_modules/.bin/tsc -p ./",
     "build": "npm run compile",
     "start": "mono bin/SampleApp.exe",
@@ -30,12 +29,13 @@
   },
   "homepage": "https://github.com/Tachyus/gluon#readme",
   "dependencies": {
-    "jquery": "^3.0.0"
+    "@types/es6-promise": "0.0.32",
+    "@types/jquery": "^2.0.34",
+    "jquery": "^3.1.1"
   },
   "devDependencies": {
     "rimraf": "^2.5.2",
-    "typescript": "^1.8.10",
-    "typings": "^1.3.1",
+    "typescript": "^2.1.4",
     "uglify-js": "^2.6.4"
   }
 }

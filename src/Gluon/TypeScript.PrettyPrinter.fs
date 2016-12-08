@@ -91,6 +91,7 @@ let rec expression e =
     | S.LiteralObject fields -> braces (commas [for (n, v) in fields -> !(S.LiteralString n) +. t ":" ++ !v])
     | S.SimpleLambda (args, body) -> parens (commasTight [for a in args -> t a]) ++ t "=>" ++ !body
     | S.This -> t "this"
+    | S.Cast (a, b) -> t "<" +. expression a +. t ">" +. expression b
 
 and typeLiteral tl =
     match tl with
@@ -153,6 +154,18 @@ let methodLike (f: S.FunctionDefinition) =
 let functionDefinition f =
     t "function" ++ methodLike f
 
+let layoutTag (tag: string) : PP.Layout =
+    t "tag" +. t ":" ++ t (HttpUtility.JavaScriptStringEncode(tag, addDoubleQuotes = true)) +. t ";"
+
+let unionCaseDefinition (u: S.UnionCaseDefinition) : PP.Layout =
+    let body =
+        vertical [
+            yield layoutTag u.UnionCaseName
+            for { FieldName = a; FieldType = b } in u.Fields do
+                yield t a +. t ": " +. typeLiteral b
+        ]
+    t "interface" ++ t u.UnionCaseName ++ braces (block body)
+
 let layoutConstructor (c: S.Constructor) : PP.Layout =
     match c with
     | S.SimpleConstructor (fields, body) ->
@@ -166,8 +179,9 @@ let layoutConstructor (c: S.Constructor) : PP.Layout =
         t "constructor" +. argsig ++ braces (block (statement body))
 
 let layoutClassMethod (cm: S.ClassMethod) =
-    let modif = if cm.IsStatic then t "static" else PP.empty
-    modif ++ methodLike cm.FunctionDefinition
+    if cm.IsStatic
+    then t "static" ++ methodLike cm.FunctionDefinition
+    else methodLike cm.FunctionDefinition
 
 let classDefinition (cl: S.ClassDefinition) =
     let body =
@@ -200,4 +214,5 @@ let definitions (defs: S.Definitions) =
         | S.DefineClass c -> prefix ++ classDefinition c
         | S.DefineEnum e -> prefix ++ enumDefinition e
         | S.DefineFunction f -> prefix ++ functionDefinition f
+        | S.DefineUnionCase u -> prefix ++ unionCaseDefinition u
     definitions false defs

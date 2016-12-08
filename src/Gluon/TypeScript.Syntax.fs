@@ -42,6 +42,7 @@ type Expression =
     | SimpleLambda of list<string> * Expression
     | This
     | Var of string
+    | Cast of Expression * Expression
 
 type Statement =
     | EmptyStatement
@@ -88,7 +89,7 @@ type ClassField =
 
     static member Create(name, ty, ?pub) =
         { FieldName = name; FieldType = ty; IsPublic = defaultArg pub true }
-
+    
 type Constructor =
     | SimpleConstructor of list<ClassField> * Statement
 
@@ -121,6 +122,25 @@ type ClassDefinition =
             Methods = defaultArg methods []
         }
 
+type UnionCaseField =
+    {
+        FieldName : string
+        FieldType : TypeLiteral
+        IsOptional : bool
+    }
+
+    static member Create(name, ty, ?isOptional) =
+        { FieldName = name; FieldType = ty; IsOptional = defaultArg isOptional false }
+
+type UnionCaseDefinition =
+    {
+        UnionCaseName : string
+        Fields : UnionCaseField list
+    }
+
+    static member Create(name, ?fields) =
+        { UnionCaseName = name; Fields = defaultArg fields [] }
+
 type Definitions =
     | Action of Expression
     | Comment of string
@@ -130,6 +150,7 @@ type Definitions =
     | DefineEnum of EnumDefinition
     | DefineFunction of FunctionDefinition
     | DefineTypeAlias of string * TypeLiteral
+    | DefineUnionCase of UnionCaseDefinition
     | InModule of string * Definitions
 
     member this.GroupModules() =

@@ -3,8 +3,8 @@
     import P = Gluon;
     import S = SampleApp.Services;
 
-    var p1 = new S.Person(new Date(), new S.Phone(12345), "Anton", 30);
-    var p2 = new S.Person(new Date(), new S.Address("San Mateo"), "Lida", 1);
+    var p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
+    var p2 = new S.Person(new Date(), { tag: "Address", text: "San Mateo" }, "Lida", 1);
 
     var j1 = JSON.stringify(p1);
     var j2 = JSON.stringify(p2);
@@ -31,7 +31,22 @@
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-     var cli = new P.Client();
+    var someValue = Gluon.Option.some(1);
+    console.log(someValue);
+    var noneValue = Gluon.Option.none<number>();
+    console.log(noneValue);
+    if (someValue.isSome) {
+        console.log("correctly matched Some");
+    } else {
+        console.error("invalid match");
+    }
+    if (noneValue.isSome) {
+        console.error("invalid match");
+    } else {
+        console.log("correctly matched None");
+    }
+
+    var cli = new P.Client();
 
     S.incr(cli)(1).then(x => {
         console.log("incr(1) ==> ", x);
@@ -103,10 +118,10 @@
 
     /// Type-safe matching example for destructuring DUs.
     function showContact(contact: S.Contact): string {
-        return S.Contact.match(contact, {
-            Address: ((text) => "address: " + text),
-            Phone: ((number) => "phone: " + String(number))
-        });
+        switch (contact.tag) {
+            case "Address": return "address: " + contact.text;
+            case "Phone": return "phone: " + String(contact.number);
+        }
     }
 
     console.log(showContact(p1.contact));
@@ -127,7 +142,7 @@
         console.log("tupleTurnaround =>", results);
     });
     
-    S.unionTurnaround(cli)(new S.C1("A")).then(results => console.log("unionTurnaround => ", results))
+    S.unionTurnaround(cli)({tag:"C1",Item:"A"}).then(results => console.log("unionTurnaround => ", results));
     
 }
 

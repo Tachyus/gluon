@@ -1,7 +1,0 @@
-{
-  "name": "gluon.client",
-  "dependencies": {},
-  "globalDependencies": {
-    "jquery": "registry:dt/jquery#1.10.0+20160701124751"
-  }
-}

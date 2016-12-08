@@ -1,15 +1,18 @@
 ﻿{
     "compilerOptions": {
-        "declaration": true,
-        "module": "umd",
+        "module": "none",
         "target": "es5",
-        "noImplicitAny": false,
-        "outDir": "./dist",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
         "removeComments": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "./dist"
     },
     "files": [
-        "typings/index.d.ts",
         "Gluon.ts"
+    ],
+    "typeRoots": [
+        "./node_modules/@types"
     ]
 }
