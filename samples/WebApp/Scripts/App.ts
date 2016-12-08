@@ -31,7 +31,22 @@
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-     var cli = new P.Client();
+    var someValue = Gluon.Option.some(1);
+    console.log(someValue);
+    var noneValue = Gluon.Option.none<number>();
+    console.log(noneValue);
+    if (someValue.isSome) {
+        console.log("correctly matched Some");
+    } else {
+        console.error("invalid match");
+    }
+    if (noneValue.isSome) {
+        console.error("invalid match");
+    } else {
+        console.log("correctly matched None");
+    }
+
+    var cli = new P.Client();
 
     S.incr(cli)(1).then(x => {
         console.log("incr(1) ==> ", x);

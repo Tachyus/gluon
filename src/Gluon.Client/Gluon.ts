@@ -230,11 +230,11 @@ module Gluon {
 
     // Option<T> support ------------------------------------------------------
 
-    export class Some<T> {
+    export interface Some<T> {
         isSome: true;
-        constructor(public value: T) { }
+        value: T;
     }
-    export class None<T> {
+    export interface None<T> {
         isSome: false;
     }
     /** Represents optional values, just as F# does. */
@@ -244,12 +244,12 @@ module Gluon {
     export module Option {
         /** Constructs a Some(value) option. */
         export function some<T>(value: T): Option<T> {
-            return new Some<T>(value) as Option<T>;
+            return { isSome: true, value };
         }
 
         /** Constructs a None option. */
         export function none<T>(): Option<T> {
-            return new None<T>() as Option<T>;
+            return { isSome: false };
         }
 
         /** Recovers an Option<T> from JSON object representation. */
