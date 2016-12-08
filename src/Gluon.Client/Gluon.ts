@@ -380,25 +380,6 @@ module Gluon {
     // Schema -----------------------------------------------------------------
 
     module DataType {
-        export function defaultMatch<T>(def: T) {
-            return {
-                ArrayType: (t: S.DataType) => def,
-                BooleanType: () => def,
-                BytesType: () => def,
-                DateTimeType: () => def,
-                DoubleType: () => def,
-                IntType: () => def,
-                JsonType: () => def,
-                ListType: (t: S.DataType) => def,
-                OptionType: (t: S.DataType) => def,
-                SequenceType: (t: S.DataType) => def,
-                StringDictType: (t: S.DataType) => def,
-                StringType: () => def,
-                TupleType: (elements: S.DataType[]) => def,
-                TypeReference: (tref: string) => def
-            }
-        }
-
         export function children(d: S.DataType): S.DataType[] {
             switch (d.tag) {
                 case "ArrayType": return [d.Item];
