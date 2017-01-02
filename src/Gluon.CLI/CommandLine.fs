@@ -17,7 +17,7 @@ module internal Gluon.CLI.CommandLine
 open System
 open System.IO
 open System.Reflection
-open Nessos.Argu
+open Argu
 
 let usage = "Gluon: generate TypeScript client proxies to F# web services."
 
@@ -67,8 +67,8 @@ let main args handle =
                 if Directory.Exists(dir) |> not then
                     Directory.CreateDirectory(dir) |> ignore
             | _ -> ()
-    let parser = ArgumentParser.Create<Args>(usage)
-    let results = parser.ParseCommandLine(args, errorHandler=ProcessExiter())
+    let parser = ArgumentParser.Create<Args>(usage, errorHandler = ProcessExiter())
+    let results = parser.ParseCommandLine(args)
     let all = results.GetAllResults()
     validate all
     prepareDir all

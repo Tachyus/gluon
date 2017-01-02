@@ -1,12 +1,13 @@
 ﻿{
     "compilerOptions": {
-        "declaration": true,
-        "module": "umd",
+        "module": "none",
         "target": "es5",
         "noImplicitAny": false,
-        "outDir": "./dist",
+        "strictNullChecks": false,
         "removeComments": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "./dist"
     },
     "files": [
         "../../packages/jquery.TypeScript.DefinitelyTyped/Content/Scripts/typings/jquery/jquery.d.ts",

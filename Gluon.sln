@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "^", "^", "{F8613B10-030D-4253-943F-A0D0CE8C2C70}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "^", "^", "{F8613B10-030D-42
 		build.fsx = build.fsx
 		build.ps1 = build.ps1
 		meta.json = meta.json
+		Node.fsx = Node.fsx
 		paket.dependencies = paket.dependencies
 		paket.lock = paket.lock
 		README.md = README.md

@@ -1,4 +1,6 @@
 source https://nuget.org/api/v2
+redirects on
+framework: >= net45
 
 nuget Argu
 nuget FSharp.Core
@@ -14,8 +16,8 @@ nuget Microsoft.Owin.Host.SystemWeb 3.0.1
 nuget Microsoft.Owin.Hosting 3.0.1
 nuget Microsoft.Owin.SelfHost 3.0.1
 nuget Microsoft.Owin.StaticFiles 3.0.1
-nuget Microsoft.TypeScript.Compiler = 1.8.4
-nuget Microsoft.TypeScript.MSBuild = 1.8.4
+nuget Microsoft.TypeScript.Compiler = 2.1.4
+nuget Microsoft.TypeScript.MSBuild = 2.1.4
 nuget Newtonsoft.Json 6.0.8
 nuget Owin 1.0
 nuget SourceLink.Fake

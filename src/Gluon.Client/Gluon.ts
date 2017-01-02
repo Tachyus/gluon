@@ -372,7 +372,12 @@ module Gluon.Schema {
         else if (value instanceof DoubleType) { return cont.DoubleType();}
         else if (value instanceof IntType) { return cont.IntType();}
         else if (value instanceof JsonType) { return cont.JsonType();}
-        else if (value instanceof ListType) {
+        else if (value instanceof TupleType) {
+           return cont.TupleType(value.Item);
+        }
+        else if (value instanceof TypeReference) {
+            return cont.TypeReference(value.Item);
+        } else if (value instanceof ListType) {
            return cont.ListType(value.Item);
         }
         else if (value instanceof OptionType) {
@@ -385,12 +390,7 @@ module Gluon.Schema {
            return cont.StringDictType(value.Item);
         }
         else if (value instanceof StringType) { return cont.StringType();}
-        else if (value instanceof TupleType) {
-           return cont.TupleType(value.Item);
-        }
-        else if (value instanceof TypeReference) {
-           return cont.TypeReference(value.Item);
-        } else { throw new Error("match failed");}
+        else { throw new Error("match failed");}
     }
 }
  module Gluon.Schema.TypeDefinition {
