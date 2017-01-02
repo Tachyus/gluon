@@ -2,9 +2,6 @@ language: csharp
 
 sudo: false  # use the new container-based Travis infrastructure 
 
-node_js:
-  - "5"
-
 script: 
   - ./build.sh BuildPackage
 

@@ -12,5 +12,5 @@ projectUrl http://www.tachyus.com/gluon/
 files
     dist/Gluon.d.ts ==> content\Scripts\typings
     dist/Gluon.js ==> content\Scripts
+    dist/Gluon.js.map ==> content\Scripts
     dist/Gluon.min.js ==> content\Scripts
-    dist/Gluon.min.js.map ==> content\Scripts
