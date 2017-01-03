@@ -15,39 +15,7 @@
 // <BOOTSTRAP-DEFS>
 module Gluon.Schema {
   
-    export class Delete {
-      
-        constructor() { }
-         tag(): string { return "Delete";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
-    }
-    export class Get {
-      
-        constructor() { }
-         tag(): string { return "Get";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
-    }
-    export class Post {
-      
-        constructor() { }
-         tag(): string { return "Post";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
-    }
-    export class Put {
-      
-        constructor() { }
-         tag(): string { return "Put";}
-         toJSON(): any {
-           return Gluon.Internals.toJSON("Gluon.Schema.HttpMethod", this);
-        }
-    }
-    export type HttpMethod = Delete | Get | Post | Put;
+    export type HttpMethod = "Delete" | "Get" | "Post" | "Put";
     export class HttpCallingConvention {
       
         constructor(public Item1: Gluon.Schema.HttpMethod,
@@ -312,18 +280,6 @@ module Gluon.Schema {
   
     export function fromJSON(json: any): HttpMethod {
        return Gluon.Internals.fromJSON("Gluon.Schema.HttpMethod", json);
-    }
-    export function match<T>(value: Gluon.Schema.HttpMethod,
-    cont: {
-      Delete: (() => T), Get: (() => T), Post: (() => T), Put: (() => T)
-    }): T {
-      
-        if (value instanceof Delete) { return cont.Delete();}
-        else if (value instanceof Get) { return cont.Get();}
-        else if (value instanceof Post) { return cont.Post();}
-        else if (value instanceof Put) { return cont.Put();} else {
-           throw new Error("match failed");
-        }
     }
 }
  module Gluon.Schema.CallingConvention {
@@ -1174,12 +1130,13 @@ module Gluon {
     module Remoting {
 
         function verbName(m: S.HttpMethod) {
-            return S.HttpMethod.match(m, {
-                Get: () => "get",
-                Delete: () => "delete",
-                Post: () => "post",
-                Put: () => "put"
-            });
+            switch (m) {
+                case "Get": return "get";
+                case "Delete": return "delete";
+                case "Post": return "post";
+                case "Put": return "put";
+                default: throw new Error("match failed");
+            }
         }
 
         function verb(conv: S.CallingConvention): S.HttpMethod {
@@ -1229,7 +1186,7 @@ module Gluon {
             }
             var url = buildUrl(cli, proxy.innerMethod);
             var httpMethod = verb(proxy.innerMethod.CallingConvention);
-            if (httpMethod instanceof S.Get) {
+            if (httpMethod === "Get") {
                 var queryParams = buildQueryParams(cli, proxy, args);
                 return cli.httpClient.httpGet(url, queryParams, parseJsonResponse);
             } else {
@@ -1398,10 +1355,10 @@ module Gluon {
 
         function httpMethod(json: any): S.HttpMethod {
             switch (tag(json)) {
-                case "Delete": return new S.Delete();
-                case "Get": return new S.Get();
-                case "Post": return new S.Post();
-                case "Put": return new S.Put();
+                case "Delete": return "Delete";
+                case "Get":    return "Get";
+                case "Post":   return "Post";
+                case "Put":    return "Put";
                 default: throw new Error("error pasring http method");
             }
         }
@@ -1483,10 +1440,10 @@ module Gluon {
 
 // <BOOTSTRAP-INIT>
 Gluon.Internals.registerActivators({
-  "Gluon.Schema.Delete": () => new Gluon.Schema.Delete(),
-  "Gluon.Schema.Get": () => new Gluon.Schema.Get(),
-  "Gluon.Schema.Post": () => new Gluon.Schema.Post(),
-  "Gluon.Schema.Put": () => new Gluon.Schema.Put(),
+  "Gluon.Schema.Delete": () => <Gluon.Schema.HttpMethod>"Delete",
+  "Gluon.Schema.Get": () => <Gluon.Schema.HttpMethod>"Get",
+  "Gluon.Schema.Post": () => <Gluon.Schema.HttpMethod>"Post",
+  "Gluon.Schema.Put": () => <Gluon.Schema.HttpMethod>"Put",
   "Gluon.Schema.HttpCallingConvention": (a, b) => new Gluon.Schema.HttpCallingConvention(a, b),
   "Gluon.Schema.ArrayType": (a) => new Gluon.Schema.ArrayType(a),
   "Gluon.Schema.BooleanType": () => new Gluon.Schema.BooleanType(),
