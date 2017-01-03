@@ -968,7 +968,7 @@ module Gluon {
         }
 
         toJSON(value: any): any {
-            var tag: string = value.tag();
+            var tag: string = value.tag;
             var uCase = this.findCase(tag);
             var res = new Array(uCase.fields.length + 1);
             res[0] = tag;

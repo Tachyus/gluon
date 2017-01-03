@@ -44,35 +44,6 @@ let rec typeLiteral sch =
     | Schema.TypeReference n -> makeType n
     | Schema.TupleType ts -> S.TupleType (List.map (!) ts)
 
-let generateMatchMethod (unionDef: Schema.Union) =
-    let t = "T"
-    let value = "value"
-    let cont = "cont"
-    let tType = makeType t
-    let uType = makeType unionDef.UnionName
-    let cases =
-        [
-            for c in unionDef.UnionCases do
-                let test = S.InstanceOf(S.Var value, S.Var c.CaseName)
-                let args = [for x in c.CaseFields -> S.GetField (S.Var value, S.Var x.FieldName)]
-                let body = S.Invoke (S.Var cont, c.CaseName, args)
-                yield (test, S.Return body)
-        ]
-    let errorCase = S.Throw (S.New (S.Var "Error", [S.LiteralString "match failed"]))
-    let contType =
-        S.TypeLiteral.ObjectType [
-            for c in unionDef.UnionCases ->
-                let ft =
-                    S.FunctionType {
-                        ParameterTypes = [for v in c.CaseFields -> (v.FieldName, typeLiteral v.FieldType)]
-                        ReturnType = tType
-                    }
-                (c.CaseName, ft)
-        ]
-    let body = S.Conditionals (cases, Some errorCase)
-    let parameters = [(value, uType); (cont, contType)]
-    S.FunctionDefinition.Create("match", body, tType, generics = [t], parameters = parameters)
-
 let inModule name defs =
     match splitName name with
     | (Some ns, _) -> S.InModule (ns, defs)
@@ -118,6 +89,11 @@ let registerService (svc: Schema.Service) =
 let properName name =
     snd (splitName name)
 
+let rec onlyProperName (name: string) =
+    match splitName name with
+    | Some _, proper -> onlyProperName proper
+    | None, proper -> proper
+
 let generateFromJsonMethod typeRef : S.FunctionDefinition =
     let json = "json"
     let body = S.Return (S.Call (S.Var "Gluon.Internals.fromJSON", [], [S.LiteralString typeRef; S.Var json]))
@@ -131,12 +107,8 @@ let generateRecordLike tRef name (fields: list<Schema.Field>) : S.ClassDefinitio
     let toJson =
         let body = S.Return (S.Call (S.Var "Gluon.Internals.toJSON", [], [S.LiteralString tRef; S.This]))
         S.FunctionDefinition.Create("toJSON", body, makeType "any")
-    let tag =
-        let body = S.Return (S.LiteralString name)
-        S.FunctionDefinition.Create("tag", body, S.LiteralStringType name)
     let methods =
         [
-            S.ClassMethod.Create(tag)
             S.ClassMethod.Create(toJson)
         ]
     S.ClassDefinition.Create(name, ctor = ctor, methods = methods)
@@ -147,18 +119,22 @@ let generateRecord (recordDef: Schema.Record) : S.Definitions =
     c.WithMethod(S.ClassMethod.Create(generateFromJsonMethod n).Static())
     |> S.DefineClass
 
+let generateUnionCase name (fields: Schema.Field list) =
+    let unionFields =
+        [ for f in fields -> S.UnionCaseField.Create(f.FieldName, typeLiteral f.FieldType) ]
+    S.UnionCaseDefinition.Create(name, unionFields)
+
 let generateUnion (unionDef: Schema.Union) : S.Definitions =
     let tRef = unionDef.UnionName
     let name = properName tRef
     let unionCases = unionDef.UnionCases
     S.DefinitionSequence [
         for c in unionCases do
-            yield S.DefineClass (generateRecordLike tRef c.CaseName c.CaseFields)
+            yield S.DefineUnionCase (generateUnionCase c.CaseName c.CaseFields)
         yield S.DefineTypeAlias (name, S.UnionType [for c in unionCases -> makeType c.CaseName])
         yield S.InModule (name,
                 S.DefinitionSequence [
                     S.DefineFunction (generateFromJsonMethod tRef)
-                    S.DefineFunction (generateMatchMethod unionDef)
                 ])
     ]
 
@@ -192,6 +168,24 @@ let builderLambda (name: string) (n: int) =
     let letters = [for i in 0 .. n - 1 -> letter i]
     S.SimpleLambda (letters, S.New (S.Var name, [for l in letters -> S.Var l]))
 
+let unionCaseLambda (name: string) (fields: Schema.Field list) =
+    let alphabet = "abcdefghijklmnopqrstuvwxyz"
+    let letter i =
+        let o = i % alphabet.Length
+        let n = (i - o) / alphabet.Length
+        match n with
+        | 0 -> string alphabet.[o]
+        | n -> sprintf "%c%i" alphabet.[o] n
+    let letters = [for i in 0 .. fields.Length - 1 -> letter i]
+    let letteredFields = List.zip fields letters
+    let body =
+        S.LiteralObject [
+            yield "tag", S.LiteralString (onlyProperName name)
+            for f, l in letteredFields do
+                yield f.FieldName, S.Var l
+        ]
+    S.SimpleLambda (letters, S.Cast (S.Var name, body))
+
 let registerActivators typeDefs =
     let args =
         S.LiteralObject [
@@ -210,7 +204,7 @@ let registerActivators typeDefs =
                             match ns with
                             | None -> c.CaseName
                             | Some ns -> sprintf "%s.%s" ns c.CaseName
-                        yield (name, builderLambda name c.CaseFields.Length)
+                        yield (name, unionCaseLambda name c.CaseFields)
         ]
     S.Call (S.Var "Gluon.Internals.registerActivators", [], [args])
     |> S.Action

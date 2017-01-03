@@ -3,8 +3,8 @@
     import P = Gluon;
     import S = SampleApp.Services;
 
-    var p1 = new S.Person(new Date(), new S.Phone(12345), "Anton", 30);
-    var p2 = new S.Person(new Date(), new S.Address("San Mateo"), "Lida", 1);
+    var p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
+    var p2 = new S.Person(new Date(), { tag: "Address", text: "San Mateo" }, "Lida", 1);
 
     var j1 = JSON.stringify(p1);
     var j2 = JSON.stringify(p2);
@@ -103,10 +103,11 @@
 
     /// Type-safe matching example for destructuring DUs.
     function showContact(contact: S.Contact): string {
-        return S.Contact.match(contact, {
-            Address: ((text) => "address: " + text),
-            Phone: ((number) => "phone: " + String(number))
-        });
+        switch (contact.tag) {
+            case "Address": return `address: ${contact.text}`;
+            case "Phone": return `phone: ${contact.number}`;
+
+        }
     }
 
     console.log(showContact(p1.contact));
@@ -127,7 +128,9 @@
         console.log("tupleTurnaround =>", results);
     });
     
-    S.unionTurnaround(cli)(new S.C1("A")).then(results => console.log("unionTurnaround => ", results))
+    S.unionTurnaround(cli)({ tag: "C1", Item: "A" }).then(results => {
+        console.log("unionTurnaround => ", results);
+    });
     
 }
 
