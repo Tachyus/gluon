@@ -31,8 +31,6 @@ NUGET
       FSharpVSPowerTools.Core (>= 2.3 < 2.4)
     FSharpVSPowerTools.Core (2.3)
       FSharp.Compiler.Service (>= 2.0.0.3)
-    jQuery (2.1.4)
-    jquery.TypeScript.DefinitelyTyped (3.0.3)
     Microsoft.NETCore.Platforms (1.1) - framework: >= net463
     Microsoft.Owin (3.0.1)
       Owin (>= 1.0)

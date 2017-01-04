@@ -1,1 +1,3 @@
-Scripts/
+node_modules/
+Scripts/*.js*
+Scripts/Generated.ts

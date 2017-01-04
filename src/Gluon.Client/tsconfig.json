@@ -6,11 +6,14 @@
         "strictNullChecks": true,
         "removeComments": true,
         "sourceMap": true,
+        "lib": [ "dom", "es6" ],
         "declaration": true,
         "outDir": "./dist"
     },
     "files": [
-        "../../packages/jquery.TypeScript.DefinitelyTyped/Content/Scripts/typings/jquery/jquery.d.ts",
         "Gluon.ts"
+    ],
+    "typeRoots": [
+        "./node_modules/@types"
     ]
 }

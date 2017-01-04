@@ -21,3 +21,4 @@ src/Gluon.Client/dist/
 temp/
 tests/*/bin
 tests/*/obj
+node_modules/

@@ -3,10 +3,8 @@
     <GluonDist>$(MSBuildThisFileDirectory)../../src/Gluon.Client/dist</GluonDist>
   </PropertyGroup>
   <ItemGroup>
-    <JavaScriptFiles Include="$(GluonDist)/Gluon.js" />
-    <JavaScriptFiles Include="../SampleSPA/bin/SampleSPA/App.js" />
-    <JavaScriptFiles Include="../SampleSPA/bin/SampleApp/bin/Generated.js" />
-    <JavaScriptFiles Include="../../packages/jQuery/Content/Scripts/jquery-2.1.4.js" />
+    <JavaScriptFiles Include="$(GluonDist)/Gluon.*" />
+    <JavaScriptFiles Include="node_modules/jquery/dist/jquery.min.js" />
   </ItemGroup>
   <Target Name="CopyGluonFiles" BeforeTargets="Build">
     <Copy SourceFiles="@(JavaScriptFiles)"

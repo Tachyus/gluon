@@ -133,11 +133,13 @@ Target "CleanDocs" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
+Target "NpmInstall" <| fun _ ->
+    Node.npm "src/Gluon.Client" "install"
+
 Target "Compile" <| fun _ ->
     projects |> msBuildRelease "Build"
 
-Target "Npm" <| fun _ ->
-    Node.npm "src/Gluon.Client" "install"
+Target "NpmBuild" <| fun _ ->
     Node.npm "src/Gluon.Client" "run build"
 
 Target "Build" <| DoNothing
@@ -261,8 +263,9 @@ Target "All" DoNothing
 
 "AssemblyInfo"
   =?> ("BuildVersion", isAppVeyorBuild)
+  ==> "NpmInstall"
   ==> "Compile"
-  ==> "Npm"
+//==> "NpmBuild"
   ==> "Build"
   ==> "RunTests"
   ==> "All"
