@@ -37,7 +37,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Scripts\*.js" />
+    <Content Include="Scripts\App.js" />
+    <Content Include="Scripts\App.js" />
+    <Content Include="Scripts\Generated.js" />
+    <Content Include="Scripts\Generated.js" />
+    <Content Include="Scripts\Gluon.js" />
+    <Content Include="Scripts\Gluon.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />

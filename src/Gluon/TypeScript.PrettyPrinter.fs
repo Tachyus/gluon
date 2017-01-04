@@ -89,7 +89,7 @@ let rec expression e =
     | S.Var v -> t v
     | S.LiteralJson x -> t x
     | S.LiteralObject fields -> braces (commas [for (n, v) in fields -> !(S.LiteralString n) +. t ":" ++ !v])
-    | S.SimpleLambda (args, body) -> parens (commasTight [for a in args -> t a]) ++ t "=>" ++ !body
+    | S.SimpleLambda (args, body) -> parens (commasTight [for (a, v) in args -> t a +. t ":" ++ typeLiteral v]) ++ t "=>" ++ !body
     | S.This -> t "this"
     | S.Cast (a, b) -> t "<" +. expression a +. t ">" +. expression b
 

@@ -39,7 +39,7 @@ type Expression =
     | InstanceOf of Expression * Expression
     | Invoke of Expression * string * list<Expression>
     | New of Expression * list<Expression>
-    | SimpleLambda of list<string> * Expression
+    | SimpleLambda of list<string * TypeLiteral> * Expression
     | This
     | Var of string
     | Cast of Expression * Expression

@@ -1,9 +1,9 @@
 ﻿{
     "compilerOptions": {
-        "module": "none",
+        "module": "umd",
         "target": "es5",
-        "noImplicitAny": false,
-        "strictNullChecks": false,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
         "removeComments": true,
         "sourceMap": true,
         "outDir": "bin"

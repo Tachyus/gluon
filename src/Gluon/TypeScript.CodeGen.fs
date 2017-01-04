@@ -157,7 +157,8 @@ let typeDef def =
         generateUnion u
         |> inModule u.UnionName
 
-let builderLambda (name: string) (n: int) =
+let builderLambda (name: string) (fields: Schema.Field list) =
+    let n = fields.Length
     let alphabet = "abcdefghijklmnopqrstuvwxyz"
     let letter i =
         let o = i % alphabet.Length
@@ -166,7 +167,9 @@ let builderLambda (name: string) (n: int) =
         | 0 -> string alphabet.[o]
         | n -> sprintf "%c%i" alphabet.[o] n
     let letters = [for i in 0 .. n - 1 -> letter i]
-    S.SimpleLambda (letters, S.New (S.Var name, [for l in letters -> S.Var l]))
+    let letteredFields = List.zip fields letters
+    let parameters = letteredFields |> List.map (fun (f, a) -> a, typeLiteral f.FieldType)
+    S.SimpleLambda (parameters, S.New (S.Var name, [for l in letters -> S.Var l]))
 
 let unionCaseLambda (name: string) (fields: Schema.Field list) =
     let alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -178,13 +181,14 @@ let unionCaseLambda (name: string) (fields: Schema.Field list) =
         | n -> sprintf "%c%i" alphabet.[o] n
     let letters = [for i in 0 .. fields.Length - 1 -> letter i]
     let letteredFields = List.zip fields letters
+    let parameters = letteredFields |> List.map (fun (f, a) -> a, typeLiteral f.FieldType)
     let body =
         S.LiteralObject [
             yield "tag", S.LiteralString (onlyProperName name)
             for f, l in letteredFields do
                 yield f.FieldName, S.Var l
         ]
-    S.SimpleLambda (letters, S.Cast (S.Var name, body))
+    S.SimpleLambda (parameters, S.Cast (S.Var name, body))
 
 let registerActivators typeDefs =
     let args =
@@ -195,7 +199,7 @@ let registerActivators typeDefs =
                 | Schema.DefineRecord def ->
                     let name = def.RecordName
                     let fields = def.RecordFields
-                    yield (name, builderLambda name fields.Length)
+                    yield (name, builderLambda name fields)
                 | Schema.DefineUnion def ->
                     let (ns, _) = splitName def.UnionName
                     let cases = def.UnionCases
