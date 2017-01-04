@@ -2,3 +2,4 @@ node_modules/
 Scripts/*.js*
 Scripts/*.map
 Scripts/Generated.ts
+Scripts/Gluon.*
