@@ -847,19 +847,18 @@ module Gluon {
     }
 
     export interface IHttpClient {
-        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<T>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): JQueryPromise<T>;
+        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<T>;
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T>;
     }
 
     class JQueryClient implements IHttpClient {
-        constructor() { }
 
         httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T) {
-            return jQuery.ajax({
+            return Promise.resolve(jQuery.ajax({
                 url: url,
                 type: "get",
                 data: queryParams
-            }).then(x => parseJsonResponse(x));
+            })).then(x => parseJsonResponse(x));
         }
 
         httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T) {
@@ -869,7 +868,7 @@ module Gluon {
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            return jQuery.ajax(ajaxParams).then(x => parseJsonResponse(x));
+            return Promise.resolve(jQuery.ajax(ajaxParams)).then(x => parseJsonResponse(x));
         }
     }
 
@@ -923,7 +922,7 @@ module Gluon {
             return JSON.stringify(proxy.jointParametersSerializer.toJSON(data));
         }
 
-        export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): JQueryPromise<any> {
+        export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): Promise<any> {
             function parseJsonResponse(resp: any) {
                 if (proxy.doesReturn) {
                     const out = proxy.returnTypeSerializer.fromJSON(resp);

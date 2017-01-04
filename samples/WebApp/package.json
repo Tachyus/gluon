@@ -1,37 +1,39 @@
 {
-    "name": "webapp",
-    "version": "1.0.0",
-    "description": "Gluon sample web application",
-    "main": "Scripts/app.js",
-    "scripts": {
-        "clean-webapp": "node_modules/.bin/rimraf ./Scripts/*.js* && node_modules/.bin/rimraf ./bin && mkdir bin",
-        "clean": "npm run clean-webapp",
-        "generate-client": "'../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.exe'",
-        "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js Scripts",
-        "copy-gluon": "cp ../../src/Gluon.Client/Gluon.ts Scripts",
-        "prebuild": "npm run copy-jquery && npm run copy-gluon && npm run generate-client",
-        "compile": "node_modules/.bin/tsc -p ./",
-        "build": "npm run compile",
-        "start": "bin/SampleApp.exe",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Tachyus/gluon.git"
-    },
-    "author": "",
-    "license": "Apache-2.0",
-    "bugs": {
-        "url": "https://github.com/Tachyus/gluon/issues"
-    },
-    "homepage": "https://github.com/Tachyus/gluon#readme",
-    "dependencies": {
-        "@types/jquery": "^2.0.34",
-        "jquery": "^3.1.1"
-    },
-    "devDependencies": {
-        "rimraf": "^2.5.2",
-        "typescript": "^2.1.4",
-        "uglify-js": "^2.6.4"
-    }
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "Gluon sample web application",
+  "main": "Scripts/app.js",
+  "scripts": {
+    "clean-webapp": "node_modules/.bin/rimraf ./Scripts/*.js* && node_modules/.bin/rimraf ./bin && mkdir bin",
+    "clean": "npm run clean-webapp",
+    "generate-client": "'../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.exe'",
+    "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js Scripts",
+    "copy-gluon": "cp ../../src/Gluon.Client/Gluon.ts Scripts",
+    "prebuild": "npm run copy-jquery && npm run copy-gluon && npm run generate-client",
+    "compile": "node_modules/.bin/tsc -p ./",
+    "build": "npm run compile",
+    "start": "bin/SampleApp.exe",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tachyus/gluon.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Tachyus/gluon/issues"
+  },
+  "homepage": "https://github.com/Tachyus/gluon#readme",
+  "dependencies": {
+    "@types/jquery": "^2.0.34",
+    "es6-promise": "^4.0.5",
+    "jquery": "^3.1.1",
+    "whatwg-fetch": "^2.0.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.5.2",
+    "typescript": "^2.1.4",
+    "uglify-js": "^2.6.4"
+  }
 }

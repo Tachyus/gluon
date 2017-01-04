@@ -4,7 +4,9 @@
   </PropertyGroup>
   <ItemGroup>
     <JavaScriptFiles Include="$(GluonDist)/Gluon.*" />
-    <JavaScriptFiles Include="node_modules/jquery/dist/jquery.min.js" />
+    <JavaScriptFiles Include="node_modules/es6-promise/dist/es6-promise.*" />
+    <JavaScriptFiles Include="node_modules/whatwg-fetch/fetch.js" />
+    <JavaScriptFiles Include="node_modules/jquery/dist/jquery.*" />
   </ItemGroup>
   <Target Name="CopyGluonFiles" BeforeTargets="Build">
     <Copy SourceFiles="@(JavaScriptFiles)"

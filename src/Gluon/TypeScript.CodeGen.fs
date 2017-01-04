@@ -50,7 +50,7 @@ let inModule name defs =
     | _ -> defs
 
 let promiseOf x =
-    S.TypeReference ("JQueryPromise", [x])
+    S.TypeReference ("Promise", [x])
 
 let generateSignature (m: Schema.Method) =
     let formals = [for par in m.MethodParameters -> (par.ParameterName, typeLiteral par.ParameterType)]
