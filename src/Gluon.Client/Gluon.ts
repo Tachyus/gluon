@@ -848,6 +848,29 @@ class JQueryClient implements IHttpClient {
             return promise.then(x => parseJsonResponse(x));
         } else {
             return promise;
+    export interface IHttpClient {
+        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<T>;
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T>;
+    }
+
+    class JQueryClient implements IHttpClient {
+
+        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T) {
+            return Promise.resolve(jQuery.ajax({
+                url: url,
+                type: "get",
+                data: queryParams
+            })).then(x => parseJsonResponse(x));
+        }
+
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T) {
+            let ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
+            if (jsonRequest !== null) {
+                ajaxParams.data = jsonRequest;
+                ajaxParams.dataType = "json";
+                ajaxParams.contentType = "application/json";
+            }
+            return Promise.resolve(jQuery.ajax(ajaxParams)).then(x => parseJsonResponse(x));
         }
     }
 }
@@ -920,6 +943,26 @@ namespace Remoting {
             default:
                 const jsonRequest = buildJsonRequest(cli, proxy, args);
                 return cli.httpClient.httpCall(verbName(httpMethod), url, jsonRequest, parseJsonResponse);
+
+        export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): Promise<any> {
+            function parseJsonResponse(resp: any) {
+                if (proxy.doesReturn) {
+                    const out = proxy.returnTypeSerializer.fromJSON(resp);
+                    return out;
+                } else {
+                    return resp;
+                }
+            }
+            const url = buildUrl(cli, proxy.innerMethod);
+            const httpMethod = verb(proxy.innerMethod.CallingConvention);
+            switch (httpMethod) {
+                case "Get":
+                    const queryParams = buildQueryParams(cli, proxy, args);
+                    return cli.httpClient.httpGet(url, queryParams, parseJsonResponse);
+                default:
+                    const jsonRequest = buildJsonRequest(cli, proxy, args);
+                    return cli.httpClient.httpCall(verbName(httpMethod), url, jsonRequest, parseJsonResponse);
+            }
         }
     }
 
