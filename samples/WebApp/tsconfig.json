@@ -6,12 +6,12 @@
         "strictNullChecks": true,
         "removeComments": true,
         "sourceMap": true,
-        "lib": [ "dom", "es6" ],
-        "declaration": true,
-        "outDir": "./dist"
+        "lib": [ "dom", "es6" ]
     },
     "files": [
-        "Gluon.ts"
+        "../../src/Gluon.Client/dist/Gluon.d.ts",
+        "Scripts/Generated.ts",
+        "Scripts/App.ts"
     ],
     "typeRoots": [
         "./node_modules/@types"

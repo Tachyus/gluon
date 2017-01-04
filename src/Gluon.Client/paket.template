@@ -14,3 +14,4 @@ files
     dist/Gluon.js ==> content\Scripts
     dist/Gluon.js.map ==> content\Scripts
     dist/Gluon.min.js ==> content\Scripts
+    dist/Gluon.min.js.map ==> content\Scripts

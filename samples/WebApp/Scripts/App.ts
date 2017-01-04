@@ -3,13 +3,13 @@
     import P = Gluon;
     import S = SampleApp.Services;
 
-    var p1 = new S.Person(new Date(), new S.Phone(12345), "Anton", 30);
-    var p2 = new S.Person(new Date(), new S.Address("San Mateo"), "Lida", 1);
+    var p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
+    var p2 = new S.Person(new Date(), { tag: "Address", text: "San Mateo" }, "Lida", 1);
 
     var j1 = JSON.stringify(p1);
     var j2 = JSON.stringify(p2);
 
-    function parse(kind, json: string) {
+    function parse<T>(kind: { fromJSON(json: any): T }, json: string): T {
         return kind.fromJSON(JSON.parse(json));
     }
 
@@ -50,7 +50,9 @@
     });
 
     S.putDataSeriesTurnaround(cli)(dataSeries).then(result => {
-        console.log("putDataSeriesTurnaround => ", result.DataPoints, result.DataPoints.length);
+        if (result !== undefined) {
+            console.log("putDataSeriesTurnaround => ", result.DataPoints, result.DataPoints.length);
+        }
     });
 
     S.getAdded(cli)(10).then(x => {
@@ -78,9 +80,11 @@
     dictExample.setAt("two", 2);
     dictExample.setAt("three", 13);
     S.convertDict(cli)(dictExample).then(x => {
-        x.forEach((key, value) => {
-            console.log("dict:", key, value);
-        });
+        if (x !== undefined) {
+            x.forEach((key, value) => {
+                console.log("dict:", key, value);
+            });
+        }
     });
 
     S.convertRawJson(cli)({ foo: 1 }).then(x => {
@@ -103,10 +107,10 @@
 
     /// Type-safe matching example for destructuring DUs.
     function showContact(contact: S.Contact): string {
-        return S.Contact.match(contact, {
-            Address: ((text) => "address: " + text),
-            Phone: ((number) => "phone: " + String(number))
-        });
+        switch (contact.tag) {
+            case "Address": return `address: ${contact.text}`;
+            case "Phone": return `phone: ${contact.number}`;
+        }
     }
 
     console.log(showContact(p1.contact));
@@ -115,8 +119,10 @@
     S.dictCheck(cli)(d0).then(x => console.log("dict check returned ok", x));
 
     S.getTwoDates(cli)().then(pair => {
-        console.log("getTwoDates => ", pair[0], pair[1])
-        S.getTwoDatesBack(cli)(pair[0], pair[1]).then(result => console.log("getTwoDatesBack => ", result));
+        if (pair !== undefined) {
+            console.log("getTwoDates => ", pair[0], pair[1])
+            S.getTwoDatesBack(cli)(pair[0], pair[1]).then(result => console.log("getTwoDatesBack => ", result));
+        }
     });
 
     S.enumTurnaround(cli)([S.E.E2, S.E.E4, S.E.E8]).then(results => {
@@ -127,7 +133,9 @@
         console.log("tupleTurnaround =>", results);
     });
     
-    S.unionTurnaround(cli)(new S.C1("A")).then(results => console.log("unionTurnaround => ", results))
+    S.unionTurnaround(cli)({ tag: "C1", Item: "A" }).then(results => {
+        console.log("unionTurnaround => ", results);
+    });
     
 }
 
