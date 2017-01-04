@@ -1,4 +1,12 @@
+### New in 2.0.0 - (Released 2016-01-04)
+Update Gluon to generate TypeScript 2.0 compliant outputs, including:
+- tagged unions
+- ES6 Promises
+- noImplicitAny enabled
+- strictNullChecks enabled
+
 ### New in 1.0.5 - (TBD)
+Fix issue with too few letter variables in generated signatures.
 
 ### New in 1.0.4 - (Released 2016-02-04)
 Fix path in source map file.

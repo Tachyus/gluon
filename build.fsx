@@ -265,7 +265,7 @@ Target "All" DoNothing
   =?> ("BuildVersion", isAppVeyorBuild)
   ==> "NpmInstall"
   ==> "Compile"
-//==> "NpmBuild"
+  ==> "NpmBuild"
   ==> "Build"
   ==> "RunTests"
   ==> "All"
