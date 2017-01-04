@@ -853,6 +853,49 @@ class JQueryClient implements IHttpClient {
         httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T>;
     }
 
+    class FetchClient implements IHttpClient {
+
+        static serialize(obj: any, prefix?: string): string {
+            const str: string[] = [];
+            for (let p in Object.keys(obj)) {
+                if (obj.hasOwnProperty(p)) {
+                    const k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+                    str.push((v !== null && typeof v === "object") ?
+                        this.serialize(v, k) :
+                        encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                }
+            }
+            return str.join("&");
+        }
+
+        async httpGet<T>(url: string, queryParams: { [key: string]: string } | null = null, parseJsonResponse: (json: any) => T) {
+            const urlAndQuery = queryParams === null ? url : `${url}?${FetchClient.serialize(queryParams)}`;
+            const response = await window.fetch(urlAndQuery, {
+                method: "GET",
+                headers: new Headers({
+                    "Accept": "application/json"
+                })
+            });
+            const json = await response.json();
+            return parseJsonResponse(json);
+        }
+
+        async httpCall<T>(httpMethod: string, url: string, jsonRequest: any | null = null, parseJsonResponse: (json: any) => T) {
+            const params =
+                jsonRequest !== null ? {
+                    method: httpMethod,
+                    body: jsonRequest,
+                    headers: new Headers({
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    })
+                } : { method: httpMethod };
+            const response = await window.fetch(url, params);
+            const json = await response.json();
+            return parseJsonResponse(json);
+        }
+    }
+
     class JQueryClient implements IHttpClient {
 
         httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T) {

@@ -36,5 +36,7 @@
     "rimraf": "2.5.1",
     "typescript": "^2.2.2",
     "uglify-js": "2.6.1"
+    "@types/jquery": "^2.0.34",
+    "@types/whatwg-fetch": "0.0.33"
   }
 }
