@@ -35,6 +35,7 @@
   "homepage": "http://www.tachyus.com/gluon",
   "private": true,
   "dependencies": {
-    "@types/jquery": "^2.0.34"
+    "@types/jquery": "^2.0.34",
+    "@types/whatwg-fetch": "0.0.33"
   }
 }
