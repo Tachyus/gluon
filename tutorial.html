@@ -34,16 +34,12 @@
         <div class="span9" id="main">
           
 <h1><a name="Tutorial" class="anchor" href="#Tutorial">Tutorial</a></h1>
-
 <p>The setup is a little tricky, but see the <code>samples</code> folder. You would
 typically use two projects, one for the F# APIs and web setup, and one
 for the C# or TypeScript web application.</p>
-
 <h2><a name="F-Project" class="anchor" href="#F-Project">F# Project</a></h2>
-
 <p>In the F# project, reference <code>Gluon</code> NuGet package. Also reference
 <code>Owin</code> and <code>Microsoft.Owin</code>. Mark some methods as remote:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -56,9 +52,7 @@ for the C# or TypeScript web application.</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>In your OWIN startup code, add Gluon to the pipeline, for example:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -87,9 +81,7 @@ for the C# or TypeScript web application.</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>Lastly, you need to make sure Gluon added a target to your <code>fsproj</code> file to get the <code>Gluon.CLI.exe</code> to copy the generated TypeScript client to your web project:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -104,11 +96,8 @@ for the C# or TypeScript web application.</p>
   <span class="k">&lt;</span><span class="i">Exec</span> <span class="o">Command</span><span class="k">="&amp;quot;$(GluonToolPath)&amp;quot; --out &amp;quot;..\WebProject\Scripts\$(Name).ts&amp;quot; --reflect &amp;quot;$(TargetPath)&amp;quot;"</span> <span class="o">ContinueOnError</span><span class="k">="false"</span> <span class="o">WorkingDirectory</span><span class="k">="$(MSBuildThisFileDirectory)"</span> <span class="k">/&gt;</span>
 <span class="k">&lt;/</span><span class="i">Target</span><span class="k">&gt;</span>
 </code></pre></td></tr></table>
-
 <h2><a name="Web-Project" class="anchor" href="#Web-Project">Web Project</a></h2>
-
 <p>Reference a bunch of packages, namely:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -127,19 +116,15 @@ for the C# or TypeScript web application.</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>Add TypeScript compilation to the project, if it does not have it
 already.  This typically takes this form in <code>.csproj</code>:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="xml"><span class="k">&lt;</span><span class="i">Import</span> <span class="o">Project</span><span class="k">="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets"</span>
         <span class="o">Condition</span><span class="k">="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')"</span> <span class="k">/&gt;</span>
 </code></pre></td></tr></table>
-
 <p>In your <code>Scripts/app.ts</code>, write something like this:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -153,36 +138,33 @@ already.  This typically takes this form in <code>.csproj</code>:</p>
 <span class="l">11: </span>
 <span class="l">12: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="typescript">/// &lt;reference path="typings/jquery/jquery.d.ts" /&gt;
-/// &lt;reference path="typings/Gluon.d.ts" /&gt;
-/// &lt;reference path="Gluon.Generated.ts" /&gt;
+<td class="snippet"><pre class="fssnip highlighted"><code lang="typescript"><span class="c">/// &lt;reference path="typings/jquery/jquery.d.ts" /&gt;</span>
+<span class="c">/// &lt;reference path="typings/Gluon.d.ts" /&gt;</span>
+<span class="c">/// &lt;reference path="Gluon.Generated.ts" /&gt;</span>
 
-jQuery(() =&gt; {
-    console.log('start');
-    var cli = new Gluon.Client();
+jQuery(() <span class="o">=</span><span class="o">&gt;</span> {
+    console.log(<span class="s">'start'</span>);
+    <span class="k">var</span> cli <span class="o">=</span> <span class="k">new</span> Gluon.Client();
 
-    MyApp.Arithmetic.incr(cli)(1).then(x =&gt; {
-        console.log('incr(1) = ', x);
+    MyApp.Arithmetic.incr(cli)(<span class="n">1</span>).then(x <span class="o">=</span><span class="o">&gt;</span> {
+        console.log('incr(<span class="n">1</span>) <span class="o">=</span> ', x);
     });
 });
 </code></pre></td></tr></table>
-
 <h2><a name="Workflow" class="anchor" href="#Workflow">Workflow</a></h2>
-
 <p>Certain error conditions such as name conflicts on methods, or using a
 type that is not a DataType as either method parameter or return type,
 are detected statically at compile time via code generation.</p>
-
 <p>The code generator takes a service descriptor, validates it, and
 provide TypeScript types for the matching client.  The user workflow is:</p>
-
 <ul>
 <li>edit F# service files</li>
 <li>compile</li>
-<li>obtain the re-generated TypeScript code and adjust TypeScript call
-sites as necessary, guided by the TypeScript compiler</li>
+<li>
+obtain the re-generated TypeScript code and adjust TypeScript call
+sites as necessary, guided by the TypeScript compiler
+</li>
 </ul>
-
 <p>Gluon ships with MSBuild automation and API to roll your own.</p>
 
 <div class="tip" id="fs1">val incr : cell:int ref -&gt; unit<br /><br />Full name: Microsoft.FSharp.Core.Operators.incr</div>

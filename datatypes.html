@@ -34,14 +34,12 @@
         <div class="span9" id="main">
           
 <h1><a name="Datatypes" class="anchor" href="#Datatypes">Datatypes</a></h1>
-
 <p>Gluon allows correct and consistent automatic serialization and
 deserialization for a specific universe of datatypes. For every type
 in this universe, Gluon defines an F# representation, a TypeScript
 representation, a serialized JSON representation, and automatic
 converters between in-memory and serialized representations. The
 grammar for the type set is given below:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -78,37 +76,29 @@ grammar for the type set is given below:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>JSON (or other serialized format) representations should be considered
 Gluon internal implementation detail and may change without notice.
 Gluon will never need to discriminate on values to infer the type of
 the represented objects, since type information is always available
 statically. This allows distinct types use similar JSON
 representations (such as a string) without confusion.</p>
-
 <p>Boolean, String, Int, Double have intuitive representations. Gluon
 should preserve the complete range of values (including NaN, Infinity,
 null strings).</p>
-
 <h2><a name="DateTime" class="anchor" href="#DateTime">DateTime</a></h2>
-
 <p>Since version 0.4.2, Gluon supports two semantics for DateTime values:
 the "physical" interpretation of DateTime is a time-point in universal
 time coordinates, and the "calendar" interpretation:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">x</span> <span class="o">=</span> <span class="i">y</span> <span class="o">&lt;=&gt;</span> <span class="i">ymdhms</span>(<span class="i">x</span>) <span class="o">=</span> <span class="i">ymdhmx</span>(<span class="i">y</span>)
 </code></pre></td>
 </tr>
 </table>
-
 <p>For convenience, both interpretations use the same types (the
 distinction is not tracked in the type system). On the F# side the
 type is <code>System.DateTime</code>, and on the TypeScript side it is <code>Date</code>.</p>
-
 <h2><a name="Physical-datetimes" class="anchor" href="#Physical-datetimes">Physical datetimes</a></h2>
-
 <p>On CLR, physical datetimes are represented as <code>DateTime</code> object with
 <code>Kind</code> being either <code>DateTimeKind.Local</code> or <code>DateTimeKind.Utc</code>. In
 TypeScript, these are represented as vanilla <code>Date</code> objects. During
@@ -116,14 +106,11 @@ interop, zone conversions happen to preserve the universal coordinate
 meaning of the datetime. Note that the browser always displays <code>Date</code>
 objects in user-local zone, which might be different from the server
 timezone; server timezone information is lost.</p>
-
 <h2><a name="Calendar-datetimes" class="anchor" href="#Calendar-datetimes">Calendar datetimes</a></h2>
-
 <p>Calendar semantics are useful when displaying dates as-is, bypassing
 timezone conversions. Two dates are considered calendar-equivalent if
 they have the same year, month, day, hour, minute and second. Time
 zone information is not tracked and must be implied.</p>
-
 <p>On CLR, calendar datetimes are <code>DateTime</code> objects with
 <code>DateTimeKind.Unspecified</code>. In TypeScript, these are represented as a
 <code>Date</code> object that is extended to have an extra tag <code>x.unspecified ==
@@ -131,9 +118,7 @@ true</code>. Browsers ignores the tag and treat the <code>Date</code> objects as
 they were in browser-local timezone, however the tag is used by Gluon
 to make sure these values roundtrip to the server using calendar
 semantics.</p>
-
 <h2><a name="Records-and-unions" class="anchor" href="#Records-and-unions">Records and unions</a></h2>
-
 <p>Records and unions use the WebSharper serialization convention, where
 the internal representation of the type is considered, regardless of
 public/internal/private declarations. This is unlike some other
@@ -142,35 +127,25 @@ properties or opt-in and opt-out attributes. This limits flexibility
 but greatly simplifies constructing equivalent types in TypeScript,
 and ensuring turnaround. Records will map to TypeScript classes in an
 intuitive manner.</p>
-
 <p>Unions currently generate a TypeScript class for each case and an
 untagged TypeScript union type alias for the union itself. This scheme
 has runtime efficiency and allows to discriminate values with the
 <code>instanceof</code> operator. This representation may change in the future,
 an alternative here is to provide a match construct that enforces
 completeness check in the type system.</p>
-
 <p>Since 0.4.x, Gluon also generates a typed pattern-matching helper for
 unions.</p>
-
 <h2><a name="Tuples" class="anchor" href="#Tuples">Tuples</a></h2>
-
 <p>Tuples will map to JavaScript records and anonymous object types in
 TypeScript.</p>
-
 <h2><a name="Collections" class="anchor" href="#Collections">Collections</a></h2>
-
 <p>Array, sequence and list types will all map to TypeScript arrays.</p>
-
 <h2><a name="Options" class="anchor" href="#Options">Options</a></h2>
-
 <p>Options will map to a newly introduced Option<T> TypeScript type, and
 StringDict will use a newly introduced Dict<T> TypeScript type
 logically equivalent to F# Dictionary<string,T>, implemented
 efficiently using object keys in JavaScript.</p>
-
 <h2><a name="Unstructured-data" class="anchor" href="#Unstructured-data">Unstructured data</a></h2>
-
 <p>Finally, there are some rare situations where absolute type safety is
 not feasible or counter-productive. In these cases it is nice to have
 an escape hatch that allows to communicate data without specifying its

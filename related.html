@@ -34,7 +34,6 @@
         <div class="span9" id="main">
           
 <h1><a name="Related" class="anchor" href="#Related">Related</a></h1>
-
 <p>Google protocol-buffers and Apache Thrift are two industrial-strength
 projects with fairly similar scope. The primary difference is that
 these projects use a custom IDL language to generate both clients and
@@ -44,19 +43,22 @@ in Gluon; such scenarios introduce the new requirement of being able
 to extend service contracts without breaking existing code. Both
 protocol-buffers and Thrift have a versioning facility to address
 this.</p>
-
 <p>Either project could be used instead of Gluon, however:</p>
-
 <ul>
-<li><p>protocol-buffers lacks TypeScript support and Thrift has it as
-third-party beta</p></li>
-<li><p>neither has F# support, though C# is probably working (so, no
-Unions, option, etc)</p></li>
-<li><p>the IDL approach is a bit more tailored for truly multiple-language
+<li>
+<p>protocol-buffers lacks TypeScript support and Thrift has it as
+third-party beta</p>
+</li>
+<li>
+<p>neither has F# support, though C# is probably working (so, no
+Unions, option, etc)</p>
+</li>
+<li>
+<p>the IDL approach is a bit more tailored for truly multiple-language
 projects; inferring schema from F# code is more convenient if that is
-the principal language</p></li>
+the principal language</p>
+</li>
 </ul>
-
 <p>These projects should definitely be considered if requirements arise
 of interacting with more languages such as Python or serializing
 semi-structured data. It should be possible to extend future versions
