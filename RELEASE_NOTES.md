@@ -1,3 +1,5 @@
+### New in 2.0.2 - (TBD)
+
 ### New in 2.0.1 - (Released 2017-01-06)
 Fix bug in generating union cases with more than one field
 
