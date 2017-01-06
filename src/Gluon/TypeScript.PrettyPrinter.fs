@@ -161,8 +161,8 @@ let unionCaseDefinition (u: S.UnionCaseDefinition) : PP.Layout =
     let body =
         vertical [
             yield layoutTag u.UnionCaseName
-            for { FieldName = a; FieldType = b } in u.Fields do
-                yield t a +. t ": " +. typeLiteral b
+            for { FieldName = a; FieldType = b } in u.Fields ->
+                t a +. t ":" ++ typeLiteral b +. t ";"
         ]
     t "interface" ++ t u.UnionCaseName ++ braces (block body)
 

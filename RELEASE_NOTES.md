@@ -1,4 +1,7 @@
-### New in 2.0.0 - (Released 2016-01-04)
+### New in 2.0.1 - (Released 2017-01-06)
+Fix bug in generating union cases with more than one field
+
+### New in 2.0.0 - (Released 2017-01-04)
 Update Gluon to generate TypeScript 2.0 compliant outputs, including:
 
 * tagged unions
