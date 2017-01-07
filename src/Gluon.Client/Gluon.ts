@@ -811,6 +811,13 @@ export class Client {
             this.prefix = "/gluon-api";
         } else {
             this.prefix = prefix;
+        /** Constructs a client, with an optional URL prefix. */
+        constructor(public httpClient: IHttpClient = new FetchClient(), prefix?: string) {
+            if (!prefix) {
+                this.prefix = "/gluon-api";
+            } else {
+                this.prefix = prefix;
+            }
         }
     }
 }
@@ -853,7 +860,7 @@ class JQueryClient implements IHttpClient {
         httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T>;
     }
 
-    class FetchClient implements IHttpClient {
+    export class FetchClient implements IHttpClient {
 
         static serialize(obj: any, prefix?: string): string {
             const str: string[] = [];
@@ -896,7 +903,7 @@ class JQueryClient implements IHttpClient {
         }
     }
 
-    class JQueryClient implements IHttpClient {
+    export class JQueryClient implements IHttpClient {
 
         httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T) {
             return Promise.resolve(jQuery.ajax({
