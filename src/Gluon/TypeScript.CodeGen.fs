@@ -128,14 +128,23 @@ let generateUnion (unionDef: Schema.Union) : S.Definitions =
     let tRef = unionDef.UnionName
     let name = properName tRef
     let unionCases = unionDef.UnionCases
+    let shouldGenerateStringLiterals =
+        unionCases |> List.forall (fun c -> List.isEmpty c.CaseFields)
     S.DefinitionSequence [
-        for c in unionCases do
-            yield S.DefineUnionCase (generateUnionCase c.CaseName c.CaseFields)
-        yield S.DefineTypeAlias (name, S.UnionType [for c in unionCases -> makeType c.CaseName])
-        yield S.InModule (name,
-                S.DefinitionSequence [
-                    S.DefineFunction (generateFromJsonMethod tRef)
-                ])
+        if shouldGenerateStringLiterals then
+            yield S.DefineTypeAlias (name, S.UnionType [for c in unionCases -> S.LiteralStringType c.CaseName])
+            yield S.InModule (name,
+                    S.DefinitionSequence [
+                        S.DefineFunction (generateFromJsonMethod tRef)
+                    ])
+        else
+            for c in unionCases do
+                yield S.DefineUnionCase (generateUnionCase c.CaseName c.CaseFields)
+            yield S.DefineTypeAlias (name, S.UnionType [for c in unionCases -> makeType c.CaseName])
+            yield S.InModule (name,
+                    S.DefinitionSequence [
+                        S.DefineFunction (generateFromJsonMethod tRef)
+                    ])
     ]
 
 let generateEnum (enumDef: Schema.Enum) =
@@ -181,14 +190,19 @@ let unionCaseLambda (name: string) (fields: Schema.Field list) =
         | n -> sprintf "%c%i" alphabet.[o] n
     let letters = [for i in 0 .. fields.Length - 1 -> letter i]
     let letteredFields = List.zip fields letters
-    let parameters = letteredFields |> List.map (fun (f, a) -> a, typeLiteral f.FieldType)
-    let body =
-        S.LiteralObject [
-            yield "tag", S.LiteralString (onlyProperName name)
-            for f, l in letteredFields do
-                yield f.FieldName, S.Var l
-        ]
-    S.SimpleLambda (parameters, S.Cast (S.Var name, body))
+    if List.isEmpty letteredFields then
+        // This is a string literal union
+        let body = S.LiteralString (onlyProperName name)
+        S.SimpleLambda ([], body)
+    else
+        let parameters = letteredFields |> List.map (fun (f, a) -> a, typeLiteral f.FieldType)
+        let body =
+            S.LiteralObject [
+                yield "tag", S.LiteralString (onlyProperName name)
+                for f, l in letteredFields do
+                    yield f.FieldName, S.Var l
+            ]
+        S.SimpleLambda (parameters, S.Cast (S.Var name, body))
 
 let registerActivators typeDefs =
     let args =

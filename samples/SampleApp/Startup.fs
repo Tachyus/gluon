@@ -81,6 +81,12 @@ module private Services =
         }
 
     [<Remote>]
+    let showContact (p: Person) =
+        match p.contact with
+        | Address text -> sprintf "address %s" text
+        | Phone number -> sprintf "phone number %i" number
+
+    [<Remote>]
     let putDataSeriesTurnaround (x: DataSeries) =
         printfn "ok.."
         x
@@ -161,6 +167,21 @@ module private Services =
         | C1 x -> C3 x
         | C3 x -> C1 x
         | C2 xs -> C2 xs
+
+    type Color =
+        | Blue
+        | Red
+        | ``Green Orange``
+
+    [<Remote>]
+    let getColor () = ``Green Orange``
+
+    [<Remote>]
+    let setColor (color: Color) =
+        match color with
+        | Blue -> "Set color to blue"
+        | Red -> "Set color to red"
+        | ``Green Orange`` -> "Set color to green orange"
 
 type Startup() =
     member x.Configuration(app: IAppBuilder) =

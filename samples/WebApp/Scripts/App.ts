@@ -31,7 +31,17 @@
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-     var cli = new P.Client();
+    var cli = new P.Client();
+
+    (async function testPersonPhone() {
+        const result = await S.showContact(cli)(p1);
+        console.log(result);
+    })();
+
+    (async function testPersonAddress() {
+        const result = await S.showContact(cli)(p2);
+        console.log(result);
+    })();
 
     S.incr(cli)(1).then(x => {
         console.log("incr(1) ==> ", x);
@@ -136,6 +146,19 @@
     S.unionTurnaround(cli)({ tag: "C1", Item: "A" }).then(results => {
         console.log("unionTurnaround => ", results);
     });
+
+    (async function getColor() {
+        const result = await S.getColor(cli)();
+        console.log("retrieved the color " + result);
+    })();
     
+    async function chooseColor(color: S.Color) {
+        const result = await S.setColor(cli)(color);
+        console.log(result);
+    }
+
+    chooseColor("Blue");
+    chooseColor("Red");
+    chooseColor("Green Orange");
 }
 

@@ -1,4 +1,5 @@
-### New in 2.0.2 - (TBD)
+### New in 2.0.2 - (Released 2017-01-07)
+Fix issue #26 by generating string literal union types from F# unions with no fields
 
 ### New in 2.0.1 - (Released 2017-01-06)
 Fix bug in generating union cases with more than one field
