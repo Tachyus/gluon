@@ -709,10 +709,8 @@ module Gluon {
             const isStringLiteralUnion = typeof value === "string";
             var tag: string = isStringLiteralUnion ? value : value.tag;
             var uCase = this.findCase(tag);
-            console.log("Union.toJSON", tag, uCase, isStringLiteralUnion);
             if (uCase !== undefined) {
                 if (isStringLiteralUnion) {
-                    console.log("Union.toJSON result", [tag]);
                     return [tag];
                 } else {
                     var res = new Array(uCase.fields.length + 1);
@@ -722,11 +720,9 @@ module Gluon {
                         var v = value[f.fieldName];
                         res[i + 1] = f.fieldSerializer.toJSON(v);
                     }
-                    console.log("Union.toJSON result", res);
                     return res;
                 }
             }
-            console.log("Union.toJSON result", null);
             return null;
         }
 
