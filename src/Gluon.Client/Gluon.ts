@@ -697,9 +697,26 @@ class UnionSerializer {
                     var f = uCase.fields[i];
                     var v = value[f.fieldName];
                     res[i + 1] = f.fieldSerializer.toJSON(v);
+        toJSON(value: any): any[] | null {
+            const isStringLiteralUnion = typeof value === "string";
+            var tag: string = isStringLiteralUnion ? value : value.tag;
+            var uCase = this.findCase(tag);
+            if (uCase !== undefined) {
+                if (isStringLiteralUnion) {
+                    return [tag];
+                } else {
+                    var res = new Array(uCase.fields.length + 1);
+                    res[0] = tag;
+                    for (var i = 0; i < uCase.fields.length; i++) {
+                        var f = uCase.fields[i];
+                        var v = value[f.fieldName];
+                        res[i + 1] = f.fieldSerializer.toJSON(v);
+                    }
+                    return res;
                 }
                 return res;
             }
+            return null;
         }
         return null;
     }
