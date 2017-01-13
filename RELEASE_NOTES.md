@@ -1,3 +1,5 @@
+### New in 3.0.1 - (Released TBD)
+
 ### New in 3.0.0 - (Released 2017-01-13)
 Change Option type to `T | null` from tagged union.
 
