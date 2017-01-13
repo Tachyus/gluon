@@ -183,6 +183,10 @@ module private Services =
         | Red -> "Set color to red"
         | ``Green Orange`` -> "Set color to green orange"
 
+    [<Remote>]
+    let optionTurnaround (value: int option) =
+        value
+
 type Startup() =
     member x.Configuration(app: IAppBuilder) =
         app.MapGluon() |> ignore

@@ -4,9 +4,9 @@
   "description": "TypeScript to FSharp connector",
   "main": "Gluon.ts",
   "devDependencies": {
-    "rimraf": "^2.5.1",
-    "typescript": "^2.1.4",
-    "uglify-js": "^2.6.1"
+    "rimraf": "2.5.1",
+    "typescript": "2.1.4",
+    "uglify-js": "2.6.1"
   },
   "scripts": {
     "clean": "rimraf ./dist && mkdir dist",
@@ -35,6 +35,6 @@
   "homepage": "http://www.tachyus.com/gluon",
   "private": true,
   "dependencies": {
-    "@types/jquery": "^2.0.34"
+    "@types/jquery": "^2.0.39"
   }
 }

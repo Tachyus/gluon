@@ -138,51 +138,34 @@ module Gluon {
 
     // Option<T> support ------------------------------------------------------
 
-    export interface Some<T> {
-        isSome: true;
-        value: T;
-    }
-    export interface None<T> {
-        isSome: false;
-    }
     /** Represents optional values, just as F# does. */
-    export type Option<T> = Some<T> | None<T>;
+    export type Option<T> = T | null;
 
     /** Option operators. */
     export module Option {
         /** Constructs a Some(value) option. */
         export function some<T>(value: T): Option<T> {
-            return { isSome: true, value };
+            return value;
         }
 
         /** Constructs a None option. */
         export function none<T>(): Option<T> {
-            return { isSome: false };
+            return null;
         }
 
         /** Recovers an Option<T> from JSON object representation. */
-        export function fromJSON<T>(json: any) {
-            if (json === null) {
-                return none<T>();
-            }
+        export function fromJSON<T>(json: any): Option<T> {
+            return json === null ? null : <T>(json[0]);
         }
 
         /** Converts to a JSON representation. */
-        export function toJSON<T>(option: Option<T>): any {
-            if (option.isSome) {
-                return [option.value];
-            } else {
-                return null;
-            }
+        export function toJSON<T>(value: Option<T>): any {
+            return value === null ? null : [value];
         }
 
         /** Unpacks with a default value. */
-        export function withDefault<T>(option: Option<T>, defaultValue: T): T {
-            if (option.isSome) {
-                return option.value;
-            } else {
-                return defaultValue;
-            }
+        export function withDefault<T>(value: Option<T>, defaultValue: T): T {
+            return value === null ? defaultValue : value;
         }
     }
 
@@ -227,11 +210,7 @@ module Gluon {
 
         tryFind(key: string): Option<T> {
             this.check(key);
-            if (this.data.hasOwnProperty(key)) {
-                return Option.some(this.data[key]);
-            } else {
-                return Option.none<T>();
-            }
+            return this.data.hasOwnProperty(key) ? this.data[key] : null;
         }
 
         setAt(key: string, value: T): void {
@@ -320,8 +299,8 @@ module Gluon {
                 var t = tupleType(m.MethodParameters.map(p => p.ParameterType));
                 visitDataType(t, visitor);
             }
-            if (m.MethodReturnType.isSome) {
-                visitDataType(m.MethodReturnType.value, visitor);
+            if (!!m.MethodReturnType) {
+                visitDataType(m.MethodReturnType, visitor);
             }
         }
         methods.forEach(visitMethod);
@@ -506,7 +485,7 @@ module Gluon {
         }
     }
 
-    class OptionSerializer {
+    class OptionSerializer<T> {
         private inner: Serializer<any>;
 
         constructor(public element: S.DataType) { }
@@ -515,20 +494,12 @@ module Gluon {
             this.inner = factory.getSerializer(this.element);
         }
 
-        toJSON(opt: Option<any>): any {
-            if (opt.isSome) {
-                return [this.inner.toJSON(opt.value)];
-            } else {
-                return null;
-            }
+        toJSON(opt: Option<T>): any {
+            return opt === null ? null : [this.inner.toJSON(opt)];
         }
 
-        fromJSON(json: any[]): Option<any> {
-            if (json === null) {
-                return Option.none();
-            } else {
-                return Option.some(this.inner.fromJSON(json[0]));
-            }
+        fromJSON(json: any[]): Option<T> {
+            return json === null ? null : <T>this.inner.fromJSON(json[0]);
         }
     }
 
@@ -968,9 +939,9 @@ module Gluon {
                         p.ParameterType)));
                     break;
             }
-            if (m.MethodReturnType.isSome) {
+            if (!!m.MethodReturnType) {
                 this.doesReturn = true;
-                this.returnTypeSerializer = factory.getSerializer(m.MethodReturnType.value);
+                this.returnTypeSerializer = factory.getSerializer(m.MethodReturnType);
             } else {
                 this.doesReturn = false;
             }
@@ -1108,11 +1079,7 @@ module Gluon {
         }
 
         function opt<T>(json: any, parse: (json: any) => T): Option<T> {
-            if (json === null) {
-                return Option.none<T>();
-            } else {
-                return Option.some<T>(parse(json[0]));
-            }
+            return json === null ? null : parse(json[0]);
         }
 
         function method(json: any): S.Method {

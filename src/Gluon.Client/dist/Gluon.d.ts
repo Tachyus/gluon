@@ -110,20 +110,13 @@ declare module Gluon.Schema {
     }
 }
 declare module Gluon {
-    interface Some<T> {
-        isSome: true;
-        value: T;
-    }
-    interface None<T> {
-        isSome: false;
-    }
-    type Option<T> = Some<T> | None<T>;
+    type Option<T> = T | null;
     module Option {
         function some<T>(value: T): Option<T>;
         function none<T>(): Option<T>;
-        function fromJSON<T>(json: any): Some<T> | None<T> | undefined;
-        function toJSON<T>(option: Option<T>): any;
-        function withDefault<T>(option: Option<T>, defaultValue: T): T;
+        function fromJSON<T>(json: any): Option<T>;
+        function toJSON<T>(value: Option<T>): any;
+        function withDefault<T>(value: Option<T>, defaultValue: T): T;
     }
     class Dict<T> {
         private data;

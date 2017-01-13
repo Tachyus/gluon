@@ -1,3 +1,6 @@
+### New in 3.0.0 - (Released 2017-01-13)
+Change Option type to `T | null` from tagged union.
+
 ### New in 2.0.3 - (Released 2017-01-12)
 Switch build to use yarn rather than npm and include dist folder in source control. Also, remove console.log statements.
 

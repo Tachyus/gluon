@@ -56,35 +56,23 @@ var Gluon;
     var Option;
     (function (Option) {
         function some(value) {
-            return { isSome: true, value: value };
+            return value;
         }
         Option.some = some;
         function none() {
-            return { isSome: false };
+            return null;
         }
         Option.none = none;
         function fromJSON(json) {
-            if (json === null) {
-                return none();
-            }
+            return json === null ? null : (json[0]);
         }
         Option.fromJSON = fromJSON;
-        function toJSON(option) {
-            if (option.isSome) {
-                return [option.value];
-            }
-            else {
-                return null;
-            }
+        function toJSON(value) {
+            return value === null ? null : [value];
         }
         Option.toJSON = toJSON;
-        function withDefault(option, defaultValue) {
-            if (option.isSome) {
-                return option.value;
-            }
-            else {
-                return defaultValue;
-            }
+        function withDefault(value, defaultValue) {
+            return value === null ? defaultValue : value;
         }
         Option.withDefault = withDefault;
     })(Option = Gluon.Option || (Gluon.Option = {}));
@@ -124,12 +112,7 @@ var Gluon;
         };
         Dict.prototype.tryFind = function (key) {
             this.check(key);
-            if (this.data.hasOwnProperty(key)) {
-                return Option.some(this.data[key]);
-            }
-            else {
-                return Option.none();
-            }
+            return this.data.hasOwnProperty(key) ? this.data[key] : null;
         };
         Dict.prototype.setAt = function (key, value) {
             this.check(key);
@@ -206,8 +189,8 @@ var Gluon;
                 var t = tupleType(m.MethodParameters.map(function (p) { return p.ParameterType; }));
                 visitDataType(t, visitor);
             }
-            if (m.MethodReturnType.isSome) {
-                visitDataType(m.MethodReturnType.value, visitor);
+            if (!!m.MethodReturnType) {
+                visitDataType(m.MethodReturnType, visitor);
             }
         }
         methods.forEach(visitMethod);
@@ -361,20 +344,10 @@ var Gluon;
             this.inner = factory.getSerializer(this.element);
         };
         OptionSerializer.prototype.toJSON = function (opt) {
-            if (opt.isSome) {
-                return [this.inner.toJSON(opt.value)];
-            }
-            else {
-                return null;
-            }
+            return opt === null ? null : [this.inner.toJSON(opt)];
         };
         OptionSerializer.prototype.fromJSON = function (json) {
-            if (json === null) {
-                return Option.none();
-            }
-            else {
-                return Option.some(this.inner.fromJSON(json[0]));
-            }
+            return json === null ? null : this.inner.fromJSON(json[0]);
         };
         return OptionSerializer;
     }());
@@ -757,9 +730,9 @@ var Gluon;
                     })));
                     break;
             }
-            if (m.MethodReturnType.isSome) {
+            if (!!m.MethodReturnType) {
                 this.doesReturn = true;
-                this.returnTypeSerializer = factory.getSerializer(m.MethodReturnType.value);
+                this.returnTypeSerializer = factory.getSerializer(m.MethodReturnType);
             }
             else {
                 this.doesReturn = false;
@@ -882,12 +855,7 @@ var Gluon;
             }
         }
         function opt(json, parse) {
-            if (json === null) {
-                return Option.none();
-            }
-            else {
-                return Option.some(parse(json[0]));
-            }
+            return json === null ? null : parse(json[0]);
         }
         function method(json) {
             var cc = callingConvention(json.CallingConvention);
