@@ -4,14 +4,14 @@
     "description": "Gluon sample web application",
     "main": "Scripts/app.js",
     "scripts": {
-        "clean-webapp": "node_modules/.bin/rimraf ./Scripts/*.js* && node_modules/.bin/rimraf ./bin && mkdir bin",
-        "clean": "npm run clean-webapp",
+        "clean-webapp": "rimraf ./Scripts/*.js* && rimraf ./bin && mkdir bin",
+        "clean": "yarn run clean-webapp",
         "generate-client": "'../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.exe'",
         "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js Scripts",
         "copy-gluon": "cp ../../src/Gluon.Client/Gluon.ts Scripts",
-        "prebuild": "npm run copy-jquery && npm run copy-gluon && npm run generate-client",
+        "prebuild": "yarn run copy-jquery && yarn run copy-gluon && yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
-        "build": "npm run compile",
+        "build": "yarn run compile",
         "start": "bin/SampleApp.exe",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

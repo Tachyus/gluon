@@ -7,6 +7,9 @@
     <JavaScriptFiles Include="node_modules/jquery/dist/jquery.min.js" />
   </ItemGroup>
   <Target Name="CopyGluonFiles" BeforeTargets="Build">
+    <Exec Command="yarn install"
+          ContinueOnError="false"
+          WorkingDirectory="$(MSBuildThisFileDirectory)" />
     <Copy SourceFiles="@(JavaScriptFiles)"
           DestinationFolder="Scripts"
           SkipUnchangedFiles="true" />

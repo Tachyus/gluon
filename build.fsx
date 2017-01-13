@@ -4,7 +4,6 @@
 #I "packages/FAKE/tools"
 #r "NuGet.Core.dll"
 #r "FakeLib.dll"
-#load "Node.fsx"
 
 open System
 open System.Diagnostics
@@ -83,6 +82,19 @@ let msBuildRelease target projects =
 // The rest of the file includes standard build steps 
 // --------------------------------------------------------------------------------------
 
+let bash script =
+    let code = Shell.Exec("bash", args = script)
+    if code <> 0 then
+        failwithf "bash %s exited with code %i" script code
+
+let ps script =
+    let code = Shell.Exec("powershell", args = sprintf "-NoProfile %s" script)
+    if code <> 0 then
+        failwithf "powershell %s exited with code %i" script code
+
+let exec script =
+    (if isUnix then bash else ps) script
+
 // Read additional information from the release notes document
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 
@@ -124,7 +136,7 @@ Target "Clean" <| fun _ ->
     CleanDirs ["bin"; "temp"]
     projects |> msBuildRelease "Clean"
     if (Directory.Exists "src/Gluon.Client/node_modules") then
-        Node.npm "src/Gluon.Client" "run clean"
+        exec "cd src/Gluon.Client; yarn run clean"
         DeleteDir "src/Gluon.Client/node_modules"
 
 Target "CleanDocs" <| fun _ ->
@@ -133,14 +145,16 @@ Target "CleanDocs" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
-Target "NpmInstall" <| fun _ ->
-    Node.npm "src/Gluon.Client" "install"
+Target "YarnInstall" <| fun _ ->
+    printf "yarn version: "
+    exec "yarn --version"
+    exec "cd src/Gluon.Client; yarn install"
 
 Target "Compile" <| fun _ ->
     projects |> msBuildRelease "Build"
 
-Target "NpmBuild" <| fun _ ->
-    Node.npm "src/Gluon.Client" "run build"
+Target "YarnBuild" <| fun _ ->
+    exec "cd src/Gluon.Client; yarn run build"
 
 Target "Build" <| DoNothing
 
@@ -263,9 +277,9 @@ Target "All" DoNothing
 
 "AssemblyInfo"
   =?> ("BuildVersion", isAppVeyorBuild)
-  ==> "NpmInstall"
+  ==> "YarnInstall"
   ==> "Compile"
-  ==> "NpmBuild"
+  ==> "YarnBuild"
   ==> "Build"
   ==> "RunTests"
   ==> "All"

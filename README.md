@@ -10,4 +10,7 @@ Get it from our public AppVeyor feed at https://ci.appveyor.com/nuget/gluon.
 
 ## Building
 
-Important: use ./build.ps1 on Windows or build.sh on Linux/Mac. Do not open in IDE before a command-line build succeeds.
+* Install [nodejs](https://nodejs.org/en/) with `choco install nodejs -version 6.9.1`
+* Install [yarn](https://yarnpkg.com/) with `choco install yarn -s chocolatey`
+* Run `build.ps1 Build` to download Nuget dependencies and build Gluon
+

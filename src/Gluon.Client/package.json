@@ -9,13 +9,13 @@
     "uglify-js": "^2.6.1"
   },
   "scripts": {
-    "clean": "node_modules/.bin/rimraf ./dist && mkdir dist",
-    "tsc": "node_modules/.bin/tsc -p ./",
-    "minify": "node_modules/.bin/uglifyjs dist/Gluon.js -o dist/Gluon.min.js --source-map dist/Gluon.min.js.map -p 1 -m",
-    "prebuild": "npm run clean",
-    "build": "npm run tsc && npm run minify",
+    "clean": "rimraf ./dist && mkdir dist",
+    "tsc": "tsc -p ./",
+    "minify": "uglifyjs dist/Gluon.js -o dist/Gluon.min.js --source-map dist/Gluon.min.js.map -p 1 -m",
+    "prebuild": "yarn run clean",
+    "build": "yarn run tsc && yarn run minify",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "node_modules/.bin/tsc --watch"
+    "watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
