@@ -151,12 +151,12 @@ type Definitions =
     | DefineFunction of FunctionDefinition
     | DefineTypeAlias of string * TypeLiteral
     | DefineUnionCase of UnionCaseDefinition
-    | InModule of string * Definitions
+    | InNamespace of string * Definitions
 
-    member this.GroupModules() =
+    member this.GroupNamespaces() =
         let rec find ctx def =
             match def with
-            | InModule (m, def) -> find (m :: ctx) def
+            | InNamespace (m, def) -> find (m :: ctx) def
             | DefinitionSequence xs -> seq { for x in xs do yield! find ctx x }
             | _ -> Seq.singleton (ctx, def)
         find [] this
@@ -166,7 +166,7 @@ type Definitions =
             let defs = Seq.toList (Seq.map snd defs)
             match m with
             | [] -> defs
-            | ms -> [InModule (String.concat "." ms, DefinitionSequence defs)])
+            | ms -> [InNamespace (String.concat "." ms, DefinitionSequence defs)])
         |> Seq.toList
         |> DefinitionSequence
         

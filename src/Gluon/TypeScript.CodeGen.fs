@@ -29,6 +29,9 @@ let splitName (name: string) =
 let makeType t =
     S.TypeReference (t, [])
 
+let makeOptionType t =
+    S.TypeReference ("Gluon.Option", [t])
+
 let rec typeLiteral sch =
     let ( ! ) t = typeLiteral t
     match sch with
@@ -39,18 +42,18 @@ let rec typeLiteral sch =
     | Schema.DoubleType | Schema.IntType -> makeType "number"
     | Schema.JsonType -> makeType "any"
     | Schema.StringType -> makeType "string"
-    | Schema.OptionType t -> S.TypeReference ("Gluon.Option", [!t])
+    | Schema.OptionType t -> makeOptionType (!t)
     | Schema.StringDictType t -> S.TypeReference ("Gluon.Dict", [!t])
     | Schema.TypeReference n -> makeType n
     | Schema.TupleType ts -> S.TupleType (List.map (!) ts)
 
-let inModule name defs =
+let inNamespace name defs =
     match splitName name with
-    | (Some ns, _) -> S.InModule (ns, defs)
+    | (Some ns, _) -> S.InNamespace (ns, defs)
     | _ -> defs
 
 let promiseOf x =
-    S.TypeReference ("JQueryPromise", [x])
+    S.TypeReference ("JQueryPromise", [makeOptionType x])
 
 let generateSignature (m: Schema.Method) =
     let formals = [for par in m.MethodParameters -> (par.ParameterName, typeLiteral par.ParameterType)]
@@ -71,7 +74,7 @@ let generateMethodStub (m: Schema.Method) =
     let main = S.DeclareVar (name, body)
     match ns with
     | None -> main
-    | Some _ -> inModule m.MethodName main
+    | Some _ -> inNamespace m.MethodName main
 
 let literalJson (value: 'T) =
     let ser = JsonSerializer.Create([typeof<'T>])
@@ -133,7 +136,7 @@ let generateUnion (unionDef: Schema.Union) : S.Definitions =
     S.DefinitionSequence [
         if shouldGenerateStringLiterals then
             yield S.DefineTypeAlias (name, S.UnionType [for c in unionCases -> S.LiteralStringType c.CaseName])
-            yield S.InModule (name,
+            yield S.InNamespace (name,
                     S.DefinitionSequence [
                         S.DefineFunction (generateFromJsonMethod tRef)
                     ])
@@ -141,7 +144,7 @@ let generateUnion (unionDef: Schema.Union) : S.Definitions =
             for c in unionCases do
                 yield S.DefineUnionCase (generateUnionCase c.CaseName c.CaseFields)
             yield S.DefineTypeAlias (name, S.UnionType [for c in unionCases -> makeType c.CaseName])
-            yield S.InModule (name,
+            yield S.InNamespace (name,
                     S.DefinitionSequence [
                         S.DefineFunction (generateFromJsonMethod tRef)
                     ])
@@ -158,13 +161,13 @@ let typeDef def =
     match def with
     | Schema.DefineEnum enu ->
         generateEnum enu
-        |> inModule enu.EnumName
+        |> inNamespace enu.EnumName
     | Schema.DefineRecord re ->
         generateRecord re
-        |> inModule re.RecordName
+        |> inNamespace re.RecordName
     | Schema.DefineUnion u ->
         generateUnion u
-        |> inModule u.UnionName
+        |> inNamespace u.UnionName
 
 let builderLambda (name: string) (fields: Schema.Field list) =
     let n = fields.Length

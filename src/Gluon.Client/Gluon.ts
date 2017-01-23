@@ -13,7 +13,7 @@
 // permissions and limitations under the License.
 
 // <BOOTSTRAP-DEFS>
-module Gluon.Schema {
+namespace Gluon.Schema {
   
     export type HttpMethod = "Delete" | "Get" | "Post" | "Put";
 
@@ -132,20 +132,25 @@ module Gluon.Schema {
 // </BOOTSTRAP-DEFS>
 
 /** Implements the client side of the Gluon connector. */
-module Gluon {
+namespace Gluon {
 
     import S = Gluon.Schema;
 
     // Option<T> support ------------------------------------------------------
 
     /** Represents optional values, just as F# does. */
-    export type Option<T> = T | null;
+    export type Option<T> = T | null | undefined;
 
     /** Option operators. */
-    export module Option {
+    export namespace Option {
         /** Constructs a Some(value) option. */
         export function some<T>(value: T): Option<T> {
             return value;
+        }
+
+        /** Returns true if the value is Some value and false otherwise. */
+        export function isSome<T>(value: Option<T>): value is T {
+            return value !== undefined && value !== null;
         }
 
         /** Constructs a None option. */
@@ -153,19 +158,24 @@ module Gluon {
             return null;
         }
 
+        /** Returns true if the value is null or undefined and false otherwise. */
+        export function isNone<T>(value: Option<T>): value is null | undefined {
+            return value === undefined || value === null;
+        }
+
         /** Recovers an Option<T> from JSON object representation. */
         export function fromJSON<T>(json: any): Option<T> {
-            return json === null ? null : <T>(json[0]);
+            return isSome(json) ? <T>(json[0]) : null;
         }
 
         /** Converts to a JSON representation. */
         export function toJSON<T>(value: Option<T>): any {
-            return value === null ? null : [value];
+            return isSome(value) ? [value] : null;
         }
 
         /** Unpacks with a default value. */
         export function withDefault<T>(value: Option<T>, defaultValue: T): T {
-            return value === null ? defaultValue : value;
+            return isSome(value) ? value : defaultValue;
         }
     }
 
@@ -225,7 +235,7 @@ module Gluon {
 
     // Schema -----------------------------------------------------------------
 
-    module DataType {
+    namespace DataType {
         export function children(d: S.DataType): S.DataType[] {
             switch (d.tag) {
                 case "ArrayType": return [d.Item];
@@ -814,14 +824,14 @@ module Gluon {
     }
 
     export interface IHttpClient {
-        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<T>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): JQueryPromise<T>;
+        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
+        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
     }
 
     class JQueryClient implements IHttpClient {
         constructor() { }
 
-        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T) {
+        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>> {
             return jQuery.ajax({
                 url: url,
                 type: "get",
@@ -829,18 +839,23 @@ module Gluon {
             }).then(x => parseJsonResponse(x));
         }
 
-        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T) {
-            let ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
-            if (jsonRequest !== null) {
+        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>> {
+            const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
+            if (Option.isSome(jsonRequest)) {
                 ajaxParams.data = jsonRequest;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            return jQuery.ajax(ajaxParams).then(x => parseJsonResponse(x));
+            const promise = jQuery.ajax(ajaxParams);
+            if (Option.isSome(parseJsonResponse)) {
+                return promise.then(x => parseJsonResponse(x));
+            } else {
+                return promise;
+            }
         }
     }
 
-    module Remoting {
+    namespace Remoting {
 
         function verbName(m: S.HttpMethod) {
             switch (m) {
@@ -982,7 +997,7 @@ module Gluon {
         }
     }
 
-    module RawSchemaJsonParser {
+    namespace RawSchemaJsonParser {
 
         function at(json: any, pos: number) {
             return json[pos + 1];
@@ -1096,7 +1111,7 @@ module Gluon {
     }
 
     /** Infrastructure methods called by generated code. */
-    export module Internals {
+    export namespace Internals {
 
         // TODO: remove this global state.
         var serializerService = new SerializerService();

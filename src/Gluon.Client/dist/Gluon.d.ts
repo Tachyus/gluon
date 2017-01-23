@@ -1,5 +1,5 @@
 /// <reference types="jquery" />
-declare module Gluon.Schema {
+declare namespace Gluon.Schema {
     type HttpMethod = "Delete" | "Get" | "Post" | "Put";
     interface HttpCallingConvention {
         tag: "HttpCallingConvention";
@@ -109,11 +109,13 @@ declare module Gluon.Schema {
         TypeDefinitions: Gluon.Schema.TypeDefinition[];
     }
 }
-declare module Gluon {
-    type Option<T> = T | null;
-    module Option {
+declare namespace Gluon {
+    type Option<T> = T | null | undefined;
+    namespace Option {
         function some<T>(value: T): Option<T>;
+        function isSome<T>(value: Option<T>): value is T;
         function none<T>(): Option<T>;
+        function isNone<T>(value: Option<T>): value is null | undefined;
         function fromJSON<T>(json: any): Option<T>;
         function toJSON<T>(value: Option<T>): any;
         function withDefault<T>(value: Option<T>, defaultValue: T): T;
@@ -146,10 +148,10 @@ declare module Gluon {
     interface IHttpClient {
         httpGet<T>(url: string, queryParams: {
             [key: string]: string;
-        }, parseJsonResponse: (json: any) => T): JQueryPromise<T>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): JQueryPromise<T>;
+        }, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
+        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
     }
-    module Internals {
+    namespace Internals {
         function toJSON(typeRef: string, value: any): any;
         function fromJSON(typeRef: string, json: any): any;
         function registerActivators(raw: {

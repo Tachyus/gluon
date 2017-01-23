@@ -59,20 +59,28 @@ var Gluon;
             return value;
         }
         Option.some = some;
+        function isSome(value) {
+            return value !== undefined && value !== null;
+        }
+        Option.isSome = isSome;
         function none() {
             return null;
         }
         Option.none = none;
+        function isNone(value) {
+            return value === undefined || value === null;
+        }
+        Option.isNone = isNone;
         function fromJSON(json) {
-            return json === null ? null : (json[0]);
+            return isSome(json) ? (json[0]) : null;
         }
         Option.fromJSON = fromJSON;
         function toJSON(value) {
-            return value === null ? null : [value];
+            return isSome(value) ? [value] : null;
         }
         Option.toJSON = toJSON;
         function withDefault(value, defaultValue) {
-            return value === null ? defaultValue : value;
+            return isSome(value) ? value : defaultValue;
         }
         Option.withDefault = withDefault;
     })(Option = Gluon.Option || (Gluon.Option = {}));
@@ -631,12 +639,18 @@ var Gluon;
         };
         JQueryClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
             var ajaxParams = { "url": url, "type": httpMethod };
-            if (jsonRequest !== null) {
+            if (Option.isSome(jsonRequest)) {
                 ajaxParams.data = jsonRequest;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            return jQuery.ajax(ajaxParams).then(function (x) { return parseJsonResponse(x); });
+            var promise = jQuery.ajax(ajaxParams);
+            if (Option.isSome(parseJsonResponse)) {
+                return promise.then(function (x) { return parseJsonResponse(x); });
+            }
+            else {
+                return promise;
+            }
         };
         return JQueryClient;
     }());

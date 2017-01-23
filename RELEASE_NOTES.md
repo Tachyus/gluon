@@ -1,4 +1,8 @@
-### New in 3.0.1 - (Released TBD)
+### New in 3.0.1 - (Released 2017-01-23)
+- Change Option type to `T | null | undefined` to work better with optional parameters in interface and function signatures.
+- Add `Option.isSome` and `Option.isNone` guard functions to help identify whether a value is null or undefined.
+- Change return type of `IHttpClient.httpGet` and `IHttpClient.httpCall` to `JQueryPromise<Option<T>>`, correctly indicating that the result is optional.
+- Switch to `namespace` from `module` per recent changes in TypeScript guidance.
 
 ### New in 3.0.0 - (Released 2017-01-13)
 Change Option type to `T | null` from tagged union.
