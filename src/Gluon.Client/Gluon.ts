@@ -843,23 +843,20 @@ namespace Gluon {
             return str.join("&");
         }
 
-        async httpGet<T>(url: string, queryParams: { [key: string]: string } | null = null, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
-            const queryString = queryParams !== null ? FetchClient.serialize(queryParams) : null;
-            const urlAndQuery = queryString === null ? url : `${url}?${queryString}`;
-            console.log(queryParams, queryString, urlAndQuery);
-            const response = await window.fetch(urlAndQuery, {
+        httpGet<T>(url: string, queryParams: { [key: string]: string }, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
+            const queryString = Option.isSome(queryParams) ? FetchClient.serialize(queryParams) : null;
+            const urlAndQuery = Option.isNone(queryString) || queryString === "" ? url : `${url}?${queryString}`;
+            return window.fetch(urlAndQuery, {
                 method: "GET",
                 headers: new Headers({
                     "Accept": "application/json"
                 })
-            });
-            const json = await response.json();
-            return parseJsonResponse(json);
+            }).then(r => r.json()).then(parseJsonResponse);
         }
 
-        async httpCall<T>(httpMethod: string, url: string, jsonRequest: any | null = null, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T> | Response> {
             const params =
-                jsonRequest !== null ? {
+                Option.isSome(jsonRequest) ? {
                     method: httpMethod,
                     body: jsonRequest,
                     headers: new Headers({
@@ -867,9 +864,12 @@ namespace Gluon {
                         "Content-Type": "application/json"
                     })
                 } : { method: httpMethod };
-            const response = await window.fetch(url, params);
-            const json = await response.json();
-            return parseJsonResponse(json);
+            const promise = window.fetch(url, params);
+            if (Option.isSome(parseJsonResponse)) {
+                return promise.then(response => response.json()).then(parseJsonResponse);
+            } else {
+                return promise;
+            }
         }
     }
 
@@ -883,7 +883,7 @@ namespace Gluon {
             })).then(x => parseJsonResponse(x));
         }
 
-        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>> {
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
             const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
             if (Option.isSome(jsonRequest)) {
                 ajaxParams.data = jsonRequest;
