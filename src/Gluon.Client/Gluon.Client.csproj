@@ -39,6 +39,9 @@
   <ItemGroup>
     <Content Include="paket.template" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="yarn.lock" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

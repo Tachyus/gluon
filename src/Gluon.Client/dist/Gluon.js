@@ -10,6 +10,108 @@ var Schema;
     Schema.Parameter = Parameter;
     var Method = (function () {
         function Method() {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t;
+    return { next: verb(0), "throw": verb(1), "return": verb(2) };
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var Gluon;
+(function (Gluon) {
+    var Schema;
+    (function (Schema) {
+        var Parameter = (function () {
+            function Parameter() {
+            }
+            return Parameter;
+        }());
+        Schema.Parameter = Parameter;
+        var Method = (function () {
+            function Method() {
+            }
+            return Method;
+        }());
+        Schema.Method = Method;
+        var EnumCase = (function () {
+            function EnumCase() {
+            }
+            return EnumCase;
+        }());
+        Schema.EnumCase = EnumCase;
+        var Enum = (function () {
+            function Enum() {
+            }
+            return Enum;
+        }());
+        Schema.Enum = Enum;
+        var Field = (function () {
+            function Field() {
+            }
+            return Field;
+        }());
+        Schema.Field = Field;
+        var Record = (function () {
+            function Record() {
+            }
+            return Record;
+        }());
+        Schema.Record = Record;
+        var UnionCase = (function () {
+            function UnionCase() {
+            }
+            return UnionCase;
+        }());
+        Schema.UnionCase = UnionCase;
+        var Union = (function () {
+            function Union() {
+            }
+            return Union;
+        }());
+        Schema.Union = Union;
+    })(Schema = Gluon.Schema || (Gluon.Schema = {}));
+})(Gluon || (Gluon = {}));
+(function (Gluon) {
+    var Option;
+    (function (Option) {
+        function some(value) {
+            return value;
+        }
+        Option.some = some;
+        function isSome(value) {
+            return value !== undefined && value !== null;
+        }
+        Option.isSome = isSome;
+        function none() {
+            return null;
         }
         return Method;
     }());
@@ -648,6 +750,184 @@ var JQueryClient = (function () {
         }
         else {
             return promise;
+        SerializerService.prototype.add = function (dt, ser) {
+            var key = dataTypeKey(dt);
+            this.dict.setAt(key, ser);
+        };
+        SerializerService.prototype.getSerializer = function (dt) {
+            var key = dataTypeKey(dt);
+            return this.dict.at(key);
+        };
+        SerializerService.prototype.contains = function (dt) {
+            var key = dataTypeKey(dt);
+            return this.dict.containsKey(key);
+        };
+        SerializerService.prototype.init = function () {
+            var _this = this;
+            this.dict.forEach(function (k, ser) {
+                ser.init(_this);
+            });
+        };
+        SerializerService.prototype.registerActivators = function (activators) {
+            this.registry.registerActivators(activators);
+        };
+        SerializerService.prototype.createVisitor = function () {
+            var _this = this;
+            var vis = defaultVisitor();
+            var add = function (dt) {
+                if (!_this.contains(dt)) {
+                    _this.add(dt, buildDataTypeSerializer(dt));
+                }
+            };
+            vis.visitDataType = function (dt) {
+                if (dt.tag !== "TypeReference") {
+                    add(dt);
+                }
+            };
+            vis.visitRecord = function (r) {
+                var dt = typeReference(r.RecordName);
+                _this.add(dt, new RecordSerializer(r, _this.registry));
+            };
+            vis.visitUnion = function (u) {
+                var dt = typeReference(u.UnionName);
+                _this.add(dt, new UnionSerializer(u, _this.registry));
+            };
+            vis.visitEnum = function (e) {
+                var dt = typeReference(e.EnumName);
+                _this.add(dt, new EnumSerializer());
+            };
+            return vis;
+        };
+        SerializerService.prototype.registerTypes = function (types) {
+            visitTypes(types, this.createVisitor());
+            this.init();
+        };
+        SerializerService.prototype.registerServiceMethods = function (methods) {
+            visitServiceMethods(methods, this.createVisitor());
+            this.init();
+        };
+        return SerializerService;
+    }());
+    var Client = (function () {
+        function Client(httpClient, prefix) {
+            if (httpClient === void 0) { httpClient = new FetchClient(); }
+            this.httpClient = httpClient;
+            if (!prefix) {
+                this.prefix = "/gluon-api";
+            }
+            else {
+                this.prefix = prefix;
+            }
+        }
+        return Client;
+    }());
+    Gluon.Client = Client;
+    var FetchClient = (function () {
+        function FetchClient() {
+        }
+        FetchClient.serialize = function (obj, prefix) {
+            var str = [];
+            for (var p in Object.keys(obj)) {
+                if (obj.hasOwnProperty(p)) {
+                    var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+                    str.push((v !== null && typeof v === "object") ?
+                        this.serialize(v, k) :
+                        encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                }
+            }
+            return str.join("&");
+        };
+        FetchClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
+            if (queryParams === void 0) { queryParams = null; }
+            return __awaiter(this, void 0, void 0, function () {
+                var urlAndQuery, response, json;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            urlAndQuery = queryParams === null ? url : url + "?" + FetchClient.serialize(queryParams);
+                            return [4 /*yield*/, window.fetch(urlAndQuery, {
+                                    method: "GET",
+                                    headers: new Headers({
+                                        "Accept": "application/json"
+                                    })
+                                })];
+                        case 1:
+                            response = _a.sent();
+                            return [4 /*yield*/, response.json()];
+                        case 2:
+                            json = _a.sent();
+                            return [2 /*return*/, parseJsonResponse(json)];
+                    }
+                });
+            });
+        };
+        FetchClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
+            if (jsonRequest === void 0) { jsonRequest = null; }
+            return __awaiter(this, void 0, void 0, function () {
+                var params, response, json;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            params = jsonRequest !== null ? {
+                                method: httpMethod,
+                                body: jsonRequest,
+                                headers: new Headers({
+                                    "Accept": "application/json",
+                                    "Content-Type": "application/json"
+                                })
+                            } : { method: httpMethod };
+                            return [4 /*yield*/, window.fetch(url, params)];
+                        case 1:
+                            response = _a.sent();
+                            return [4 /*yield*/, response.json()];
+                        case 2:
+                            json = _a.sent();
+                            return [2 /*return*/, parseJsonResponse(json)];
+                    }
+                });
+            });
+        };
+        return FetchClient;
+    }());
+    Gluon.FetchClient = FetchClient;
+    var JQueryClient = (function () {
+        function JQueryClient() {
+        }
+        JQueryClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
+            return Promise.resolve(jQuery.ajax({
+                url: url,
+                type: "get",
+                data: queryParams
+            })).then(function (x) { return parseJsonResponse(x); });
+        };
+        JQueryClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
+            var ajaxParams = { "url": url, "type": httpMethod };
+            if (Option.isSome(jsonRequest)) {
+                ajaxParams.data = jsonRequest;
+                ajaxParams.dataType = "json";
+                ajaxParams.contentType = "application/json";
+            }
+            var promise = Promise.resolve(jQuery.ajax(ajaxParams));
+            if (Option.isSome(parseJsonResponse)) {
+                return promise.then(function (x) { return parseJsonResponse(x); });
+            }
+            else {
+                return promise;
+            }
+        };
+        return JQueryClient;
+    }());
+    Gluon.JQueryClient = JQueryClient;
+    var Remoting;
+    (function (Remoting) {
+        function verbName(m) {
+            switch (m) {
+                case "Get": return "get";
+                case "Delete": return "delete";
+                case "Post": return "post";
+                case "Put": return "put";
+                default: throw new Error("match failed");
+            }
         }
     };
     return JQueryClient;

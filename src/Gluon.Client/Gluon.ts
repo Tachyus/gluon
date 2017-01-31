@@ -875,6 +875,8 @@ class JQueryClient implements IHttpClient {
     export interface IHttpClient {
         httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<T>;
         httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T>;
+        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
     }
 
     export class FetchClient implements IHttpClient {
@@ -892,7 +894,7 @@ class JQueryClient implements IHttpClient {
             return str.join("&");
         }
 
-        async httpGet<T>(url: string, queryParams: { [key: string]: string } | null = null, parseJsonResponse: (json: any) => T) {
+        async httpGet<T>(url: string, queryParams: { [key: string]: string } | null = null, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
             const urlAndQuery = queryParams === null ? url : `${url}?${FetchClient.serialize(queryParams)}`;
             const response = await window.fetch(urlAndQuery, {
                 method: "GET",
@@ -904,7 +906,7 @@ class JQueryClient implements IHttpClient {
             return parseJsonResponse(json);
         }
 
-        async httpCall<T>(httpMethod: string, url: string, jsonRequest: any | null = null, parseJsonResponse: (json: any) => T) {
+        async httpCall<T>(httpMethod: string, url: string, jsonRequest: any | null = null, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
             const params =
                 jsonRequest !== null ? {
                     method: httpMethod,
@@ -922,7 +924,7 @@ class JQueryClient implements IHttpClient {
 
     export class JQueryClient implements IHttpClient {
 
-        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T) {
+        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
             return Promise.resolve(jQuery.ajax({
                 url: url,
                 type: "get",
@@ -933,11 +935,20 @@ class JQueryClient implements IHttpClient {
         httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T) {
             let ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
             if (jsonRequest !== null) {
+        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>> {
+            const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
+            if (Option.isSome(jsonRequest)) {
                 ajaxParams.data = jsonRequest;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
             return Promise.resolve(jQuery.ajax(ajaxParams)).then(x => parseJsonResponse(x));
+            const promise = Promise.resolve(jQuery.ajax(ajaxParams));
+            if (Option.isSome(parseJsonResponse)) {
+                return promise.then(x => parseJsonResponse(x));
+            } else {
+                return promise;
+            }
         }
     }
 }

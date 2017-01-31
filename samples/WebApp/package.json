@@ -11,6 +11,13 @@
         "postinstall": "yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
         "build": "webpack --config webpack.config.js -d",
+        "generate-client": "'../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe' --out 'Scripts/Generated.ts' --reflect 'bin/SampleApp.exe'",
+        "copy-jquery": "cp node_modules/jquery/dist/jquery.min.js Scripts",
+        "copy-gluon": "cp ../../src/Gluon.Client/Gluon.ts Scripts",
+        "prebuild": "yarn run copy-jquery && yarn run copy-gluon && yarn run generate-client",
+        "compile": "node_modules/.bin/tsc -p ./",
+        "build": "yarn run compile",
+        "start": "bin/SampleApp.exe",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -74,4 +81,15 @@
     "typescript": "^2.1.4",
     "uglify-js": "^2.6.4"
   }
+        "es6-promise": "^4.0.5",
+        "jquery": "^3.1.1",
+        "whatwg-fetch": "^2.0.1"
+    },
+    "devDependencies": {
+        "@types/jquery": "^2.0.34",
+        "@types/whatwg-fetch": "0.0.33",
+        "rimraf": "^2.5.2",
+        "typescript": "^2.1.4",
+        "uglify-js": "^2.6.4"
+    }
 }

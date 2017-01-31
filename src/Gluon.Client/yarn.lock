@@ -6,6 +6,16 @@
   version "2.0.39"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-2.0.39.tgz#917fe65300dbc6ccbdfa7e2ee51159fbd29d7689"
 
+"@types/whatwg-fetch@^0.0.33":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@types/whatwg-fetch/-/whatwg-fetch-0.0.33.tgz#19c0d2863c8cb2380f21a1c736b79cbf7895bb13"
+  dependencies:
+    "@types/whatwg-streams" "*"
+
+"@types/whatwg-streams@*":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/whatwg-streams/-/whatwg-streams-0.0.2.tgz#58eb11cf9ab33a2b55878d568ad7e9b933e67f7d"
+
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/align-text/-/align-text-0.1.4.tgz#0cd90a561093f35d0a99256c22b7069433fad117"
