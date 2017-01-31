@@ -4,7 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <JavaScriptFiles Include="$(GluonDist)/Gluon.*" />
-    <JavaScriptFiles Include="node_modules/jquery/dist/jquery.min.js" />
+    <JavaScriptFiles Include="node_modules/core-js/client/shim.*" />
+    <JavaScriptFiles Include="node_modules/jquery/dist/jquery.*" />
   </ItemGroup>
   <Target Name="CopyGluonFiles" BeforeTargets="Build">
     <Exec Command="yarn install"

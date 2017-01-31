@@ -631,11 +631,11 @@ var Gluon;
         function JQueryClient() {
         }
         JQueryClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
-            return jQuery.ajax({
+            return Promise.resolve(jQuery.ajax({
                 url: url,
                 type: "get",
                 data: queryParams
-            }).then(function (x) { return parseJsonResponse(x); });
+            }).then(parseJsonResponse));
         };
         JQueryClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
             var ajaxParams = { "url": url, "type": httpMethod };
@@ -644,13 +644,7 @@ var Gluon;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            var promise = jQuery.ajax(ajaxParams);
-            if (Option.isSome(parseJsonResponse)) {
-                return promise.then(function (x) { return parseJsonResponse(x); });
-            }
-            else {
-                return promise;
-            }
+            return Promise.resolve(jQuery.ajax(ajaxParams).then(parseJsonResponse));
         };
         return JQueryClient;
     }());

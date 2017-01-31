@@ -1,4 +1,3 @@
-/// <reference types="jquery" />
 declare namespace Gluon.Schema {
     type HttpMethod = "Delete" | "Get" | "Post" | "Put";
     interface HttpCallingConvention {
@@ -148,8 +147,8 @@ declare namespace Gluon {
     interface IHttpClient {
         httpGet<T>(url: string, queryParams: {
             [key: string]: string;
-        }, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
+        }, parseJsonResponse: (json: any) => T): Promise<T>;
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T>;
     }
     namespace Internals {
         function toJSON(typeRef: string, value: any): any;
