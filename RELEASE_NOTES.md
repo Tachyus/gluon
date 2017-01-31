@@ -1,4 +1,14 @@
-### New in 2.0.3 - (TBD)
+### New in 3.0.1 - (Released 2017-01-23)
+- Change Option type to `T | null | undefined` to work better with optional parameters in interface and function signatures.
+- Add `Option.isSome` and `Option.isNone` guard functions to help identify whether a value is null or undefined.
+- Change return type of `IHttpClient.httpGet` and `IHttpClient.httpCall` to `JQueryPromise<Option<T>>`, correctly indicating that the result is optional.
+- Switch to `namespace` from `module` per recent changes in TypeScript guidance.
+
+### New in 3.0.0 - (Released 2017-01-13)
+Change Option type to `T | null` from tagged union.
+
+### New in 2.0.3 - (Released 2017-01-12)
+Switch build to use yarn rather than npm and include dist folder in source control. Also, remove console.log statements.
 
 ### New in 2.0.2 - (Released 2017-01-07)
 Fix issue #26 by generating string literal union types from F# unions with no fields

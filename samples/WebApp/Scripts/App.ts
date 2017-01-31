@@ -60,7 +60,7 @@
     });
 
     S.putDataSeriesTurnaround(cli)(dataSeries).then(result => {
-        if (result !== undefined) {
+        if (Gluon.Option.isSome(result)) {
             console.log("putDataSeriesTurnaround => ", result.DataPoints, result.DataPoints.length);
         }
     });
@@ -90,7 +90,7 @@
     dictExample.setAt("two", 2);
     dictExample.setAt("three", 13);
     S.convertDict(cli)(dictExample).then(x => {
-        if (x !== undefined) {
+        if (Gluon.Option.isSome(x)) {
             x.forEach((key, value) => {
                 console.log("dict:", key, value);
             });
@@ -129,9 +129,10 @@
     S.dictCheck(cli)(d0).then(x => console.log("dict check returned ok", x));
 
     S.getTwoDates(cli)().then(pair => {
-        if (pair !== undefined) {
-            console.log("getTwoDates => ", pair[0], pair[1])
-            S.getTwoDatesBack(cli)(pair[0], pair[1]).then(result => console.log("getTwoDatesBack => ", result));
+        if (Gluon.Option.isSome(pair)) {
+            const [x, y] = pair;
+            console.log("getTwoDates => ", x, y)
+            S.getTwoDatesBack(cli)(x, y).then(result => console.log("getTwoDatesBack => ", result));
         }
     });
 
@@ -160,5 +161,38 @@
     chooseColor("Blue");
     chooseColor("Red");
     chooseColor("Green Orange");
+
+    // Option tests
+    const some = Gluon.Option.some(1);
+    const none = Gluon.Option.none<number>();
+    const someLiteral = 1;
+    const noneLiteral = null;
+
+    if (some === someLiteral) {
+        console.log("some constructor equals literal some value");
+    } else {
+        console.error("some constructor does not equal literal some value");
+    }
+
+    if (none === noneLiteral) {
+        console.log("none constructor equals literal none value");
+    } else {
+        console.error("none constructor does not equal literal none value");
+    }
+
+    console.log("withDefault when using some", Gluon.Option.withDefault(some, 2));
+    console.log("withDefault when using none", Gluon.Option.withDefault(none, 2));
+    console.log("withDefault with default of null", Gluon.Option.withDefault(none, null));
+
+    (async function someOptionTurnaround() {
+        const result = await S.optionTurnaround(cli)(some);
+        console.log("optionTurnaround with some", result);
+    })();
+
+    (async function noneOptionTurnaround() {
+        const result = await S.optionTurnaround(cli)(none);
+        console.log("optionTurnaround with none", result);
+    })();
+
 }
 

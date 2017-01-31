@@ -201,16 +201,16 @@ let enumDefinition (enu: S.EnumDefinition) =
     t "enum" ++ t enu.EnumName ++ braces (block body)
 
 let definitions (defs: S.Definitions) =
-    let defs = defs.GroupModules()
-    let rec definitions inModule defs =
-        let prefix = if inModule then t "export" else PP.empty
+    let defs = defs.GroupNamespaces()
+    let rec definitions inNamespace defs =
+        let prefix = if inNamespace then t "export" else PP.empty
         match defs with
         | S.Action e -> expression e +. t ";"
         | S.Comment s -> t (sprintf "// %s" s)
-        | S.DefinitionSequence xs -> vertical [for d in xs -> definitions inModule d]
+        | S.DefinitionSequence xs -> vertical [for d in xs -> definitions inNamespace d]
         | S.DeclareVar (name, expr) -> prefix ++ t "var" ++ t name ++ t "=" ++ expression expr +. t ";"
         | S.DefineTypeAlias (name, lit) -> prefix ++ t "type" ++ t name ++ t "=" ++ typeLiteral lit +. t ";"
-        | S.InModule (mname, defs) -> prefix ++ t "module" ++ t mname ++ braces (block (definitions true defs))
+        | S.InNamespace (mname, defs) -> prefix ++ t "namespace" ++ t mname ++ braces (block (definitions true defs))
         | S.DefineClass c -> prefix ++ classDefinition c
         | S.DefineEnum e -> prefix ++ enumDefinition e
         | S.DefineFunction f -> prefix ++ functionDefinition f

@@ -4,18 +4,18 @@
   "description": "TypeScript to FSharp connector",
   "main": "Gluon.ts",
   "devDependencies": {
-    "rimraf": "^2.5.1",
-    "typescript": "^2.1.4",
-    "uglify-js": "^2.6.1"
+    "rimraf": "2.5.1",
+    "typescript": "2.1.4",
+    "uglify-js": "2.6.1"
   },
   "scripts": {
-    "clean": "node_modules/.bin/rimraf ./dist && mkdir dist",
-    "tsc": "node_modules/.bin/tsc -p ./",
-    "minify": "node_modules/.bin/uglifyjs dist/Gluon.js -o dist/Gluon.min.js --source-map dist/Gluon.min.js.map -p 1 -m",
-    "prebuild": "npm run clean",
-    "build": "npm run tsc && npm run minify",
+    "clean": "rimraf ./dist && mkdir dist",
+    "tsc": "tsc -p ./",
+    "minify": "uglifyjs dist/Gluon.js -o dist/Gluon.min.js --source-map dist/Gluon.min.js.map -p 1 -m",
+    "prebuild": "yarn run clean",
+    "build": "yarn run tsc && yarn run minify",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "node_modules/.bin/tsc --watch"
+    "watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -37,5 +37,6 @@
   "dependencies": {
     "@types/jquery": "^2.0.34",
     "@types/whatwg-fetch": "0.0.33"
+    "@types/jquery": "^2.0.39"
   }
 }
