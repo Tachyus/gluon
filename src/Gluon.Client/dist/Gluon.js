@@ -810,7 +810,7 @@ var JQueryClient = (function () {
     }());
     var Client = (function () {
         function Client(httpClient, prefix) {
-            if (httpClient === void 0) { httpClient = new FetchClient(); }
+            if (httpClient === void 0) { httpClient = new JQueryClient(); }
             this.httpClient = httpClient;
             if (!prefix) {
                 this.prefix = "/gluon-api";
@@ -827,7 +827,7 @@ var JQueryClient = (function () {
         }
         FetchClient.serialize = function (obj, prefix) {
             var str = [];
-            for (var p in Object.keys(obj)) {
+            for (var p in obj) {
                 if (obj.hasOwnProperty(p)) {
                     var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
                     str.push((v !== null && typeof v === "object") ?
@@ -840,11 +840,13 @@ var JQueryClient = (function () {
         FetchClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
             if (queryParams === void 0) { queryParams = null; }
             return __awaiter(this, void 0, void 0, function () {
-                var urlAndQuery, response, json;
+                var queryString, urlAndQuery, response, json;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            urlAndQuery = queryParams === null ? url : url + "?" + FetchClient.serialize(queryParams);
+                            queryString = queryParams !== null ? FetchClient.serialize(queryParams) : null;
+                            urlAndQuery = queryString === null ? url : url + "?" + queryString;
+                            console.log(queryParams, queryString, urlAndQuery);
                             return [4 /*yield*/, window.fetch(urlAndQuery, {
                                     method: "GET",
                                     headers: new Headers({

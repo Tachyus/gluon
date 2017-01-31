@@ -84,6 +84,8 @@
         "es6-promise": "^4.0.5",
         "jquery": "^3.1.1",
         "whatwg-fetch": "^2.0.1"
+        "core-js": "^2.4.1",
+        "jquery": "^3.1.1"
     },
     "devDependencies": {
         "@types/jquery": "^2.0.34",

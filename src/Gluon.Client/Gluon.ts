@@ -829,7 +829,7 @@ export class Client {
         } else {
             this.prefix = prefix;
         /** Constructs a client, with an optional URL prefix. */
-        constructor(public httpClient: IHttpClient = new FetchClient(), prefix?: string) {
+        constructor(public httpClient: IHttpClient = new JQueryClient(), prefix?: string) {
             if (!prefix) {
                 this.prefix = "/gluon-api";
             } else {
@@ -883,7 +883,7 @@ class JQueryClient implements IHttpClient {
 
         static serialize(obj: any, prefix?: string): string {
             const str: string[] = [];
-            for (let p in Object.keys(obj)) {
+            for (let p in obj) {
                 if (obj.hasOwnProperty(p)) {
                     const k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
                     str.push((v !== null && typeof v === "object") ?
@@ -895,7 +895,9 @@ class JQueryClient implements IHttpClient {
         }
 
         async httpGet<T>(url: string, queryParams: { [key: string]: string } | null = null, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
-            const urlAndQuery = queryParams === null ? url : `${url}?${FetchClient.serialize(queryParams)}`;
+            const queryString = queryParams !== null ? FetchClient.serialize(queryParams) : null;
+            const urlAndQuery = queryString === null ? url : `${url}?${queryString}`;
+            console.log(queryParams, queryString, urlAndQuery);
             const response = await window.fetch(urlAndQuery, {
                 method: "GET",
                 headers: new Headers({

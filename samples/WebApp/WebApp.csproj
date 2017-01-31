@@ -63,20 +63,21 @@
     <ConfigFiles Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="Gluon.targets" />
-    <Content Include="Scripts\es6-promise.js" />
-    <Content Include="Scripts\es6-promise.min.js" />
-    <Content Include="Scripts\fetch.js" />
+    <Content Include="Scripts\core.js" />
+    <Content Include="Scripts\core.min.js" />
     <Content Include="Scripts\Gluon.js.map" />
     <Content Include="Scripts\Gluon.min.js.map" />
-    <Content Include="Scripts\es6-promise.map" />
-    <Content Include="Scripts\es6-promise.min.map" />
     <Content Include="Scripts\jquery.min.map" />
+    <Content Include="Scripts\core.min.js.map" />
+    <Content Include="Scripts\shim.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Scripts\shim.js" />
+    <Content Include="Scripts\shim.min.js" />
     <Content Include="yarn.lock" />
   </ItemGroup>
   <ItemGroup>

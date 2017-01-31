@@ -34,6 +34,7 @@ export namespace WebApp {
     console.log(dataSeries1);
 
     var cli = new Gluon.Client();
+    var cli = new P.Client(new Gluon.FetchClient());
 
     (async function testPersonPhone() {
         const result = await S.showContact(cli)(p1);
