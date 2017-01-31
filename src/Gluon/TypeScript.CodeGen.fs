@@ -59,8 +59,6 @@ let inNamespace name defs =
     | _ -> defs
 
 let promiseOf x =
-    S.TypeReference ("JQueryPromise", [makeOptionType x])
-    S.TypeReference ("Promise", [x])
     S.TypeReference ("Promise", [makeOptionType x])
 
 let generateSignature (m: Schema.Method) =

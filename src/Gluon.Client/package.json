@@ -4,17 +4,6 @@
   "description": "TypeScript to FSharp connector",
   "main": "./dist/Gluon.js",
   "typings": "./dist/Gluon.d.ts",
-  "name": "gluon",
-  "version": "4.0.0",
-  "description": "TypeScript to FSharp connector",
-  "main": "Gluon.ts",
-  "devDependencies": {
-    "@types/jquery": "^2.0.39",
-    "@types/whatwg-fetch": "^0.0.33",
-    "rimraf": "2.5.1",
-    "typescript": "2.1.4",
-    "uglify-js": "2.6.1"
-  },
   "scripts": {
     "clean": "rimraf ./dist && mkdir dist",
     "tsc": "tsc -p ./",
@@ -40,15 +29,12 @@
     "url": "https://github.com/Tachyus/gluon/issues"
   },
   "homepage": "http://www.tachyus.com/gluon",
-  "dependencies": {
-    "@types/jquery": "^2.0.39"
-  },
   "devDependencies": {
+    "@types/jquery": "^2.0.39",
+    "@types/isomorphic-fetch": "^0.0.33",
     "rimraf": "2.5.1",
     "typescript": "^2.2.2",
     "uglify-js": "2.6.1"
-    "@types/jquery": "^2.0.34",
-    "@types/whatwg-fetch": "0.0.33"
-  }
+  },
   "private": true
 }

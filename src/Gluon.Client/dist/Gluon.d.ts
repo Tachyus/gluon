@@ -1,6 +1,4 @@
-/// <reference types="jquery" />
 export declare namespace Schema {
-declare namespace Gluon.Schema {
     type HttpMethod = "Delete" | "Get" | "Post" | "Put";
     interface HttpCallingConvention {
         tag: "HttpCallingConvention";
@@ -148,8 +146,19 @@ export interface RemoteMethod<T> {
 export interface IHttpClient {
     httpGet<T>(url: string, queryParams: {
         [key: string]: string;
-    }, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
+    }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
+}
+export declare class FetchClient implements IHttpClient {
+    private headers;
+    constructor(headers?: {
+        [key: string]: string;
+    });
+    static serialize(obj: any, prefix?: string): string;
+    httpGet<T>(url: string, queryParams: {
+        [key: string]: string;
+    }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T> | Response>;
 }
 export declare namespace Internals {
     function toJSON(typeRef: string, value: any): any;
@@ -160,69 +169,4 @@ export declare namespace Internals {
     function registerTypeDefinitions(rawTypeDefJson: any[]): void;
     function registerService(rawServiceJson: any): void;
     function remoteMethod<T>(name: string): RemoteMethod<T>;
-declare namespace Gluon {
-    type Option<T> = T | null | undefined;
-    namespace Option {
-        function some<T>(value: T): Option<T>;
-        function isSome<T>(value: Option<T>): value is T;
-        function none<T>(): Option<T>;
-        function isNone<T>(value: Option<T>): value is null | undefined;
-        function fromJSON<T>(json: any): Option<T>;
-        function toJSON<T>(value: Option<T>): any;
-        function withDefault<T>(value: Option<T>, defaultValue: T): T;
-    }
-    class Dict<T> {
-        private data;
-        private check(key);
-        containsKey(key: string): boolean;
-        forEach(visit: (key: string, element: T) => void): void;
-        copy(): Dict<T>;
-        at(key: string): T;
-        tryFind(key: string): Option<T>;
-        setAt(key: string, value: T): void;
-        toJSON(): {
-            [key: string]: T;
-        };
-    }
-    interface IActivator {
-        createInstance(args: any[]): any;
-        typeId: string;
-    }
-    class Client {
-        httpClient: IHttpClient;
-        prefix: string;
-        constructor(httpClient?: IHttpClient, prefix?: string);
-    }
-    interface RemoteMethod<T> {
-        (client: Client): T;
-    }
-    interface IHttpClient {
-        httpGet<T>(url: string, queryParams: {
-            [key: string]: string;
-        }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-    }
-    class FetchClient implements IHttpClient {
-        static serialize(obj: any, prefix?: string): string;
-        httpGet<T>(url: string, queryParams: {
-            [key: string]: string;
-        } | null, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest: any | null, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-    }
-    class JQueryClient implements IHttpClient {
-        httpGet<T>(url: string, queryParams: {
-            [key: string]: string;
-        }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
-    }
-    namespace Internals {
-        function toJSON(typeRef: string, value: any): any;
-        function fromJSON(typeRef: string, json: any): any;
-        function registerActivators(raw: {
-            [key: string]: Function;
-        }): void;
-        function registerTypeDefinitions(rawTypeDefJson: any[]): void;
-        function registerService(rawServiceJson: any): void;
-        function remoteMethod<T>(name: string): RemoteMethod<T>;
-    }
 }
