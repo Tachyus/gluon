@@ -824,38 +824,28 @@ namespace Gluon {
     }
 
     export interface IHttpClient {
-        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
         httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<T>;
         httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T>;
     }
 
     class JQueryClient implements IHttpClient {
 
-        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>> {
-            return jQuery.ajax({
-        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T) {
+        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): Promise<T> {
             return Promise.resolve(jQuery.ajax({
                 url: url,
                 type: "get",
                 data: queryParams
-            })).then(x => parseJsonResponse(x));
+            }).then(parseJsonResponse));
         }
 
-        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>> {
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<T> {
             const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
             if (Option.isSome(jsonRequest)) {
                 ajaxParams.data = jsonRequest;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            const promise = jQuery.ajax(ajaxParams);
-            if (Option.isSome(parseJsonResponse)) {
-                return promise.then(x => parseJsonResponse(x));
-            } else {
-                return promise;
-            }
-            return Promise.resolve(jQuery.ajax(ajaxParams)).then(x => parseJsonResponse(x));
+            return Promise.resolve(jQuery.ajax(ajaxParams).then(parseJsonResponse));
         }
     }
 
