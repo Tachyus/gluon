@@ -1,5 +1,5 @@
 /// <reference types="jquery" />
-declare namespace Gluon.Schema {
+export declare namespace Gluon.Schema {
     type HttpMethod = "Delete" | "Get" | "Post" | "Put";
     interface HttpCallingConvention {
         tag: "HttpCallingConvention";
@@ -109,7 +109,7 @@ declare namespace Gluon.Schema {
         TypeDefinitions: Gluon.Schema.TypeDefinition[];
     }
 }
-declare namespace Gluon {
+export declare namespace Gluon {
     type Option<T> = T | null | undefined;
     namespace Option {
         function some<T>(value: T): Option<T>;

@@ -1,3 +1,4 @@
+"use strict";
 var Gluon;
 (function (Gluon) {
     var Schema;
@@ -51,7 +52,7 @@ var Gluon;
         }());
         Schema.Union = Union;
     })(Schema = Gluon.Schema || (Gluon.Schema = {}));
-})(Gluon || (Gluon = {}));
+})(Gluon = exports.Gluon || (exports.Gluon = {}));
 (function (Gluon) {
     var Option;
     (function (Option) {
@@ -926,7 +927,7 @@ var Gluon;
         }
         Internals.remoteMethod = remoteMethod;
     })(Internals = Gluon.Internals || (Gluon.Internals = {}));
-})(Gluon || (Gluon = {}));
+})(Gluon = exports.Gluon || (exports.Gluon = {}));
 Gluon.Internals.registerActivators({
     "Gluon.Schema.Delete": function () { return "Delete"; },
     "Gluon.Schema.Get": function () { return "Get"; },
