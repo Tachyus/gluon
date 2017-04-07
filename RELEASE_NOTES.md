@@ -1,3 +1,6 @@
+### New in 3.1.0 - (Released 2017-04-06)
+Support for universal module definitions (UMD)
+
 ### New in 3.0.1 - (Released 2017-01-23)
 - Change Option type to `T | null | undefined` to work better with optional parameters in interface and function signatures.
 - Add `Option.isSome` and `Option.isNone` guard functions to help identify whether a value is null or undefined.
