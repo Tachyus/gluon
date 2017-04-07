@@ -19,7 +19,7 @@
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>f4d92798</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,7 +62,6 @@
     <Content Include="paket.references" />
     <ConfigFiles Include="tsconfig.json" />
     <Content Include="package.json" />
-    <Content Include="Gluon.targets" />
     <Content Include="Scripts\Gluon.js.map" />
     <Content Include="Scripts\Gluon.min.js.map" />
     <None Include="Web.Debug.config">
@@ -106,7 +105,6 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <Import Project="Gluon.targets" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
@@ -196,4 +194,11 @@
       </ItemGroup>
     </When>
   </Choose>
+  <PropertyGroup>
+    <PreBuildEvent>yarn install
+yarn run prebuild</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>yarn run build</PostBuildEvent>
+  </PropertyGroup>
 </Project>
