@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="Startup.fs" />
     <Content Include="paket.references" />
-    <None Include="Gluon.targets" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -62,7 +61,6 @@
       <Project>{A49BBFB6-98A6-42CA-A5B3-35C89A7C3800}</Project>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="Gluon.targets" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>

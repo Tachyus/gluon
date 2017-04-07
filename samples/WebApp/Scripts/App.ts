@@ -1,4 +1,7 @@
-﻿module WebApp {
+﻿import * as Gluon from "Gluon"
+import * as SampleApp from "Generated"
+
+namespace WebApp {
 
     import P = Gluon;
     import S = SampleApp.Services;

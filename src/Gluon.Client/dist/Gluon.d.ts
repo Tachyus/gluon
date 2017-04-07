@@ -1,4 +1,5 @@
 /// <reference types="jquery" />
+export = Gluon;
 declare namespace Gluon.Schema {
     type HttpMethod = "Delete" | "Get" | "Post" | "Put";
     interface HttpCallingConvention {
