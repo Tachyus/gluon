@@ -12,8 +12,10 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
+export = Gluon;
+
 // <BOOTSTRAP-DEFS>
-export namespace Gluon.Schema {
+namespace Gluon.Schema {
   
     export type HttpMethod = "Delete" | "Get" | "Post" | "Put";
 
@@ -132,7 +134,7 @@ export namespace Gluon.Schema {
 // </BOOTSTRAP-DEFS>
 
 /** Implements the client side of the Gluon connector. */
-export namespace Gluon {
+namespace Gluon {
 
     import S = Gluon.Schema;
 
