@@ -824,29 +824,73 @@ namespace Gluon {
     }
 
     export interface IHttpClient {
-        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
-        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
+        httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
     }
 
-    class JQueryClient implements IHttpClient {
-        constructor() { }
+    export class FetchClient implements IHttpClient {
 
-        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>> {
-            return jQuery.ajax({
+        static serialize(obj: any, prefix?: string): string {
+            const str: string[] = [];
+            for (let p in obj) {
+                if (obj.hasOwnProperty(p)) {
+                    const k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+                    str.push((v !== null && typeof v === "object") ?
+                        this.serialize(v, k) :
+                        encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                }
+            }
+            return str.join("&");
+        }
+
+        httpGet<T>(url: string, queryParams: { [key: string]: string }, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
+            const queryString = Option.isSome(queryParams) ? FetchClient.serialize(queryParams) : null;
+            const urlAndQuery = Option.isNone(queryString) || queryString === "" ? url : `${url}?${queryString}`;
+            return window.fetch(urlAndQuery, {
+                method: "GET",
+                headers: new Headers({
+                    "Accept": "application/json"
+                })
+            }).then(r => r.json()).then(parseJsonResponse);
+        }
+
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T> | Response> {
+            const params =
+                Option.isSome(jsonRequest) ? {
+                    method: httpMethod,
+                    body: jsonRequest,
+                    headers: new Headers({
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    })
+                } : { method: httpMethod };
+            const promise = window.fetch(url, params);
+            if (Option.isSome(parseJsonResponse)) {
+                return promise.then(response => response.json()).then(parseJsonResponse);
+            } else {
+                return promise;
+            }
+        }
+    }
+
+    export class JQueryClient implements IHttpClient {
+
+        httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
+            return Promise.resolve(jQuery.ajax({
                 url: url,
                 type: "get",
                 data: queryParams
-            }).then(x => parseJsonResponse(x));
+            })).then(x => parseJsonResponse(x));
         }
 
-        httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>> {
+        httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
             const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
             if (Option.isSome(jsonRequest)) {
                 ajaxParams.data = jsonRequest;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            const promise = jQuery.ajax(ajaxParams);
+            const promise = Promise.resolve(jQuery.ajax(ajaxParams));
             if (Option.isSome(parseJsonResponse)) {
                 return promise.then(x => parseJsonResponse(x));
             } else {
@@ -905,7 +949,7 @@ namespace Gluon {
             return JSON.stringify(proxy.jointParametersSerializer.toJSON(data));
         }
 
-        export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): JQueryPromise<any> {
+        export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): Promise<any> {
             function parseJsonResponse(resp: any) {
                 if (proxy.doesReturn) {
                     const out = proxy.returnTypeSerializer.fromJSON(resp);

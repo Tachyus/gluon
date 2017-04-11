@@ -627,15 +627,60 @@ var Gluon;
         return Client;
     }());
     Gluon.Client = Client;
+    var FetchClient = (function () {
+        function FetchClient() {
+        }
+        FetchClient.serialize = function (obj, prefix) {
+            var str = [];
+            for (var p in obj) {
+                if (obj.hasOwnProperty(p)) {
+                    var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+                    str.push((v !== null && typeof v === "object") ?
+                        this.serialize(v, k) :
+                        encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                }
+            }
+            return str.join("&");
+        };
+        FetchClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
+            var queryString = Option.isSome(queryParams) ? FetchClient.serialize(queryParams) : null;
+            var urlAndQuery = Option.isNone(queryString) || queryString === "" ? url : url + "?" + queryString;
+            return window.fetch(urlAndQuery, {
+                method: "GET",
+                headers: new Headers({
+                    "Accept": "application/json"
+                })
+            }).then(function (r) { return r.json(); }).then(parseJsonResponse);
+        };
+        FetchClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
+            var params = Option.isSome(jsonRequest) ? {
+                method: httpMethod,
+                body: jsonRequest,
+                headers: new Headers({
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                })
+            } : { method: httpMethod };
+            var promise = window.fetch(url, params);
+            if (Option.isSome(parseJsonResponse)) {
+                return promise.then(function (response) { return response.json(); }).then(parseJsonResponse);
+            }
+            else {
+                return promise;
+            }
+        };
+        return FetchClient;
+    }());
+    Gluon.FetchClient = FetchClient;
     var JQueryClient = (function () {
         function JQueryClient() {
         }
         JQueryClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
-            return jQuery.ajax({
+            return Promise.resolve(jQuery.ajax({
                 url: url,
                 type: "get",
                 data: queryParams
-            }).then(function (x) { return parseJsonResponse(x); });
+            })).then(function (x) { return parseJsonResponse(x); });
         };
         JQueryClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
             var ajaxParams = { "url": url, "type": httpMethod };
@@ -644,7 +689,7 @@ var Gluon;
                 ajaxParams.dataType = "json";
                 ajaxParams.contentType = "application/json";
             }
-            var promise = jQuery.ajax(ajaxParams);
+            var promise = Promise.resolve(jQuery.ajax(ajaxParams));
             if (Option.isSome(parseJsonResponse)) {
                 return promise.then(function (x) { return parseJsonResponse(x); });
             }
@@ -654,6 +699,7 @@ var Gluon;
         };
         return JQueryClient;
     }());
+    Gluon.JQueryClient = JQueryClient;
     var Remoting;
     (function (Remoting) {
         function verbName(m) {

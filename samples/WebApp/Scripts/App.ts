@@ -31,7 +31,7 @@
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-    var cli = new P.Client();
+    var cli = new P.Client(new Gluon.FetchClient());
 
     (async function testPersonPhone() {
         const result = await S.showContact(cli)(p1);
