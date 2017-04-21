@@ -60,6 +60,7 @@
   <Import Project="..\..\packages\xunit.runner.visualstudio.2.1.0\build\$(__paket__xunit_runner_visualstudio_props).props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.1.0\build\$(__paket__xunit_runner_visualstudio_props).props')" Label="Paket" />
   <ItemGroup>
     <Compile Include="JsonProtocolTests.fs" />
+    <Compile Include="CodeGenTests.fs" />
     <Content Include="paket.references" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
