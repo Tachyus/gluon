@@ -1,5 +1,5 @@
-### New in 3.1.0 - (Released 2017-04-06)
-Support for universal module definitions (UMD)
+### New in 4.0.0 - (Released 2017-04-25)
+- Switch to external and nested module code generation to work with module imports
 
 ### New in 3.0.1 - (Released 2017-01-23)
 - Change Option type to `T | null | undefined` to work better with optional parameters in interface and function signatures.

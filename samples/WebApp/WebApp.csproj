@@ -195,10 +195,15 @@
     </When>
   </Choose>
   <PropertyGroup>
-    <PreBuildEvent>yarn install
-yarn run prebuild</PreBuildEvent>
+    <PreBuildEvent>cd $(ProjectDir)
+yarn install</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>yarn run build</PostBuildEvent>
+    <PostBuildEvent>cd $(ProjectDir)
+yarn run build</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
 </Project>

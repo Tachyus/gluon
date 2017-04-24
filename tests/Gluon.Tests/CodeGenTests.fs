@@ -50,18 +50,41 @@ module CodeGenTests =
         ]
 
     [<Property>]
-    let ``should create service with two methods`` () =
+    let ``should create service with 4 methods`` () =
         service.Methods |> Seq.length = 4
     
     [<Property>]
-    let ``should create service with 2 namespace groups`` () =
-        match defs.GroupNamespaces() with
-        | Syntax.DefinitionSequence ns -> ns.Length = 2
+    let ``should create service with 1 top-level namespace group`` () =
+        let groups = defs.GroupNamespaces()
+        match groups with
+        | Syntax.DefinitionSequence ns -> ns.Length = 1
         | _ -> failwith "Expected a DefinitionSequence at the top of the tree"
 
     [<Property>]
-    let ``should create service with 2 namespace groups matching module names`` () =
-        match defs.GroupNamespaces() with
-        | Syntax.DefinitionSequence [Syntax.InNamespace(ns1, _); Syntax.InNamespace(ns2,_)] ->
-            ns1 = "Gluon.Tests.SampleApp" && ns2 = "Gluon.Tests.TestApp"
+    let ``should create service with 1 namespace group matching module names`` () =
+        let groups = defs.GroupNamespaces()
+        match groups with
+        | Syntax.DefinitionSequence [Syntax.InNamespace(ns1,_)] -> ns1 = "Gluon"
+        | _ -> failwith "Expected a DefinitionSequence at the top of the tree"
+
+    [<Property>]
+    let ``should create service with two namespace groups matching module names at the module level`` () =
+        let groups = defs.GroupNamespaces()
+        match groups with
+        | Syntax.DefinitionSequence
+            [ Syntax.InNamespace("Gluon",
+                Syntax.InNamespace("Tests",
+                  Syntax.DefinitionSequence
+                    [ Syntax.InNamespace("TestApp", _)
+                      Syntax.InNamespace("SampleApp", _)
+                    ]
+                )
+              )
+            ] -> true
+        | Syntax.DefinitionSequence
+            [ Syntax.InNamespace("Gluon",
+                Syntax.InNamespace("Tests",
+                  Syntax.DefinitionSequence actual))
+            ] ->
+            failwithf "Found a different hierarchy than expected: %A" actual
         | _ -> failwith "Expected a DefinitionSequence at the top of the tree"

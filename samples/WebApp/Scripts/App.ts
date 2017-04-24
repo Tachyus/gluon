@@ -1,9 +1,8 @@
 ﻿import * as Gluon from "Gluon"
-import * as SampleApp from "Generated"
+import { SampleApp } from "Generated"
 
 namespace WebApp {
 
-    import P = Gluon;
     import S = SampleApp.Services;
 
     var p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
@@ -34,7 +33,7 @@ namespace WebApp {
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-    var cli = new P.Client();
+    var cli = new Gluon.Client();
 
     (async function testPersonPhone() {
         const result = await S.showContact(cli)(p1);
