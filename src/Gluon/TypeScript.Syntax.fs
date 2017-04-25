@@ -154,19 +154,60 @@ type Definitions =
     | InNamespace of string * Definitions
 
     member this.GroupNamespaces() =
-        let rec find ctx def =
+        let rec merge (a:Definitions) (b:Definitions) : Definitions =
+            match a, b with
+            | InNamespace(nsA, defA), InNamespace(nsB, defB) when nsA = nsB ->
+                InNamespace(nsA, merge defA defB)
+            | DefinitionSequence a, InNamespace(nsB, defB) ->
+                let matched, notMatched = 
+                    a |> List.partition (function InNamespace(nsA, _) when nsA = nsB -> true | _ -> false)
+                match matched with
+                | [InNamespace(_, defA)] ->
+                    DefinitionSequence(InNamespace(nsB, merge defA defB) :: notMatched)
+                | _ -> DefinitionSequence(b::a)
+            | DefinitionSequence a, DefinitionSequence b ->
+                DefinitionSequence(a @ b)
+            | DefinitionSequence a, b ->
+                DefinitionSequence(b::a)
+            | a, DefinitionSequence b ->
+                DefinitionSequence(a::b)
+            | _, _ ->
+                DefinitionSequence [a; b]
+
+        let rec step (acc:Definitions list) (def:Definitions) : Definitions list =
             match def with
-            | InNamespace (m, def) -> find (m :: ctx) def
-            | DefinitionSequence xs -> seq { for x in xs do yield! find ctx x }
-            | _ -> Seq.singleton (ctx, def)
-        find [] this
-        |> Seq.map (fun (m, defs) -> (List.rev m, defs))
-        |> Seq.groupBy fst
-        |> Seq.collect (fun (m, defs) ->
-            let defs = Seq.toList (Seq.map snd defs)
-            match m with
-            | [] -> defs
-            | ms -> [InNamespace (String.concat "." ms, DefinitionSequence defs)])
-        |> Seq.toList
-        |> DefinitionSequence
-        
+            | DefinitionSequence [] ->
+                // Skip the value.
+                acc
+            | DefinitionSequence (def'::[]) ->
+                // Recursively call step until Definitions are found.
+                step acc def'
+            | DefinitionSequence defs ->
+                // Fold the results of calling step for each Definitions instance.
+                // NOTE: This could potentially result in a StackOverflowException.
+                defs |> List.fold step acc
+            | _ ->
+                // Process the provided Definitions.
+                match acc with
+                | [] -> [def]
+                | _ ->
+                    let res =
+                        acc
+                        |> List.map (fun a ->
+                            let merged = merge a def
+                            match merged with
+                            | InNamespace _ -> Choice1Of2 merged
+                            | DefinitionSequence _ -> Choice2Of2 a
+                            | _ -> failwith "Invalid option"
+                        )
+                    let wasMerged =
+                        res |> List.exists (function Choice1Of2 _ -> true | Choice2Of2 _ -> false)
+                    if wasMerged then
+                        res |> List.map (function Choice1Of2 def -> def | Choice2Of2 def -> def)
+                    else def::acc
+
+        match this with
+        | DefinitionSequence defs ->
+            let xs = defs |> Seq.fold step []
+            xs |> DefinitionSequence
+        | _ -> this

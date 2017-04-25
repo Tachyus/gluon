@@ -9,7 +9,7 @@
         "lib": [ "dom", "es6" ]
     },
     "files": [
-        "../../src/Gluon.Client/dist/Gluon.d.ts",
+        "Scripts/Gluon.d.ts",
         "Scripts/Generated.ts",
         "Scripts/App.ts"
     ],

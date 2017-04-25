@@ -1,6 +1,8 @@
-﻿module WebApp {
+﻿import { Gluon } from "Gluon"
+import { SampleApp } from "Generated"
 
-    import P = Gluon;
+namespace WebApp {
+
     import S = SampleApp.Services;
 
     var p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
@@ -31,7 +33,7 @@
     var dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-    var cli = new P.Client();
+    var cli = new Gluon.Client();
 
     (async function testPersonPhone() {
         const result = await S.showContact(cli)(p1);
@@ -91,7 +93,7 @@
     dictExample.setAt("three", 13);
     S.convertDict(cli)(dictExample).then(x => {
         if (Gluon.Option.isSome(x)) {
-            x.forEach((key, value) => {
+            x.forEach((key: string, value: number) => {
                 console.log("dict:", key, value);
             });
         }
