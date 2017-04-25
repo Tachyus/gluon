@@ -1,6 +1,6 @@
 ﻿{
     "compilerOptions": {
-        "module": "umd",
+        "module": "none",
         "target": "es5",
         "noImplicitAny": true,
         "strictNullChecks": true,

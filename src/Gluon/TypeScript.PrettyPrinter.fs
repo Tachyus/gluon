@@ -215,4 +215,4 @@ let definitions (defs: S.Definitions) =
         | S.DefineEnum e -> prefix ++ enumDefinition e
         | S.DefineFunction f -> prefix ++ functionDefinition f
         | S.DefineUnionCase u -> prefix ++ unionCaseDefinition u
-    definitions true defs
+    definitions false defs

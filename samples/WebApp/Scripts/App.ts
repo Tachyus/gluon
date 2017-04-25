@@ -1,7 +1,4 @@
-﻿import { Gluon } from "Gluon"
-import { SampleApp } from "Generated"
-
-namespace WebApp {
+﻿namespace WebApp {
 
     import S = SampleApp.Services;
 
