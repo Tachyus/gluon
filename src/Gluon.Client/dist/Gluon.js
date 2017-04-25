@@ -1,5 +1,12 @@
-var Gluon;
-(function (Gluon) {
+(function (dependencies, factory) {
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        var v = factory(require, exports); if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === 'function' && define.amd) {
+        define(dependencies, factory);
+    }
+})(["require", "exports"], function (require, exports) {
+    "use strict";
     var Schema;
     (function (Schema) {
         var Parameter = (function () {
@@ -50,7 +57,7 @@ var Gluon;
             return Union;
         }());
         Schema.Union = Union;
-    })(Schema = Gluon.Schema || (Gluon.Schema = {}));
+    })(Schema = exports.Schema || (exports.Schema = {}));
     var Option;
     (function (Option) {
         function some(value) {
@@ -81,7 +88,7 @@ var Gluon;
             return isSome(value) ? value : defaultValue;
         }
         Option.withDefault = withDefault;
-    })(Option = Gluon.Option || (Gluon.Option = {}));
+    })(Option = exports.Option || (exports.Option = {}));
     var Dict = (function () {
         function Dict() {
             this.data = {};
@@ -129,7 +136,7 @@ var Gluon;
         };
         return Dict;
     }());
-    Gluon.Dict = Dict;
+    exports.Dict = Dict;
     var DataType;
     (function (DataType) {
         function children(d) {
@@ -624,7 +631,7 @@ var Gluon;
         }
         return Client;
     }());
-    Gluon.Client = Client;
+    exports.Client = Client;
     var JQueryClient = (function () {
         function JQueryClient() {
         }
@@ -923,40 +930,40 @@ var Gluon;
             return methodBuilder.remoteMethod(name);
         }
         Internals.remoteMethod = remoteMethod;
-    })(Internals = Gluon.Internals || (Gluon.Internals = {}));
-})(Gluon || (Gluon = {}));
-Gluon.Internals.registerActivators({
-    "Gluon.Schema.Delete": function () { return "Delete"; },
-    "Gluon.Schema.Get": function () { return "Get"; },
-    "Gluon.Schema.Post": function () { return "Post"; },
-    "Gluon.Schema.Put": function () { return "Put"; },
-    "Gluon.Schema.HttpCallingConvention": function (httpMethod, path) { return ({ tag: "HttpCallingConvention", Item1: httpMethod, path: path }); },
-    "Gluon.Schema.ArrayType": function (a) { return ({ tag: "ArrayType", Item: a }); },
-    "Gluon.Schema.BooleanType": function () { return ({ tag: "BooleanType" }); },
-    "Gluon.Schema.BytesType": function () { return ({ tag: "BytesType" }); },
-    "Gluon.Schema.DateTimeType": function () { return ({ tag: "DateTimeType" }); },
-    "Gluon.Schema.DoubleType": function () { return ({ tag: "DoubleType" }); },
-    "Gluon.Schema.IntType": function () { return ({ tag: "IntType" }); },
-    "Gluon.Schema.JsonType": function () { return ({ tag: "JsonType" }); },
-    "Gluon.Schema.ListType": function (a) { return ({ tag: "ListType", Item: a }); },
-    "Gluon.Schema.OptionType": function (a) { return ({ tag: "OptionType", Item: a }); },
-    "Gluon.Schema.SequenceType": function (a) { return ({ tag: "SequenceType", Item: a }); },
-    "Gluon.Schema.StringDictType": function (a) { return ({ tag: "StringDictType", Item: a }); },
-    "Gluon.Schema.StringType": function () { return ({ tag: "StringType" }); },
-    "Gluon.Schema.TupleType": function (a) { return ({ tag: "TupleType", Item: a }); },
-    "Gluon.Schema.TypeReference": function (a) { return ({ tag: "TypeReference", Item: a }); },
-    "Gluon.Schema.Parameter": function (a, b) { return ({ ParameterName: a, ParameterType: b }); },
-    "Gluon.Schema.Method": function (a, b, c, d) { return ({ CallingConvention: a, MethodName: b, MethodParameters: c, MethodReturnType: d }); },
-    "Gluon.Schema.EnumCase": function (a, b) { return ({ EnumCaseName: a, EnumCaseValue: b }); },
-    "Gluon.Schema.Enum": function (a, b) { return ({ EnumName: a, EnumCases: b }); },
-    "Gluon.Schema.Field": function (a, b) { return ({ FieldName: a, FieldType: b }); },
-    "Gluon.Schema.Record": function (a, b) { return ({ RecordName: a, RecordFields: b }); },
-    "Gluon.Schema.UnionCase": function (a, b) { return ({ CaseName: a, CaseFields: b }); },
-    "Gluon.Schema.Union": function (a, b) { return ({ UnionName: a, UnionCases: b }); },
-    "Gluon.Schema.DefineEnum": function (a) { return ({ tag: "DefineEnum", Item: a }); },
-    "Gluon.Schema.DefineRecord": function (a) { return ({ tag: "DefineRecord", Item: a }); },
-    "Gluon.Schema.DefineUnion": function (a) { return ({ tag: "DefineUnion", Item: a }); },
-    "Gluon.Schema.Service": function (a, b) { return ({ Methods: a, TypeDefinitions: b }); }
+    })(Internals = exports.Internals || (exports.Internals = {}));
+    Internals.registerActivators({
+        "Gluon.Schema.Delete": function () { return "Delete"; },
+        "Gluon.Schema.Get": function () { return "Get"; },
+        "Gluon.Schema.Post": function () { return "Post"; },
+        "Gluon.Schema.Put": function () { return "Put"; },
+        "Gluon.Schema.HttpCallingConvention": function (httpMethod, path) { return ({ tag: "HttpCallingConvention", Item1: httpMethod, path: path }); },
+        "Gluon.Schema.ArrayType": function (a) { return ({ tag: "ArrayType", Item: a }); },
+        "Gluon.Schema.BooleanType": function () { return ({ tag: "BooleanType" }); },
+        "Gluon.Schema.BytesType": function () { return ({ tag: "BytesType" }); },
+        "Gluon.Schema.DateTimeType": function () { return ({ tag: "DateTimeType" }); },
+        "Gluon.Schema.DoubleType": function () { return ({ tag: "DoubleType" }); },
+        "Gluon.Schema.IntType": function () { return ({ tag: "IntType" }); },
+        "Gluon.Schema.JsonType": function () { return ({ tag: "JsonType" }); },
+        "Gluon.Schema.ListType": function (a) { return ({ tag: "ListType", Item: a }); },
+        "Gluon.Schema.OptionType": function (a) { return ({ tag: "OptionType", Item: a }); },
+        "Gluon.Schema.SequenceType": function (a) { return ({ tag: "SequenceType", Item: a }); },
+        "Gluon.Schema.StringDictType": function (a) { return ({ tag: "StringDictType", Item: a }); },
+        "Gluon.Schema.StringType": function () { return ({ tag: "StringType" }); },
+        "Gluon.Schema.TupleType": function (a) { return ({ tag: "TupleType", Item: a }); },
+        "Gluon.Schema.TypeReference": function (a) { return ({ tag: "TypeReference", Item: a }); },
+        "Gluon.Schema.Parameter": function (a, b) { return ({ ParameterName: a, ParameterType: b }); },
+        "Gluon.Schema.Method": function (a, b, c, d) { return ({ CallingConvention: a, MethodName: b, MethodParameters: c, MethodReturnType: d }); },
+        "Gluon.Schema.EnumCase": function (a, b) { return ({ EnumCaseName: a, EnumCaseValue: b }); },
+        "Gluon.Schema.Enum": function (a, b) { return ({ EnumName: a, EnumCases: b }); },
+        "Gluon.Schema.Field": function (a, b) { return ({ FieldName: a, FieldType: b }); },
+        "Gluon.Schema.Record": function (a, b) { return ({ RecordName: a, RecordFields: b }); },
+        "Gluon.Schema.UnionCase": function (a, b) { return ({ CaseName: a, CaseFields: b }); },
+        "Gluon.Schema.Union": function (a, b) { return ({ UnionName: a, UnionCases: b }); },
+        "Gluon.Schema.DefineEnum": function (a) { return ({ tag: "DefineEnum", Item: a }); },
+        "Gluon.Schema.DefineRecord": function (a) { return ({ tag: "DefineRecord", Item: a }); },
+        "Gluon.Schema.DefineUnion": function (a) { return ({ tag: "DefineUnion", Item: a }); },
+        "Gluon.Schema.Service": function (a, b) { return ({ Methods: a, TypeDefinitions: b }); }
+    });
+    Internals.registerTypeDefinitions([["DefineUnion", { "UnionName": "Gluon.Schema.HttpMethod", "UnionCases": [{ "CaseName": "Delete", "CaseFields": [] }, { "CaseName": "Get", "CaseFields": [] }, { "CaseName": "Post", "CaseFields": [] }, { "CaseName": "Put", "CaseFields": [] }] }], ["DefineUnion", { "UnionName": "Gluon.Schema.CallingConvention", "UnionCases": [{ "CaseName": "HttpCallingConvention", "CaseFields": [{ "FieldName": "Item1", "FieldType": ["TypeReference", "Gluon.Schema.HttpMethod"] }, { "FieldName": "path", "FieldType": ["StringType"] }] }] }], ["DefineUnion", { "UnionName": "Gluon.Schema.DataType", "UnionCases": [{ "CaseName": "ArrayType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "BooleanType", "CaseFields": [] }, { "CaseName": "BytesType", "CaseFields": [] }, { "CaseName": "DateTimeType", "CaseFields": [] }, { "CaseName": "DoubleType", "CaseFields": [] }, { "CaseName": "IntType", "CaseFields": [] }, { "CaseName": "JsonType", "CaseFields": [] }, { "CaseName": "ListType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "OptionType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "SequenceType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "StringDictType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "StringType", "CaseFields": [] }, { "CaseName": "TupleType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.DataType"]] }] }, { "CaseName": "TypeReference", "CaseFields": [{ "FieldName": "Item", "FieldType": ["StringType"] }] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Parameter", "RecordFields": [{ "FieldName": "ParameterName", "FieldType": ["StringType"] }, { "FieldName": "ParameterType", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Method", "RecordFields": [{ "FieldName": "CallingConvention", "FieldType": ["TypeReference", "Gluon.Schema.CallingConvention"] }, { "FieldName": "MethodName", "FieldType": ["StringType"] }, { "FieldName": "MethodParameters", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Parameter"]] }, { "FieldName": "MethodReturnType", "FieldType": ["OptionType", ["TypeReference", "Gluon.Schema.DataType"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.EnumCase", "RecordFields": [{ "FieldName": "EnumCaseName", "FieldType": ["StringType"] }, { "FieldName": "EnumCaseValue", "FieldType": ["IntType"] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Enum", "RecordFields": [{ "FieldName": "EnumName", "FieldType": ["StringType"] }, { "FieldName": "EnumCases", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.EnumCase"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Field", "RecordFields": [{ "FieldName": "FieldName", "FieldType": ["StringType"] }, { "FieldName": "FieldType", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Record", "RecordFields": [{ "FieldName": "RecordName", "FieldType": ["StringType"] }, { "FieldName": "RecordFields", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Field"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.UnionCase", "RecordFields": [{ "FieldName": "CaseName", "FieldType": ["StringType"] }, { "FieldName": "CaseFields", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Field"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Union", "RecordFields": [{ "FieldName": "UnionName", "FieldType": ["StringType"] }, { "FieldName": "UnionCases", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.UnionCase"]] }] }], ["DefineUnion", { "UnionName": "Gluon.Schema.TypeDefinition", "UnionCases": [{ "CaseName": "DefineEnum", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.Enum"] }] }, { "CaseName": "DefineRecord", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.Record"] }] }, { "CaseName": "DefineUnion", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.Union"] }] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Service", "RecordFields": [{ "FieldName": "Methods", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Method"]] }, { "FieldName": "TypeDefinitions", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.TypeDefinition"]] }] }]]);
 });
-Gluon.Internals.registerTypeDefinitions([["DefineUnion", { "UnionName": "Gluon.Schema.HttpMethod", "UnionCases": [{ "CaseName": "Delete", "CaseFields": [] }, { "CaseName": "Get", "CaseFields": [] }, { "CaseName": "Post", "CaseFields": [] }, { "CaseName": "Put", "CaseFields": [] }] }], ["DefineUnion", { "UnionName": "Gluon.Schema.CallingConvention", "UnionCases": [{ "CaseName": "HttpCallingConvention", "CaseFields": [{ "FieldName": "Item1", "FieldType": ["TypeReference", "Gluon.Schema.HttpMethod"] }, { "FieldName": "path", "FieldType": ["StringType"] }] }] }], ["DefineUnion", { "UnionName": "Gluon.Schema.DataType", "UnionCases": [{ "CaseName": "ArrayType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "BooleanType", "CaseFields": [] }, { "CaseName": "BytesType", "CaseFields": [] }, { "CaseName": "DateTimeType", "CaseFields": [] }, { "CaseName": "DoubleType", "CaseFields": [] }, { "CaseName": "IntType", "CaseFields": [] }, { "CaseName": "JsonType", "CaseFields": [] }, { "CaseName": "ListType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "OptionType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "SequenceType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "StringDictType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }, { "CaseName": "StringType", "CaseFields": [] }, { "CaseName": "TupleType", "CaseFields": [{ "FieldName": "Item", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.DataType"]] }] }, { "CaseName": "TypeReference", "CaseFields": [{ "FieldName": "Item", "FieldType": ["StringType"] }] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Parameter", "RecordFields": [{ "FieldName": "ParameterName", "FieldType": ["StringType"] }, { "FieldName": "ParameterType", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Method", "RecordFields": [{ "FieldName": "CallingConvention", "FieldType": ["TypeReference", "Gluon.Schema.CallingConvention"] }, { "FieldName": "MethodName", "FieldType": ["StringType"] }, { "FieldName": "MethodParameters", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Parameter"]] }, { "FieldName": "MethodReturnType", "FieldType": ["OptionType", ["TypeReference", "Gluon.Schema.DataType"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.EnumCase", "RecordFields": [{ "FieldName": "EnumCaseName", "FieldType": ["StringType"] }, { "FieldName": "EnumCaseValue", "FieldType": ["IntType"] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Enum", "RecordFields": [{ "FieldName": "EnumName", "FieldType": ["StringType"] }, { "FieldName": "EnumCases", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.EnumCase"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Field", "RecordFields": [{ "FieldName": "FieldName", "FieldType": ["StringType"] }, { "FieldName": "FieldType", "FieldType": ["TypeReference", "Gluon.Schema.DataType"] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Record", "RecordFields": [{ "FieldName": "RecordName", "FieldType": ["StringType"] }, { "FieldName": "RecordFields", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Field"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.UnionCase", "RecordFields": [{ "FieldName": "CaseName", "FieldType": ["StringType"] }, { "FieldName": "CaseFields", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Field"]] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Union", "RecordFields": [{ "FieldName": "UnionName", "FieldType": ["StringType"] }, { "FieldName": "UnionCases", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.UnionCase"]] }] }], ["DefineUnion", { "UnionName": "Gluon.Schema.TypeDefinition", "UnionCases": [{ "CaseName": "DefineEnum", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.Enum"] }] }, { "CaseName": "DefineRecord", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.Record"] }] }, { "CaseName": "DefineUnion", "CaseFields": [{ "FieldName": "Item", "FieldType": ["TypeReference", "Gluon.Schema.Union"] }] }] }], ["DefineRecord", { "RecordName": "Gluon.Schema.Service", "RecordFields": [{ "FieldName": "Methods", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.Method"]] }, { "FieldName": "TypeDefinitions", "FieldType": ["ListType", ["TypeReference", "Gluon.Schema.TypeDefinition"]] }] }]]);
 //# sourceMappingURL=Gluon.js.map
