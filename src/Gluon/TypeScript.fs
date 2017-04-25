@@ -49,7 +49,7 @@ type CodeUnit(layout: PrettyPrint.Layout) =
 
 [<Sealed>]
 type Program(defs: CodeUnit, init: CodeUnit) =
-    let imports = CodeUnit(PrettyPrint.text "import * as Gluon from \"Gluon\"")
+    let imports = CodeUnit(PrettyPrint.text "import { Gluon } from \"Gluon\"")
     member this.Imports = imports
     member this.Definitions = defs
     member this.Initializer = init

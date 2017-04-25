@@ -13,6 +13,7 @@ packages
 paket.exe
 samples/*/bin
 samples/*/obj
+samples/*/dist
 src/*/AssemblyInfo.*
 src/*/Properties/AssemblyInfo.*
 src/*/bin

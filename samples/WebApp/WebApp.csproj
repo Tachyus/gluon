@@ -62,8 +62,7 @@
     <Content Include="paket.references" />
     <ConfigFiles Include="tsconfig.json" />
     <Content Include="package.json" />
-    <Content Include="Scripts\Gluon.js.map" />
-    <Content Include="Scripts\Gluon.min.js.map" />
+    <Content Include="webpack.config.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -73,9 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
-    <Content Include="Scripts\Gluon.js" />
-    <Content Include="Scripts\Gluon.min.js" />
-    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -95,7 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\Generated.ts" />
-    <TypeScriptCompile Include="Scripts\Gluon.d.ts" />
+    <TypeScriptCompile Include="Scripts\Gluon.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
