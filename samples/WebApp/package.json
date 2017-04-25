@@ -10,7 +10,7 @@
         "generate-client": "../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll",
         "copy-jquery": "cpx node_modules/jquery/dist/jquery.min.js Scripts",
         "copy-gluon": "cpx ../../src/Gluon.Client/dist/Gluon.* Scripts",
-        "postinstall": "yarn run copy-jquery && yarn run copy-gluon && yarn run generate-client",
+        "postinstall": "yarn run copy-gluon && yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
         "build": "yarn run compile",
         "test": "echo \"Error: no test specified\" && exit 1"

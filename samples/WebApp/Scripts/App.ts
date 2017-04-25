@@ -1,4 +1,4 @@
-﻿import * as Gluon from "Gluon"
+﻿import { Gluon } from "Gluon"
 import { SampleApp } from "Generated"
 
 namespace WebApp {
