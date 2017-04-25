@@ -1,17 +1,16 @@
 /// <reference types="jquery" />
-export = Gluon;
-declare namespace Gluon {
+export declare namespace Gluon {
     namespace Schema {
         type HttpMethod = "Delete" | "Get" | "Post" | "Put";
         interface HttpCallingConvention {
             tag: "HttpCallingConvention";
-            Item1: Gluon.Schema.HttpMethod;
+            Item1: HttpMethod;
             path: string;
         }
         type CallingConvention = HttpCallingConvention;
         interface ArrayType {
             tag: "ArrayType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         interface BooleanType {
             tag: "BooleanType";
@@ -33,26 +32,26 @@ declare namespace Gluon {
         }
         interface ListType {
             tag: "ListType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         interface OptionType {
             tag: "OptionType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         interface SequenceType {
             tag: "SequenceType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         interface StringDictType {
             tag: "StringDictType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         interface StringType {
             tag: "StringType";
         }
         interface TupleType {
             tag: "TupleType";
-            Item: Gluon.Schema.DataType[];
+            Item: DataType[];
         }
         interface TypeReference {
             tag: "TypeReference";
@@ -61,13 +60,13 @@ declare namespace Gluon {
         type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
         class Parameter {
             ParameterName: string;
-            ParameterType: Gluon.Schema.DataType;
+            ParameterType: DataType;
         }
         class Method {
-            CallingConvention: Gluon.Schema.CallingConvention;
+            CallingConvention: CallingConvention;
             MethodName: string;
-            MethodParameters: Gluon.Schema.Parameter[];
-            MethodReturnType: Gluon.Option<Gluon.Schema.DataType>;
+            MethodParameters: Parameter[];
+            MethodReturnType: Gluon.Option<DataType>;
         }
         class EnumCase {
             EnumCaseName: string;
@@ -75,40 +74,40 @@ declare namespace Gluon {
         }
         class Enum {
             EnumName: string;
-            EnumCases: Gluon.Schema.EnumCase[];
+            EnumCases: EnumCase[];
         }
         class Field {
             FieldName: string;
-            FieldType: Gluon.Schema.DataType;
+            FieldType: DataType;
         }
         class Record {
             RecordName: string;
-            RecordFields: Gluon.Schema.Field[];
+            RecordFields: Field[];
         }
         class UnionCase {
             CaseName: string;
-            CaseFields: Gluon.Schema.Field[];
+            CaseFields: Field[];
         }
         class Union {
             UnionName: string;
-            UnionCases: Gluon.Schema.UnionCase[];
+            UnionCases: UnionCase[];
         }
         interface DefineEnum {
             tag: "DefineEnum";
-            Item: Gluon.Schema.Enum;
+            Item: Enum;
         }
         interface DefineRecord {
             tag: "DefineRecord";
-            Item: Gluon.Schema.Record;
+            Item: Record;
         }
         interface DefineUnion {
             tag: "DefineUnion";
-            Item: Gluon.Schema.Union;
+            Item: Union;
         }
         type TypeDefinition = DefineEnum | DefineRecord | DefineUnion;
         interface Service {
-            Methods: Gluon.Schema.Method[];
-            TypeDefinitions: Gluon.Schema.TypeDefinition[];
+            Methods: Method[];
+            TypeDefinitions: TypeDefinition[];
         }
     }
     type Option<T> = T | null | undefined;

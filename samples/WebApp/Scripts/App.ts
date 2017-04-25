@@ -93,7 +93,7 @@ namespace WebApp {
     dictExample.setAt("three", 13);
     S.convertDict(cli)(dictExample).then(x => {
         if (Gluon.Option.isSome(x)) {
-            x.forEach((key, value) => {
+            x.forEach((key: string, value: number) => {
                 console.log("dict:", key, value);
             });
         }

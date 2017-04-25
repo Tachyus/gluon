@@ -12,9 +12,7 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-export = Gluon;
-
-namespace Gluon {
+export namespace Gluon {
 
     // <BOOTSTRAP-DEFS>
     export namespace Schema {
@@ -23,14 +21,14 @@ namespace Gluon {
 
         export interface HttpCallingConvention {
             tag: "HttpCallingConvention";
-            Item1: Gluon.Schema.HttpMethod;
+            Item1: HttpMethod;
             path: string;
         }
         export type CallingConvention = HttpCallingConvention;
 
         export interface ArrayType {
             tag: "ArrayType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         export interface BooleanType {
             tag: "BooleanType";
@@ -52,26 +50,26 @@ namespace Gluon {
         }
         export interface ListType {
             tag: "ListType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         export interface OptionType {
             tag: "OptionType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         export interface SequenceType {
             tag: "SequenceType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         export interface StringDictType {
             tag: "StringDictType";
-            Item: Gluon.Schema.DataType;
+            Item: DataType;
         }
         export interface StringType {
             tag: "StringType";
         }
         export interface TupleType {
             tag: "TupleType";
-            Item: Gluon.Schema.DataType[];
+            Item: DataType[];
         }
         export interface TypeReference {
             tag: "TypeReference";
@@ -81,13 +79,13 @@ namespace Gluon {
 
         export class Parameter {
             ParameterName: string;
-            ParameterType: Gluon.Schema.DataType;
+            ParameterType: DataType;
         }
         export class Method {
-            CallingConvention: Gluon.Schema.CallingConvention;
+            CallingConvention: CallingConvention;
             MethodName: string;
-            MethodParameters: Gluon.Schema.Parameter[];
-            MethodReturnType: Gluon.Option<Gluon.Schema.DataType>;
+            MethodParameters: Parameter[];
+            MethodReturnType: Gluon.Option<DataType>;
         }
         export class EnumCase {
             EnumCaseName: string;
@@ -95,42 +93,42 @@ namespace Gluon {
         }
         export class Enum {
             EnumName: string;
-            EnumCases: Gluon.Schema.EnumCase[];
+            EnumCases: EnumCase[];
         }
         export class Field {
             FieldName: string;
-            FieldType: Gluon.Schema.DataType;
+            FieldType: DataType;
         }
         export class Record {
             RecordName: string;
-            RecordFields: Gluon.Schema.Field[];
+            RecordFields: Field[];
         }
         export class UnionCase {
             CaseName: string;
-            CaseFields: Gluon.Schema.Field[];
+            CaseFields: Field[];
         }
         export class Union {
             UnionName: string;
-            UnionCases: Gluon.Schema.UnionCase[];
+            UnionCases: UnionCase[];
         }
 
         export interface DefineEnum {
             tag: "DefineEnum";
-            Item: Gluon.Schema.Enum;
+            Item: Enum;
         }
         export interface DefineRecord {
             tag: "DefineRecord";
-            Item: Gluon.Schema.Record;
+            Item: Record;
         }
         export interface DefineUnion {
             tag: "DefineUnion";
-            Item: Gluon.Schema.Union;
+            Item: Union;
         }
         export type TypeDefinition = DefineEnum | DefineRecord | DefineUnion;
 
         export interface Service {
-            Methods: Gluon.Schema.Method[];
-            TypeDefinitions: Gluon.Schema.TypeDefinition[];
+            Methods: Method[];
+            TypeDefinitions: TypeDefinition[];
         }
     }
     // </BOOTSTRAP-DEFS>
