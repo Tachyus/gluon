@@ -1,14 +1,9 @@
 {
-  "name": "gluon-client",
-  "version": "3.1.0",
+  "name": "gluon",
+  "version": "4.0.0",
   "description": "TypeScript to FSharp connector",
-  "main": "dist/Gluon.js",
-  "types": "dist/Gluon.d.ts",
-  "devDependencies": {
-    "rimraf": "2.5.1",
-    "typescript": "^2.2.2",
-    "uglify-js": "2.6.1"
-  },
+  "main": "./dist/Gluon.js",
+  "typings": "./dist/Gluon.d.ts",
   "scripts": {
     "clean": "rimraf ./dist && mkdir dist",
     "tsc": "tsc -p ./",
@@ -36,5 +31,10 @@
   "homepage": "http://www.tachyus.com/gluon",
   "dependencies": {
     "@types/jquery": "^2.0.39"
+  },
+  "devDependencies": {
+    "rimraf": "2.5.1",
+    "typescript": "^2.2.2",
+    "uglify-js": "2.6.1"
   }
 }

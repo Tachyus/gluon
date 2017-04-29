@@ -1,7 +1,8 @@
-FsCheck
-FsCheck.Xunit
-Newtonsoft.Json
-xunit
-xunit.runner.visualstudio
 FSharp.Core
 Microsoft.Owin
+Newtonsoft.Json
+group Test
+FsCheck
+FsCheck.Xunit
+xunit
+xunit.runner.visualstudio

@@ -7,10 +7,8 @@
         "clean-webapp": "rimraf ./Scripts/*.js* && rimraf ./bin && mkdir bin",
         "clean": "yarn run clean-webapp",
         "build-webapp": "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe WebApp.csproj /p:Configuration=Release",
-        "generate-client": "../../src/Gluon.CLI/bin/Release/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll",
-        "copy-jquery": "cpx node_modules/jquery/dist/jquery.min.js Scripts",
-        "copy-gluon": "cpx ../../src/Gluon.Client/dist/Gluon.* Scripts",
-        "postinstall": "yarn run copy-gluon && yarn run generate-client",
+        "generate-client": "./node_modules/gluon/bin/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll",
+        "postinstall": "yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
         "build": "yarn run compile",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,12 +24,16 @@
     },
     "homepage": "https://github.com/Tachyus/gluon#readme",
     "dependencies": {
-        "@types/jquery": "^2.0.34",
+        "gluon": "file:../../src/Gluon.Client",
         "jquery": "^3.1.1"
     },
     "devDependencies": {
+        "@types/jquery": "^2.0.34",
         "cpx": "^1.5.0",
         "rimraf": "^2.5.2",
-        "typescript": "^2.2.2"
+        "source-map-loader": "^0.2.1",
+        "ts-loader": "^2.0.3",
+        "typescript": "^2.2.2",
+        "webpack": "^2.4.1"
     }
 }
