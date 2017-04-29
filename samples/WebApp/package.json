@@ -10,7 +10,7 @@
         "generate-client": "./node_modules/gluon/bin/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll",
         "postinstall": "yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
-        "build": "yarn run compile",
+        "build": "webpack --config webpack.config.js -d",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

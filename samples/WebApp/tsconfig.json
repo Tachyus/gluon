@@ -1,6 +1,6 @@
 ﻿{
     "compilerOptions": {
-        "module": "umd",
+        "module": "commonjs",
         "target": "es5",
         "noImplicitAny": true,
         "strictNullChecks": true,
@@ -8,9 +8,8 @@
         "sourceMap": true,
         "lib": [ "dom", "es6" ]
     },
-    "files": [
-        "Scripts/Generated.ts",
-        "Scripts/App.ts"
+    "include": [
+        "Scripts/*.ts"
     ],
     "typeRoots": [
         "./node_modules/@types"

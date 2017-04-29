@@ -1,5 +1,5 @@
-﻿import * as Gluon from "Gluon"
-import { SampleApp } from "Generated"
+﻿import * as Gluon from "gluon"
+import { SampleApp } from "./Generated"
 
 export namespace WebApp {
 
