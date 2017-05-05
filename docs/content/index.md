@@ -13,7 +13,10 @@ Gluon can take this and build plumbing that lets you call this code
 from TypeScript:
 
 ```typescript
-var c = new Gluon.Client();
+import * as Gluon from "gluon-client";
+import { My } from "./Generated";
+
+const c = new Gluon.Client();
 My.Service.increment(c)(1).then(x => console.log(x));
 ```
 

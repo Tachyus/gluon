@@ -1,4 +1,3 @@
-/// <reference types="jquery" />
 export declare namespace Schema {
     type HttpMethod = "Delete" | "Get" | "Post" | "Put";
     interface HttpCallingConvention {
@@ -147,8 +146,19 @@ export interface RemoteMethod<T> {
 export interface IHttpClient {
     httpGet<T>(url: string, queryParams: {
         [key: string]: string;
-    }, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
+    }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
+}
+export declare class FetchClient implements IHttpClient {
+    private headers;
+    constructor(headers?: {
+        [key: string]: string;
+    });
+    static serialize(obj: any, prefix?: string): string;
+    httpGet<T>(url: string, queryParams: {
+        [key: string]: string;
+    }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T> | Response>;
 }
 export declare namespace Internals {
     function toJSON(typeRef: string, value: any): any;

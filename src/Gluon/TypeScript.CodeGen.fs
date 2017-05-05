@@ -59,7 +59,7 @@ let inNamespace name defs =
     | _ -> defs
 
 let promiseOf x =
-    S.TypeReference ("JQueryPromise", [makeOptionType x])
+    S.TypeReference ("Promise", [makeOptionType x])
 
 let generateSignature (m: Schema.Method) =
     let formals = [for par in m.MethodParameters -> (par.ParameterName, typeLiteral par.ParameterType)]

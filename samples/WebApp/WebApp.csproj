@@ -68,6 +68,8 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="webpack.config.js" />
+    <Content Include="yarn.lock" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />

@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/isomorphic-fetch@^0.0.33":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.33.tgz#3ea1b86f8b73e6a7430d01d4dbd5b1f63fd72718"
+
 "@types/jquery@^2.0.39":
   version "2.0.39"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-2.0.39.tgz#917fe65300dbc6ccbdfa7e2ee51159fbd29d7689"

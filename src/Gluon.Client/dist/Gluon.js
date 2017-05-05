@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Schema;
 (function (Schema) {
@@ -613,27 +621,65 @@ var SerializerService = (function () {
 }());
 var Client = (function () {
     function Client(httpClient, prefix) {
-        if (httpClient === void 0) { httpClient = new JQueryClient(); }
+        if (httpClient === void 0) { httpClient = new FetchClient(); }
+        if (prefix === void 0) { prefix = "/gluon-api"; }
         this.httpClient = httpClient;
-        if (!prefix) {
-            this.prefix = "/gluon-api";
-        }
-        else {
-            this.prefix = prefix;
-        }
+        this.prefix = prefix;
     }
     return Client;
 }());
 exports.Client = Client;
+var FetchClient = (function () {
+    function FetchClient(headers) {
+        if (headers === void 0) { headers = {}; }
+        this.headers = headers;
+    }
+    FetchClient.serialize = function (obj, prefix) {
+        var str = [];
+        for (var p in obj) {
+            if (obj.hasOwnProperty(p)) {
+                var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+                str.push((v !== null && typeof v === "object") ?
+                    this.serialize(v, k) :
+                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
+            }
+        }
+        return str.join("&");
+    };
+    FetchClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
+        var queryString = Option.isSome(queryParams) ? FetchClient.serialize(queryParams) : null;
+        var urlAndQuery = Option.isNone(queryString) || queryString === "" ? url : url + "?" + queryString;
+        return window.fetch(urlAndQuery, {
+            method: "GET",
+            headers: new Headers(__assign({}, this.headers, { "Accept": "application/json" }))
+        }).then(function (r) { return r.json(); }).then(parseJsonResponse);
+    };
+    FetchClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
+        var params = Option.isSome(jsonRequest) ? {
+            method: httpMethod,
+            body: jsonRequest,
+            headers: new Headers(__assign({}, this.headers, { "Accept": "application/json", "Content-Type": "application/json" }))
+        } : { method: httpMethod };
+        var promise = window.fetch(url, params);
+        if (Option.isSome(parseJsonResponse)) {
+            return promise.then(function (response) { return response.json(); }).then(parseJsonResponse);
+        }
+        else {
+            return promise;
+        }
+    };
+    return FetchClient;
+}());
+exports.FetchClient = FetchClient;
 var JQueryClient = (function () {
     function JQueryClient() {
     }
     JQueryClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
-        return jQuery.ajax({
+        return Promise.resolve(jQuery.ajax({
             url: url,
             type: "get",
             data: queryParams
-        }).then(function (x) { return parseJsonResponse(x); });
+        })).then(function (x) { return parseJsonResponse(x); });
     };
     JQueryClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
         var ajaxParams = { "url": url, "type": httpMethod };
@@ -642,7 +688,7 @@ var JQueryClient = (function () {
             ajaxParams.dataType = "json";
             ajaxParams.contentType = "application/json";
         }
-        var promise = jQuery.ajax(ajaxParams);
+        var promise = Promise.resolve(jQuery.ajax(ajaxParams));
         if (Option.isSome(parseJsonResponse)) {
             return promise.then(function (x) { return parseJsonResponse(x); });
         }
@@ -897,7 +943,7 @@ var Internals;
         var activators = [];
         function addActivator(typeId, func) {
             activators.push({
-                typeId: key,
+                typeId: typeId,
                 createInstance: function (args) { return func.apply(null, args); }
             });
         }

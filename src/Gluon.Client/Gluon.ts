@@ -193,7 +193,7 @@ export class Dict<T> {
     }
 
     forEach(visit: (key: string, element: T) => void): void {
-        for (var prop in this.data) {
+        for (const prop in this.data) {
             if (this.data.hasOwnProperty(prop)) {
                 visit(prop, this.data[prop]);
             }
@@ -201,7 +201,7 @@ export class Dict<T> {
     }
 
     copy(): Dict<T> {
-        var result = new Dict<T>();
+        const result = new Dict<T>();
         this.forEach((key, el) => result.setAt(key, el));
         return result;
     }
@@ -303,7 +303,7 @@ function visitServiceMethods(methods: Schema.Method[], visitor: Visitor) {
     function visitMethod(m: Schema.Method) {
         m.MethodParameters.forEach(visitParam);
         if (m.MethodParameters.length > 1) {
-            var t = tupleType(m.MethodParameters.map(p => p.ParameterType));
+            const t = tupleType(m.MethodParameters.map(p => p.ParameterType));
             visitDataType(t, visitor);
         }
         if (!!m.MethodReturnType) {
@@ -361,7 +361,7 @@ interface Serializer<T> {
     fromJSON(json: any): T;
 }
 
-var booleanSerializer: Serializer<boolean> =
+const booleanSerializer: Serializer<boolean> =
     {
         init: f => { },
         toJSON: x => x,
@@ -380,18 +380,18 @@ function deserializeNumber(json: any): number {
     return Number(json);
 }
 
-var numberSerializer: Serializer<number> =
+const numberSerializer: Serializer<number> =
     {
         init: f => { },
         toJSON: serializeNumber,
         fromJSON: deserializeNumber
     };
 
-var dateSerializer: Serializer<Date> =
+const dateSerializer: Serializer<Date> =
     {
         init: f => { },
         toJSON: date => {
-            var str = date.toISOString();
+            let str = date.toISOString();
             // if .unspecified marker set before by Gluon ..
             if ((<any>date).unspecified) {
                 // we remove the timezone marker (trailing "Z")
@@ -401,15 +401,15 @@ var dateSerializer: Serializer<Date> =
         },
         fromJSON: (str: string) => {
             // check if timezone marker is given ..
-            var unspecified = str.charAt(str.length - 1).toLowerCase() != "z";
-            var d = new Date(str);
+            const unspecified = str.charAt(str.length - 1).toLowerCase() != "z";
+            const d = new Date(str);
             // propagate the timezone marker info to allow turnaround
             (<any>d).unspecified = unspecified;
             return d;
         }
     };
 
-var rawJsonSerializer: Serializer<any> =
+const rawJsonSerializer: Serializer<any> =
     {
         init: f => { },
         toJSON: x => x,
@@ -417,30 +417,30 @@ var rawJsonSerializer: Serializer<any> =
     };
 
 function b64encode(bytes: Uint8Array): string {
-    var s: string = "";
-    for (var i = 0; i < bytes.length; i++) {
+    let s: string = "";
+    for (let i = 0; i < bytes.length; i++) {
         s = s + String.fromCharCode(bytes[i]);
     }
     return btoa(s);
 }
 
 function b64decode(b64: string): Uint8Array {
-    var input = atob(b64);
-    var r = new Uint8Array(input.length);
-    for (var i = 0; i < r.length; i++) {
+    const input = atob(b64);
+    const r = new Uint8Array(input.length);
+    for (let i = 0; i < r.length; i++) {
         r[i] = input.charCodeAt(i);
     }
     return r;
 }
 
-var bytesSerializer: Serializer<Uint8Array> =
+const bytesSerializer: Serializer<Uint8Array> =
     {
         init: f => { },
         toJSON: x => b64encode(x),
         fromJSON: x => b64decode(x)
     };
 
-var stringSerializer: Serializer<string> =
+const stringSerializer: Serializer<string> =
     {
         init: f => { },
         toJSON: x => x,
@@ -476,7 +476,7 @@ class DictSerializer {
     }
 
     toJSON(dict: Dict<any>): any {
-        var result: {[key: string]: any} = {};
+        const result: {[key: string]: any} = {};
         dict.forEach((key, value) => {
             result[key] = this.inner.toJSON(value);
         });
@@ -484,8 +484,8 @@ class DictSerializer {
     }
 
     fromJSON(json: any): Dict<any> {
-        var result = new Dict<any>();
-        for (var key in json) {
+        const result = new Dict<any>();
+        for (let key in json) {
             result.setAt(key, this.inner.fromJSON(json[key]));
         }
         return result;
@@ -525,18 +525,18 @@ class TupleSerializer {
     }
 
     toJSON(tup: any[]): any[] {
-        var n = this.length();
-        var res = new Array(n);
-        for (var i = 0; i < n; i++) {
+        const n = this.length();
+        const res = new Array(n);
+        for (let i = 0; i < n; i++) {
             res[i] = this.inner[i].toJSON(tup[i]);
         }
         return res;
     }
 
     fromJSON(json: any[]): any[] {
-        var n = this.length();
-        var res = new Array(n);
-        for (var i = 0; i < n; i++) {
+        const n = this.length();
+        const res = new Array(n);
+        for (let i = 0; i < n; i++) {
             res[i] = this.inner[i].fromJSON(json[i]);
         }
         return res;
@@ -584,7 +584,7 @@ class TypeRegistry {
     }
 
     fullCaseName(typeId: string, caseName: string) {
-        var i = typeId.lastIndexOf('.');
+        const i = typeId.lastIndexOf('.');
         if (i === -1) {
             return caseName;
         } else {
@@ -625,7 +625,7 @@ class RecordSerializer {
     }
 
     toJSON(value: any) {
-        var result: {[key: string]: any} = {};
+        const result: {[key: string]: any} = {};
         this.fields.forEach(fld => {
             result[fld.name] = fld.ser.toJSON(value[fld.name]);
         });
@@ -633,10 +633,10 @@ class RecordSerializer {
     }
 
     fromJSON(json: any) {
-        var len = this.fields.length;
-        var args = new Array(len);
-        for (var i = 0; i < len; i++) {
-            var fld = this.fields[i];
+        const len = this.fields.length;
+        const args = new Array(len);
+        for (let i = 0; i < len; i++) {
+            const fld = this.fields[i];
             args[i] = fld.ser.fromJSON(json[fld.name]);
         }
         return this.typeRegistry.createRecord(
@@ -675,8 +675,8 @@ class UnionSerializer {
     }
 
     findCase(name: string): CaseInfo | undefined {
-        for (var i = 0; i < this.cases.length; i++) {
-            var c = this.cases[i];
+        for (let i = 0; i < this.cases.length; i++) {
+            const c = this.cases[i];
             if (c.caseName === name) {
                 return c;
             }
@@ -685,17 +685,17 @@ class UnionSerializer {
 
     toJSON(value: any): any[] | null {
         const isStringLiteralUnion = typeof value === "string";
-        var tag: string = isStringLiteralUnion ? value : value.tag;
-        var uCase = this.findCase(tag);
+        const tag: string = isStringLiteralUnion ? value : value.tag;
+        const uCase = this.findCase(tag);
         if (uCase !== undefined) {
             if (isStringLiteralUnion) {
                 return [tag];
             } else {
-                var res = new Array(uCase.fields.length + 1);
+                const res = new Array(uCase.fields.length + 1);
                 res[0] = tag;
-                for (var i = 0; i < uCase.fields.length; i++) {
-                    var f = uCase.fields[i];
-                    var v = value[f.fieldName];
+                for (let i = 0; i < uCase.fields.length; i++) {
+                    const f = uCase.fields[i];
+                    const v = value[f.fieldName];
                     res[i + 1] = f.fieldSerializer.toJSON(v);
                 }
                 return res;
@@ -705,11 +705,11 @@ class UnionSerializer {
     }
 
     fromJSON(json: any): any | null {
-        var c = this.findCase(json[0]);
+        const c = this.findCase(json[0]);
         if (c !== undefined) {
-            var args = new Array(json.length - 1);
-            for (var i = 0; i < args.length; i++) {
-                var fld = c.fields[i];
+            const args = new Array(json.length - 1);
+            for (let i = 0; i < args.length; i++) {
+                const fld = c.fields[i];
                 args[i] = fld.fieldSerializer.fromJSON(json[i + 1]);
             }
             return this.typeRegistry.createUnion(this.union.UnionName, c.caseName, args);
@@ -737,17 +737,17 @@ class SerializerService {
     }
 
     private add(dt: Schema.DataType, ser: Serializer<any>) {
-        var key = dataTypeKey(dt);
+        const key = dataTypeKey(dt);
         this.dict.setAt(key, ser);
     }
 
     getSerializer(dt: Schema.DataType): Serializer<any> {
-        var key = dataTypeKey(dt);
+        const key = dataTypeKey(dt);
         return this.dict.at(key);
     }
 
     private contains(dt: Schema.DataType) {
-        var key = dataTypeKey(dt);
+        const key = dataTypeKey(dt);
         return this.dict.containsKey(key);
     }
 
@@ -762,8 +762,8 @@ class SerializerService {
     }
 
     private createVisitor() {
-        var vis = defaultVisitor();
-        var add = (dt: Schema.DataType) => {
+        const vis = defaultVisitor();
+        const add = (dt: Schema.DataType) => {
             if (!this.contains(dt)) {
                 this.add(dt, buildDataTypeSerializer(dt));
             }
@@ -774,15 +774,15 @@ class SerializerService {
             }
         };
         vis.visitRecord = r => {
-            var dt = typeReference(r.RecordName);
+            const dt = typeReference(r.RecordName);
             this.add(dt, new RecordSerializer(r, this.registry));
         };
         vis.visitUnion = u => {
-            var dt = typeReference(u.UnionName);
+            const dt = typeReference(u.UnionName);
             this.add(dt, new UnionSerializer(u, this.registry));
         };
         vis.visitEnum = e => {
-            var dt = typeReference(e.EnumName);
+            const dt = typeReference(e.EnumName);
             this.add(dt, new EnumSerializer());
         };
         return vis;
@@ -802,16 +802,8 @@ class SerializerService {
 /** Client for the HTTP transport. */
 export class Client {
 
-    /** URL prefix to direct method calls to. */
-    public prefix: string;
-
     /** Constructs a client, with an optional URL prefix. */
-    constructor(public httpClient: IHttpClient = new JQueryClient(), prefix?: string) {
-        if (!prefix) {
-            this.prefix = "/gluon-api";
-        } else {
-            this.prefix = prefix;
-        }
+    constructor(public httpClient: IHttpClient = new FetchClient(), public prefix = "/gluon-api") {
     }
 }
 
@@ -821,29 +813,79 @@ export interface RemoteMethod<T> {
 }
 
 export interface IHttpClient {
-    httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>>;
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>>;
+    httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
+}
+
+export class FetchClient implements IHttpClient {
+    constructor(private headers: { [key: string]: string } = {}) {
+    }
+
+    static serialize(obj: any, prefix?: string): string {
+        const str: string[] = [];
+        for (let p in obj) {
+            if (obj.hasOwnProperty(p)) {
+                const k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+                str.push((v !== null && typeof v === "object") ?
+                    this.serialize(v, k) :
+                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
+            }
+        }
+        return str.join("&");
+    }
+
+    httpGet<T>(url: string, queryParams: { [key: string]: string }, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
+        const queryString = Option.isSome(queryParams) ? FetchClient.serialize(queryParams) : null;
+        const urlAndQuery = Option.isNone(queryString) || queryString === "" ? url : `${url}?${queryString}`;
+        return window.fetch(urlAndQuery, {
+            method: "GET",
+            headers: new Headers({
+                ...this.headers,
+                "Accept": "application/json"
+            })
+        }).then(r => r.json()).then(parseJsonResponse);
+    }
+
+    httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T> | Response> {
+        const params =
+            Option.isSome(jsonRequest) ? {
+                method: httpMethod,
+                body: jsonRequest,
+                headers: new Headers({
+                    ...this.headers,
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                })
+            } : { method: httpMethod };
+        const promise = window.fetch(url, params);
+        if (Option.isSome(parseJsonResponse)) {
+            return promise.then(response => response.json()).then(parseJsonResponse);
+        } else {
+            return promise;
+        }
+    }
 }
 
 class JQueryClient implements IHttpClient {
-    constructor() { }
+    constructor() {
+    }
 
-    httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): JQueryPromise<Option<T>> {
-        return jQuery.ajax({
+    httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
+        return Promise.resolve(jQuery.ajax({
             url: url,
             type: "get",
             data: queryParams
-        }).then(x => parseJsonResponse(x));
+        })).then(x => parseJsonResponse(x));
     }
 
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): JQueryPromise<Option<T>> {
+    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>> {
         const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
         if (Option.isSome(jsonRequest)) {
             ajaxParams.data = jsonRequest;
             ajaxParams.dataType = "json";
             ajaxParams.contentType = "application/json";
         }
-        const promise = jQuery.ajax(ajaxParams);
+        const promise = Promise.resolve(jQuery.ajax(ajaxParams));
         if (Option.isSome(parseJsonResponse)) {
             return promise.then(x => parseJsonResponse(x));
         } else {
@@ -902,7 +944,7 @@ namespace Remoting {
         return JSON.stringify(proxy.jointParametersSerializer.toJSON(data));
     }
 
-    export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): JQueryPromise<any> {
+    export function remoteCall(cli: Client, proxy: RemoteMethodProxy, args: any[]): Promise<any> {
         function parseJsonResponse(resp: any) {
             if (proxy.doesReturn) {
                 const out = proxy.returnTypeSerializer.fromJSON(resp);
@@ -922,7 +964,6 @@ namespace Remoting {
                 return cli.httpClient.httpCall(verbName(httpMethod), url, jsonRequest, parseJsonResponse);
         }
     }
-
 }
 
 class RemoteMethodProxy {
@@ -940,7 +981,7 @@ class RemoteMethodProxy {
             case 0:
                 break;
             case 1:
-                var s0 = factory.getSerializer(m.MethodParameters[0].ParameterType);
+                const s0 = factory.getSerializer(m.MethodParameters[0].ParameterType);
                 this.jointParametersSerializer = s0;
                 this.parameterSerializers = [s0];
                 break;
@@ -973,7 +1014,7 @@ class MethodBuilder {
 
     registerService(service: Schema.Service) {
         service.Methods.forEach(m => {
-            var proxy = new RemoteMethodProxy(this.factory, m);
+            const proxy = new RemoteMethodProxy(this.factory, m);
             this.table.setAt(m.MethodName, proxy);
         });
     }
@@ -984,9 +1025,9 @@ class MethodBuilder {
 
     remoteMethod<T>(name: string): RemoteMethod<T> {
         return (client: Client) => {
-            var proxy = this.getProxy(name);
+            const proxy = this.getProxy(name);
             function call() {
-                var args: any = arguments;
+                const args: any = arguments;
                 return proxy.call(client, args);
             }
             return <any>call;
@@ -1001,7 +1042,7 @@ namespace RawSchemaJsonParser {
     }
 
     function rawCaseFields(json: any): any[] {
-        var j: any[] = json;
+        const j: any[] = json;
         return j.slice(1);
     }
 
@@ -1095,10 +1136,10 @@ namespace RawSchemaJsonParser {
     }
 
     function method(json: any): Schema.Method {
-        var cc = callingConvention(json.CallingConvention);
-        var methodName = json.MethodName;
-        var methodParameters = json.MethodParameters.map(parameter);
-        var methodReturnType = opt<Schema.DataType>(json.MethodReturnType, dataType);
+        const cc = callingConvention(json.CallingConvention);
+        const methodName = json.MethodName;
+        const methodParameters = json.MethodParameters.map(parameter);
+        const methodReturnType = opt<Schema.DataType>(json.MethodReturnType, dataType);
         return { CallingConvention: cc, MethodName: methodName, MethodParameters: methodParameters, MethodReturnType: methodReturnType };
     }
 
@@ -1111,8 +1152,8 @@ namespace RawSchemaJsonParser {
 export namespace Internals {
 
     // TODO: remove this global state.
-    var serializerService = new SerializerService();
-    var methodBuilder = new MethodBuilder(serializerService);
+    const serializerService = new SerializerService();
+    const methodBuilder = new MethodBuilder(serializerService);
 
     export function toJSON(typeRef: string, value: any): any {
         return serializerService.getSerializer({ tag: "TypeReference", Item: typeRef }).toJSON(value);
@@ -1123,26 +1164,26 @@ export namespace Internals {
     }
 
     export function registerActivators(raw: {[key: string]: Function}) {
-        var activators: IActivator[] = [];
+        const activators: IActivator[] = [];
         function addActivator(typeId: string, func: Function) {
             activators.push({
-                typeId: key,
+                typeId: typeId,
                 createInstance: args => func.apply(null, args)
             });
         }
-        for (var key in raw) {
+        for (let key in raw) {
             addActivator(key, raw[key]);
         }
         serializerService.registerActivators(activators);
     }
 
     export function registerTypeDefinitions(rawTypeDefJson: any[]): void {
-        var typeDefs = rawTypeDefJson.map(RawSchemaJsonParser.parseTypeDefinition);
+        const typeDefs = rawTypeDefJson.map(RawSchemaJsonParser.parseTypeDefinition);
         serializerService.registerTypes(typeDefs);
     }
 
     export function registerService(rawServiceJson: any): void {
-        var service = RawSchemaJsonParser.parseServiceSchema(rawServiceJson);
+        const service = RawSchemaJsonParser.parseServiceSchema(rawServiceJson);
         serializerService.registerTypes(service.TypeDefinitions);
         serializerService.registerServiceMethods(service.Methods);
         methodBuilder.registerService(service);

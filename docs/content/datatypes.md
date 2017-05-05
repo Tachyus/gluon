@@ -106,7 +106,13 @@ Array, sequence and list types will all map to TypeScript arrays.
 
 ## Options
 
-Options will map to a newly introduced Option<T> TypeScript type, and
+Options will map to T | null | undefined. This provides type-safety
+when `strictNullChecks` is enabled in `tsconfig.json`. This also
+provides nicer interop with existing JavaScript code. An `Option`
+namespace provides helper functions to test for `isSome`, `isNone`,
+or provide default values.
+
+## Dictionaries
 StringDict will use a newly introduced Dict<T> TypeScript type
 logically equivalent to F# Dictionary<string,T>, implemented
 efficiently using object keys in JavaScript.

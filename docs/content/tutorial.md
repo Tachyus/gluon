@@ -67,9 +67,9 @@ already.  This typically takes this form in `.csproj`:
 In your `Scripts/app.ts`, write something like this:
 
 ```typescript
-/// <reference path="typings/jquery/jquery.d.ts" />
-/// <reference path="typings/Gluon.d.ts" />
-/// <reference path="Gluon.Generated.ts" />
+import * as $ from "jquery";
+import * as Gluon from "gluon-client";
+import { MyApp } from "./Generated";
 
 jQuery(() => {
     console.log('start');

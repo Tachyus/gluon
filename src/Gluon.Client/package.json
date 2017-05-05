@@ -29,12 +29,12 @@
     "url": "https://github.com/Tachyus/gluon/issues"
   },
   "homepage": "http://www.tachyus.com/gluon",
-  "dependencies": {
-    "@types/jquery": "^2.0.39"
-  },
   "devDependencies": {
+    "@types/jquery": "^2.0.39",
+    "@types/isomorphic-fetch": "^0.0.33",
     "rimraf": "2.5.1",
     "typescript": "^2.2.2",
     "uglify-js": "2.6.1"
-  }
+  },
+  "private": true
 }

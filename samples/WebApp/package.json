@@ -24,7 +24,7 @@
     },
     "homepage": "https://github.com/Tachyus/gluon#readme",
     "dependencies": {
-        "gluon": "file:../../src/Gluon.Client",
+        "gluon-client": "file:../../src/Gluon.Client",
         "jquery": "^3.1.1"
     },
     "devDependencies": {
