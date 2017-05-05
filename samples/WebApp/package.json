@@ -7,7 +7,7 @@
         "clean-webapp": "rimraf ./Scripts/*.js* && rimraf ./bin && mkdir bin",
         "clean": "yarn run clean-webapp",
         "build-webapp": "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe WebApp.csproj /p:Configuration=Release",
-        "generate-client": "./node_modules/gluon/bin/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll",
+        "generate-client": "./node_modules/gluon-client/bin/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll",
         "postinstall": "yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
         "build": "webpack --config webpack.config.js -d",
