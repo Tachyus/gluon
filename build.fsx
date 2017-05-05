@@ -49,7 +49,7 @@ let tags = "F# fsharp web typescript webapi"
 let solutionFile = "Gluon.sln"
 
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
+let testAssemblies = "test/**/bin/Release/*Tests*.dll"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted 
@@ -64,7 +64,7 @@ let projects =
     !! "src/Gluon/Gluon.fsproj"
     ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
     ++ "src/Gluon.Client/Gluon.Client.csproj"
-    ++ "tests/Gluon.Tests/Gluon.Tests.fsproj"
+    ++ "test/Gluon.Tests/Gluon.Tests.fsproj"
 
 let msBuildRelease target projects =
     for projFile in projects do

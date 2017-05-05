@@ -22,9 +22,9 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon", "src\Gluon\Gluon.fs
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.CLI", "src\Gluon.CLI\Gluon.CLI.fsproj", "{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9EE20BDB-FEA9-411E-9311-1DEECD1F02BC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9EE20BDB-FEA9-411E-9311-1DEECD1F02BC}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.Tests", "tests\Gluon.Tests\Gluon.Tests.fsproj", "{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.Tests", "test\Gluon.Tests\Gluon.Tests.fsproj", "{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{603A6B73-7725-48F8-870D-50685AC95C96}"
 EndProject
