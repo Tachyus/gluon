@@ -21,3 +21,4 @@ temp/
 tests/*/bin
 tests/*/obj
 node_modules/
+.yarnclean
