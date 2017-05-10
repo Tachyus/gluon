@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "^", "^", "{F8613B10-030D-4253-943F-A0D0CE8C2C70}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,9 +22,9 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon", "src\Gluon\Gluon.fs
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.CLI", "src\Gluon.CLI\Gluon.CLI.fsproj", "{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9EE20BDB-FEA9-411E-9311-1DEECD1F02BC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9EE20BDB-FEA9-411E-9311-1DEECD1F02BC}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.Tests", "tests\Gluon.Tests\Gluon.Tests.fsproj", "{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Gluon.Tests", "test\Gluon.Tests\Gluon.Tests.fsproj", "{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{603A6B73-7725-48F8-870D-50685AC95C96}"
 EndProject
@@ -43,6 +43,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{A0F699D3
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gluon.Client", "src\Gluon.Client\Gluon.Client.csproj", "{DDE1011A-6059-4A36-B46F-9F821FADFB70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{BEEBA518-1104-4716-81D9-6507758DAA32}"
+	ProjectSection(SolutionItems) = preProject
+		docs\content\datatypes.md = docs\content\datatypes.md
+		docs\content\index.md = docs\content\index.md
+		docs\content\license.md = docs\content\license.md
+		docs\content\nuget.md = docs\content\nuget.md
+		docs\content\related.md = docs\content\related.md
+		docs\content\tutorial.md = docs\content\tutorial.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,5 +96,6 @@ Global
 		{D137BEC5-3BD3-421F-94EB-47F6A8A63859} = {603A6B73-7725-48F8-870D-50685AC95C96}
 		{A0F699D3-A4C8-4975-8A77-D06DE7B11D60} = {C3DE5E72-8B3E-47FF-9E18-45853B08F0A1}
 		{DDE1011A-6059-4A36-B46F-9F821FADFB70} = {55836903-C800-4B5A-B20D-23E9C25D5131}
+		{BEEBA518-1104-4716-81D9-6507758DAA32} = {C3DE5E72-8B3E-47FF-9E18-45853B08F0A1}
 	EndGlobalSection
 EndGlobal

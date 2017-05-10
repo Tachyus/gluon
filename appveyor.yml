@@ -1,4 +1,4 @@
-os: Visual Studio 2015
+os: Visual Studio 2017
 version: '{build}'
 branches:
   except:
@@ -7,7 +7,7 @@ clone_depth: 10
 build:
   verbosity: minimal
 build_script:
-  - ps: .\build.ps1 BuildPackage
+  - ps: .\build.cmd BuildPackage
 test: off
 artifacts:
   - path: 'bin\*.nupkg'

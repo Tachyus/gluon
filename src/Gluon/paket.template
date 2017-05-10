@@ -5,7 +5,7 @@ owners
     ctaggart
     panesofglass
     t0yv0
-copyright Copyright Tachyus Corp. All rights reserved.
+copyright Copyright Tachyus Corp.
 description TypeScript to FSharp connector
 licenseUrl https://raw.githubusercontent.com/Tachyus/gluon/master/LICENSE.txt
 projectUrl http://www.tachyus.com/gluon/

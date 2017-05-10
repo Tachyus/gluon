@@ -47,13 +47,19 @@ let rec typeLiteral sch =
     | Schema.TypeReference n -> makeType n
     | Schema.TupleType ts -> S.TupleType (List.map (!) ts)
 
+let rec nestNamespaces defs cont namespaces =
+    match namespaces with
+    | [] -> cont defs
+    | ns::rest -> nestNamespaces defs (fun inner -> cont (S.InNamespace (ns, inner))) rest
+
 let inNamespace name defs =
     match splitName name with
-    | (Some ns, _) -> S.InNamespace (ns, defs)
+    | (Some ns, _) ->
+        ns.Split('.') |> Array.toList |> nestNamespaces defs id
     | _ -> defs
 
 let promiseOf x =
-    S.TypeReference ("JQueryPromise", [makeOptionType x])
+    S.TypeReference ("Promise", [makeOptionType x])
 
 let generateSignature (m: Schema.Method) =
     let formals = [for par in m.MethodParameters -> (par.ParameterName, typeLiteral par.ParameterType)]

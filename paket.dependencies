@@ -1,27 +1,37 @@
 source https://nuget.org/api/v2
 redirects on
-framework: >= net45
+framework: >= net461
 
 nuget Argu
 nuget FSharp.Core
 nuget FSharp.Formatting
-nuget Fake
-nuget FsCheck
-nuget FsCheck.Xunit
-nuget Microsoft.Owin 3.0.1 framework: >= net45
-nuget Microsoft.Owin.Diagnostics 3.0.1
-nuget Microsoft.Owin.FileSystems 3.0.1
-nuget Microsoft.Owin.Host.HttpListener 3.0.1
-nuget Microsoft.Owin.Host.SystemWeb 3.0.1
-nuget Microsoft.Owin.Hosting 3.0.1
-nuget Microsoft.Owin.SelfHost 3.0.1
-nuget Microsoft.Owin.StaticFiles 3.0.1
-nuget Microsoft.TypeScript.Compiler = 2.1.4
-nuget Microsoft.TypeScript.MSBuild = 2.1.4
-nuget Newtonsoft.Json 6.0.8
-nuget Owin 1.0
-nuget SourceLink.Fake
-nuget YUICompressor.NET.MSBuild
-nuget xunit < 2
-nuget xunit.runner.console
-nuget xunit.runner.visualstudio version_in_path: true
+nuget Microsoft.Owin
+nuget Microsoft.Owin.Diagnostics
+nuget Microsoft.Owin.FileSystems
+nuget Microsoft.Owin.Host.HttpListener
+nuget Microsoft.Owin.Host.SystemWeb
+nuget Microsoft.Owin.Hosting
+nuget Microsoft.Owin.SelfHost
+nuget Microsoft.Owin.StaticFiles
+nuget Microsoft.TypeScript.MSBuild
+nuget Newtonsoft.Json
+nuget Owin
+
+group Build
+    source https://nuget.org/api/v2
+    redirects on
+    framework: >= net461
+
+    nuget Fake
+    nuget SourceLink.Fake
+
+group Test
+    source https://nuget.org/api/v2
+    redirects on
+    framework: >= net461
+
+    nuget xunit
+    nuget xunit.runner.console
+    nuget xunit.runner.visualstudio version_in_path: true
+    nuget FsCheck
+    nuget FsCheck.Xunit

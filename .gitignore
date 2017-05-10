@@ -18,6 +18,7 @@ src/*/Properties/AssemblyInfo.*
 src/*/bin
 src/*/obj
 temp/
-tests/*/bin
-tests/*/obj
+test/*/bin
+test/*/obj
 node_modules/
+.yarnclean

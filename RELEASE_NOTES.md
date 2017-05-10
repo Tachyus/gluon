@@ -1,3 +1,8 @@
+### New in 4.0.0 - (Released TBD)
+- Switch to external and nested module code generation to work with module imports
+- Publish gluon-client library to npm
+- Gluon.CLI now packaged with the gluon-client library
+
 ### New in 3.0.1 - (Released 2017-01-23)
 - Change Option type to `T | null | undefined` to work better with optional parameters in interface and function signatures.
 - Add `Option.isSome` and `Option.isNone` guard functions to help identify whether a value is null or undefined.

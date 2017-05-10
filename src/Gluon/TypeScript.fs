@@ -49,6 +49,8 @@ type CodeUnit(layout: PrettyPrint.Layout) =
 
 [<Sealed>]
 type Program(defs: CodeUnit, init: CodeUnit) =
+    let imports = CodeUnit(PrettyPrint.text """import * as Gluon from "gluon-client";""")
+    member this.Imports = imports
     member this.Definitions = defs
     member this.Initializer = init
 
@@ -84,6 +86,7 @@ type Generator() =
 
     member this.Write(service, out) =
         let prog = this.GenerateServiceCode(service)
+        prog.Imports.Write(out)
         prog.Definitions.Write(out)
         prog.Initializer.Write(out)
 

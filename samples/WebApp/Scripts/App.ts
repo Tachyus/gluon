@@ -1,37 +1,39 @@
-﻿module WebApp {
+﻿import * as Gluon from "gluon-client"
+import { SampleApp } from "./Generated"
 
-    import P = Gluon;
+export namespace WebApp {
+
     import S = SampleApp.Services;
 
-    var p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
-    var p2 = new S.Person(new Date(), { tag: "Address", text: "San Mateo" }, "Lida", 1);
+    const p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
+    const p2 = new S.Person(new Date(), { tag: "Address", text: "San Mateo" }, "Lida", 1);
 
-    var j1 = JSON.stringify(p1);
-    var j2 = JSON.stringify(p2);
+    const j1 = JSON.stringify(p1);
+    const j2 = JSON.stringify(p2);
 
     function parse<T>(kind: { fromJSON(json: any): T }, json: string): T {
         return kind.fromJSON(JSON.parse(json));
     }
 
-    var p1x = parse(S.Person, j1);
-    var p2x = parse(S.Person, j2);
+    const p1x = parse(S.Person, j1);
+    const p2x = parse(S.Person, j2);
 
     console.log(p1x);
     console.log(p2x);
 
-    var dataSeries = new S.DataSeries([]);
+    const dataSeries = new S.DataSeries([]);
 
-    for (var i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
         dataSeries.DataPoints.push(new S.DataPoint(new Date(), i, i / 2, Math.sqrt(i)));
     }
 
-    var dataJson = JSON.stringify(dataSeries);
+    const dataJson = JSON.stringify(dataSeries);
     console.log(dataJson);
 
-    var dataSeries1 = parse(S.DataSeries, dataJson);
+    const dataSeries1 = parse(S.DataSeries, dataJson);
     console.log(dataSeries1);
 
-    var cli = new P.Client();
+    const cli = new Gluon.Client();
 
     (async function testPersonPhone() {
         const result = await S.showContact(cli)(p1);
@@ -85,13 +87,13 @@
         console.log("reverseBytes => ", x);
     });
 
-    var dictExample = new Gluon.Dict<number>();
+    const dictExample = new Gluon.Dict<number>();
     dictExample.setAt("one", 1);
     dictExample.setAt("two", 2);
     dictExample.setAt("three", 13);
     S.convertDict(cli)(dictExample).then(x => {
         if (Gluon.Option.isSome(x)) {
-            x.forEach((key, value) => {
+            x.forEach((key: string, value: number) => {
                 console.log("dict:", key, value);
             });
         }
@@ -107,7 +109,7 @@
 
     S.addWithContext(cli)(1).then(x => console.log("add with context ok"));
 
-    var d0 = new Gluon.Dict<[string, string]>();
+    const d0 = new Gluon.Dict<[string, string]>();
 
     d0.setAt("one", ["zero", "one"]);
     d0.setAt("two", ["one", "two"]);
