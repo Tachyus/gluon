@@ -35,6 +35,5 @@
     "rimraf": "2.5.1",
     "typescript": "^2.2.2",
     "uglify-js": "2.6.1"
-  },
-  "private": true
+  }
 }
