@@ -181,10 +181,6 @@ Target "SourceLink" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
-let referenceDependencies dependencies =
-    let packagesDir = __SOURCE_DIRECTORY__  </> "packages"
-    [ for dependency in dependencies -> dependency, GetPackageVersion packagesDir dependency ]
-
 Target "NuGet" <| fun _ ->
     Paket.Pack <| fun x ->
         { x with
