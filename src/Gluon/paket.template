@@ -1,4 +1,5 @@
 type project
+authors Tachyus
 owners
     ctaggart
     panesofglass

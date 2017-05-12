@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <Name>Gluon.CLI</Name>
     <RootNamespace>Gluon.CLI</RootNamespace>
-    <AssemblyName>$(Name)</AssemblyName>
+    <AssemblyName>Gluon.CLI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
   </PropertyGroup>

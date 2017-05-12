@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <Name>Gluon</Name>
     <RootNamespace>Gluon</RootNamespace>
-    <AssemblyName>$(Name)</AssemblyName>
+    <AssemblyName>Gluon</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
   </PropertyGroup>
