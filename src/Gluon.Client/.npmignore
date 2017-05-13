@@ -1,0 +1,9 @@
+.vscode/
+node_modules/
+obj/
+Properties/
+Gluon.Client.csproj*
+Gluon.ts
+paket.*
+tsconfig.json
+yarn.lock
