@@ -32,6 +32,23 @@
       <div class="row">
         <div class="span9" id="main">
           
+<h3><a name="New-in-4-0-0-Released-TBD" class="anchor" href="#New-in-4-0-0-Released-TBD">New in 4.0.0 - (Released TBD)</a></h3>
+<ul>
+<li>Switch to external and nested module code generation to work with module imports</li>
+<li>Publish gluon-client library to npm</li>
+<li>Gluon.CLI now packaged with the gluon-client library</li>
+</ul>
+<h3><a name="New-in-3-0-1-Released-2017-01-23" class="anchor" href="#New-in-3-0-1-Released-2017-01-23">New in 3.0.1 - (Released 2017-01-23)</a></h3>
+<ul>
+<li>Change Option type to <code>T | null | undefined</code> to work better with optional parameters in interface and function signatures.</li>
+<li>Add <code>Option.isSome</code> and <code>Option.isNone</code> guard functions to help identify whether a value is null or undefined.</li>
+<li>Change return type of <code>IHttpClient.httpGet</code> and <code>IHttpClient.httpCall</code> to <code>JQueryPromise&lt;Option&lt;T&gt;&gt;</code>, correctly indicating that the result is optional.</li>
+<li>Switch to <code>namespace</code> from <code>module</code> per recent changes in TypeScript guidance.</li>
+</ul>
+<h3><a name="New-in-3-0-0-Released-2017-01-13" class="anchor" href="#New-in-3-0-0-Released-2017-01-13">New in 3.0.0 - (Released 2017-01-13)</a></h3>
+<p>Change Option type to <code>T | null</code> from tagged union.</p>
+<h3><a name="New-in-2-0-3-Released-2017-01-12" class="anchor" href="#New-in-2-0-3-Released-2017-01-12">New in 2.0.3 - (Released 2017-01-12)</a></h3>
+<p>Switch build to use yarn rather than npm and include dist folder in source control. Also, remove console.log statements.</p>
 <h3><a name="New-in-2-0-2-Released-2017-01-07" class="anchor" href="#New-in-2-0-2-Released-2017-01-07">New in 2.0.2 - (Released 2017-01-07)</a></h3>
 <p>Fix issue #26 by generating string literal union types from F# unions with no fields</p>
 <h3><a name="New-in-2-0-1-Released-2017-01-06" class="anchor" href="#New-in-2-0-1-Released-2017-01-06">New in 2.0.1 - (Released 2017-01-06)</a></h3>

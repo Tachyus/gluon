@@ -57,22 +57,22 @@ grammar for the type set is given below:</p>
 <span class="l">15: </span>
 <span class="l">16: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="t">Type</span> <span class="o">=</span>
-    | <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="p">Boolean</span>
-    | <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="p">String</span>
-    | <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="p">Bytes</span>
-    | <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="p">Json</span>
-    | <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="p">Int</span>
-    | <span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="p">Double</span>
-    | <span onmouseout="hideTip(event, 'fs8', 8)" onmouseover="showTip(event, 'fs8', 8)" class="p">DateTime</span>
-    | <span onmouseout="hideTip(event, 'fs9', 9)" onmouseover="showTip(event, 'fs9', 9)" class="p">Record</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 10)" onmouseover="showTip(event, 'fs10', 10)" class="t">list</span><span class="o">&lt;</span><span class="i">Field</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs1', 11)" onmouseover="showTip(event, 'fs1', 11)" class="t">Type</span><span class="o">&gt;</span>
-    | <span onmouseout="hideTip(event, 'fs11', 12)" onmouseover="showTip(event, 'fs11', 12)" class="p">Union</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 13)" onmouseover="showTip(event, 'fs10', 13)" class="t">list</span><span class="o">&lt;</span><span class="i">Case</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs10', 14)" onmouseover="showTip(event, 'fs10', 14)" class="t">list</span><span class="o">&lt;</span><span class="i">Field</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs1', 15)" onmouseover="showTip(event, 'fs1', 15)" class="t">Type</span><span class="o">&gt;</span><span class="o">&gt;</span>
-    | <span onmouseout="hideTip(event, 'fs12', 16)" onmouseover="showTip(event, 'fs12', 16)" class="p">Tuple</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 17)" onmouseover="showTip(event, 'fs10', 17)" class="t">list</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs1', 18)" onmouseover="showTip(event, 'fs1', 18)" class="t">Type</span><span class="o">&gt;</span>
-    | <span onmouseout="hideTip(event, 'fs13', 19)" onmouseover="showTip(event, 'fs13', 19)" class="p">Option</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 20)" onmouseover="showTip(event, 'fs1', 20)" class="t">Type</span>
-    | <span onmouseout="hideTip(event, 'fs14', 21)" onmouseover="showTip(event, 'fs14', 21)" class="p">Array</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 22)" onmouseover="showTip(event, 'fs1', 22)" class="t">Type</span>
-    | <span onmouseout="hideTip(event, 'fs15', 23)" onmouseover="showTip(event, 'fs15', 23)" class="p">Sequence</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 24)" onmouseover="showTip(event, 'fs1', 24)" class="t">Type</span>
-    | <span onmouseout="hideTip(event, 'fs16', 25)" onmouseover="showTip(event, 'fs16', 25)" class="p">List</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 26)" onmouseover="showTip(event, 'fs1', 26)" class="t">Type</span>   
-    | <span onmouseout="hideTip(event, 'fs17', 27)" onmouseover="showTip(event, 'fs17', 27)" class="p">StringDict</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs1', 28)" onmouseover="showTip(event, 'fs1', 28)" class="t">Type</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="i">Type</span> <span class="o">=</span>
+    | <span class="i">Boolean</span>
+    | <span class="i">String</span>
+    | <span class="i">Bytes</span>
+    | <span class="i">Json</span>
+    | <span class="i">Int</span>
+    | <span class="i">Double</span>
+    | <span class="i">DateTime</span>
+    | <span class="i">Record</span> <span class="k">of</span> <span class="i">list</span><span class="o">&lt;</span><span class="i">Field</span> <span class="o">*</span> <span class="i">Type</span><span class="o">&gt;</span>
+    | <span class="i">Union</span> <span class="k">of</span> <span class="i">list</span><span class="o">&lt;</span><span class="i">Case</span> <span class="o">*</span> <span class="i">list</span><span class="o">&lt;</span><span class="i">Field</span> <span class="o">*</span> <span class="i">Type</span><span class="o">&gt;</span><span class="o">&gt;</span>
+    | <span class="i">Tuple</span> <span class="k">of</span> <span class="i">list</span><span class="o">&lt;</span><span class="i">Type</span><span class="o">&gt;</span>
+    | <span class="i">Option</span> <span class="k">of</span> <span class="i">Type</span>
+    | <span class="i">Array</span> <span class="k">of</span> <span class="i">Type</span>
+    | <span class="i">Sequence</span> <span class="k">of</span> <span class="i">Type</span>
+    | <span class="i">List</span> <span class="k">of</span> <span class="i">Type</span>   
+    | <span class="i">StringDict</span> <span class="k">of</span> <span class="i">Type</span>
 </code></pre></td>
 </tr>
 </table>
@@ -141,8 +141,13 @@ TypeScript.</p>
 <h2><a name="Collections" class="anchor" href="#Collections">Collections</a></h2>
 <p>Array, sequence and list types will all map to TypeScript arrays.</p>
 <h2><a name="Options" class="anchor" href="#Options">Options</a></h2>
-<p>Options will map to a newly introduced Option<T> TypeScript type, and
-StringDict will use a newly introduced Dict<T> TypeScript type
+<p>Options will map to T | null | undefined. This provides type-safety
+when <code>strictNullChecks</code> is enabled in <code>tsconfig.json</code>. This also
+provides nicer interop with existing JavaScript code. An <code>Option</code>
+namespace provides helper functions to test for <code>isSome</code>, <code>isNone</code>,
+or provide default values.</p>
+<h2><a name="Dictionaries" class="anchor" href="#Dictionaries">Dictionaries</a></h2>
+<p>StringDict will use a newly introduced Dict<T> TypeScript type
 logically equivalent to F# Dictionary<string,T>, implemented
 efficiently using object keys in JavaScript.</p>
 <h2><a name="Unstructured-data" class="anchor" href="#Unstructured-data">Unstructured data</a></h2>
@@ -156,23 +161,6 @@ embedding any value in the JSON grammar <a href="http://www.json.org/">http://ww
 represented as a corresponding JavaScript object, and typed "any" in
 TypeScript.</p>
 
-<div class="tip" id="fs1">type Type =<br />&#160;&#160;| Boolean<br />&#160;&#160;| String<br />&#160;&#160;| Bytes<br />&#160;&#160;| Json<br />&#160;&#160;| Int<br />&#160;&#160;| Double<br />&#160;&#160;| DateTime<br />&#160;&#160;| Record of (obj * Type) list<br />&#160;&#160;| Union of (obj * (obj * Type) list) list<br />&#160;&#160;| Tuple of Type list<br />&#160;&#160;...<br /><br />Full name: datatypes.Type</div>
-<div class="tip" id="fs2">union case Type.Boolean: Type</div>
-<div class="tip" id="fs3">Multiple items<br />union case Type.String: Type<br /><br />--------------------<br />module String<br /><br />from Microsoft.FSharp.Core</div>
-<div class="tip" id="fs4">union case Type.Bytes: Type</div>
-<div class="tip" id="fs5">union case Type.Json: Type</div>
-<div class="tip" id="fs6">union case Type.Int: Type</div>
-<div class="tip" id="fs7">union case Type.Double: Type</div>
-<div class="tip" id="fs8">union case Type.DateTime: Type</div>
-<div class="tip" id="fs9">union case Type.Record: (obj * Type) list -&gt; Type</div>
-<div class="tip" id="fs10">type &#39;T list = List&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Collections.list&lt;_&gt;</div>
-<div class="tip" id="fs11">union case Type.Union: (obj * (obj * Type) list) list -&gt; Type</div>
-<div class="tip" id="fs12">union case Type.Tuple: Type list -&gt; Type</div>
-<div class="tip" id="fs13">Multiple items<br />union case Type.Option: Type -&gt; Type<br /><br />--------------------<br />module Option<br /><br />from Microsoft.FSharp.Core</div>
-<div class="tip" id="fs14">Multiple items<br />union case Type.Array: Type -&gt; Type<br /><br />--------------------<br />module Array<br /><br />from Microsoft.FSharp.Collections</div>
-<div class="tip" id="fs15">union case Type.Sequence: Type -&gt; Type</div>
-<div class="tip" id="fs16">Multiple items<br />union case Type.List: Type -&gt; Type<br /><br />--------------------<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;interface IEnumerable<br />&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;member GetSlice : startIndex:int option * endIndex:int option -&gt; &#39;T list<br />&#160;&#160;member Head : &#39;T<br />&#160;&#160;member IsEmpty : bool<br />&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;member Length : int<br />&#160;&#160;member Tail : &#39;T list<br />&#160;&#160;static member Cons : head:&#39;T * tail:&#39;T list -&gt; &#39;T list<br />&#160;&#160;static member Empty : &#39;T list<br /><br />Full name: Microsoft.FSharp.Collections.List&lt;_&gt;</div>
-<div class="tip" id="fs17">union case Type.StringDict: Type -&gt; Type</div>
 
         </div>
         <div class="span3">
