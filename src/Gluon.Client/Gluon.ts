@@ -866,7 +866,7 @@ export class FetchClient implements IHttpClient {
     }
 }
 
-class JQueryClient implements IHttpClient {
+export class JQueryClient implements IHttpClient {
     constructor() {
     }
 
