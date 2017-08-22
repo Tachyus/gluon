@@ -1,6 +1,7 @@
 FSharp.Core
 Microsoft.Owin
 Newtonsoft.Json
+
 group Test
 FsCheck
 FsCheck.Xunit

@@ -8,6 +8,8 @@ open Gluon
 
 module private Services =
 
+    module L = Services.Library
+
     type M = Gluon.Method
 
     type Marker = class end
@@ -55,19 +57,6 @@ module private Services =
     let add x y =
         x + y
 
-    type DataPoint =
-        {
-            time : DateTime
-            x: float
-            y: float
-            z: float
-        }
-
-    type DataSeries =
-        {
-            DataPoints : seq<DataPoint>
-        }
-
     type Contact =
         | Address of text: string
         | Phone of number: int
@@ -87,7 +76,7 @@ module private Services =
         | Phone number -> sprintf "phone number %i" number
 
     [<Remote>]
-    let putDataSeriesTurnaround (x: DataSeries) =
+    let putDataSeriesTurnaround (x: L.DataSeries) =
         printfn "ok.."
         x
 

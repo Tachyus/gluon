@@ -1,8 +1,9 @@
 ﻿import * as Gluon from "gluon-client"
-import { SampleApp } from "./Generated"
+import { SampleApp, Services } from "./Generated"
 
 export namespace WebApp {
 
+    import L = Services.Library;
     import S = SampleApp.Services;
 
     const p1 = new S.Person(new Date(), { tag: "Phone", number: 12345 }, "Anton", 30);
@@ -21,16 +22,16 @@ export namespace WebApp {
     console.log(p1x);
     console.log(p2x);
 
-    const dataSeries = new S.DataSeries([]);
+    const dataSeries = new L.DataSeries([]);
 
     for (let i = 0; i < 10; i++) {
-        dataSeries.DataPoints.push(new S.DataPoint(new Date(), i, i / 2, Math.sqrt(i)));
+        dataSeries.DataPoints.push(new L.DataPoint(new Date(), i, i / 2, Math.sqrt(i)));
     }
 
     const dataJson = JSON.stringify(dataSeries);
     console.log(dataJson);
 
-    const dataSeries1 = parse(S.DataSeries, dataJson);
+    const dataSeries1 = parse(L.DataSeries, dataJson);
     console.log(dataSeries1);
 
     const cli = new Gluon.Client();
