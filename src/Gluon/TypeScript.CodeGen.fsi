@@ -17,8 +17,8 @@ module internal Gluon.TypeScript.CodeGen
 
 open Gluon
 
-val typeDefinitions : seq<Schema.TypeDefinition> -> Syntax.Definitions
-val methodStubs : typeDefinitions:Syntax.Definitions -> Schema.Service -> Syntax.Definitions
+val typeDefinitions : Schema.Service -> Syntax.Definitions
+val methodStubs : Schema.Service -> Syntax.Definitions
 val registerActivators : seq<Schema.TypeDefinition> -> Syntax.Definitions
 val registerService : Schema.Service -> Syntax.Definitions
 val registerTypeDefinitions : seq<Schema.TypeDefinition> -> Syntax.Definitions

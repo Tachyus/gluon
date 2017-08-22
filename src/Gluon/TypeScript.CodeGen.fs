@@ -113,9 +113,9 @@ let generateFromJsonMethod typeRef : S.FunctionDefinition =
     let rt = makeType (properName typeRef)
     S.FunctionDefinition.Create("fromJSON", body, rt, parameters = [(json, makeType "any")])
 
-let generateRecordLike tRef name (fields: list<Schema.Field>) : S.ClassDefinition =
+let generateRecordLike ns tRef name (fields: list<Schema.Field>) : S.ClassDefinition =
     let name = properName name
-    let fields = [for f in fields -> S.ClassField.Create(f.FieldName, typeLiteral f.FieldType)]
+    let fields = [for f in fields -> S.ClassField.Create(f.FieldName, typeLiteralNs ns f.FieldType)]
     let ctor = S.SimpleConstructor (fields, S.EmptyStatement)
     let toJson =
         let body = S.Return (S.Call (S.Var "Gluon.Internals.toJSON", [], [S.LiteralString tRef; S.This]))
@@ -126,18 +126,18 @@ let generateRecordLike tRef name (fields: list<Schema.Field>) : S.ClassDefinitio
         ]
     S.ClassDefinition.Create(name, ctor = ctor, methods = methods)
 
-let generateRecord (recordDef: Schema.Record) : S.Definitions =
+let generateRecord ns (recordDef: Schema.Record) : S.Definitions =
     let n = recordDef.RecordName
-    let c = generateRecordLike n n recordDef.RecordFields    
+    let c = generateRecordLike ns n n recordDef.RecordFields    
     c.WithMethod(S.ClassMethod.Create(generateFromJsonMethod n).Static())
     |> S.DefineClass
 
-let generateUnionCase name (fields: Schema.Field list) =
+let generateUnionCase ns name (fields: Schema.Field list) =
     let unionFields =
-        [ for f in fields -> S.UnionCaseField.Create(f.FieldName, typeLiteral f.FieldType) ]
+        [ for f in fields -> S.UnionCaseField.Create(f.FieldName, typeLiteralNs ns f.FieldType) ]
     S.UnionCaseDefinition.Create(name, unionFields)
 
-let generateUnion (unionDef: Schema.Union) : S.Definitions =
+let generateUnion ns (unionDef: Schema.Union) : S.Definitions =
     let tRef = unionDef.UnionName
     let name = properName tRef
     let unionCases = unionDef.UnionCases
@@ -152,7 +152,7 @@ let generateUnion (unionDef: Schema.Union) : S.Definitions =
                     ])
         else
             for c in unionCases do
-                yield S.DefineUnionCase (generateUnionCase c.CaseName c.CaseFields)
+                yield S.DefineUnionCase (generateUnionCase ns c.CaseName c.CaseFields)
             yield S.DefineTypeAlias (name, S.UnionType [for c in unionCases -> makeType c.CaseName])
             yield S.InNamespace (name,
                     S.DefinitionSequence [
@@ -167,16 +167,16 @@ let generateEnum (enumDef: Schema.Enum) =
     S.EnumDefinition.Create(name, cases)
     |> S.DefineEnum
 
-let typeDef def =
+let typeDef namespaces def =
     match def with
     | Schema.DefineEnum enu ->
         generateEnum enu
         |> inNamespace enu.EnumName
     | Schema.DefineRecord re ->
-        generateRecord re
+        generateRecord namespaces re
         |> inNamespace re.RecordName
     | Schema.DefineUnion u ->
-        generateUnion u
+        generateUnion namespaces u
         |> inNamespace u.UnionName
 
 let builderLambda (name: string) (fields: Schema.Field list) =
@@ -240,13 +240,8 @@ let registerActivators typeDefs =
     S.Call (S.Var "Gluon.Internals.registerActivators", [], [args])
     |> S.Action
 
-let typeDefinitions typeDefs =
-    S.DefinitionSequence [for t in typeDefs -> typeDef t]
+let typeDefinitions (svc: Schema.Service) =
+    S.DefinitionSequence [for t in svc.TypeDefinitions -> typeDef svc.Namespaces t]
 
-let methodStubs (typeDefinitions: S.Definitions) (svc: Schema.Service) =
-    let namespaces =
-        match typeDefinitions.GroupNamespaces() with
-        | S.DefinitionSequence defs ->
-            defs |> List.choose (function S.InTopLevelNamespace(name, _) -> Some name | _ -> None)
-        | _ -> []
-    S.DefinitionSequence [for m in svc.Methods -> generateMethodStub namespaces m]
+let methodStubs (svc: Schema.Service) =
+    S.DefinitionSequence [for m in svc.Methods -> generateMethodStub svc.Namespaces m]

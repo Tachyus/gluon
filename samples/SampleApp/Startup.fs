@@ -14,11 +14,11 @@ module private Services =
 
     type Marker = class end
 
-    type Content = { Value : L.Text }
+    type Content = { Value : L.SomeContent }
 
     [<Remote>]
     let testGeneric () =
-        { Content.Value = { L.Text.Value = "test" } }
+        { Content.Value = L.T({L.Text.Value = "test"}) }
 
     [<Remote>]
     let dictCheck (x: IDictionary<string,string*string>) : IDictionary<string,string*string> =

@@ -1,4 +1,10 @@
-### New in 4.0.0 - (Released TBD)
+### New in 4.0.2 - (Released 2017-08-22)
+* Fix issue #47 by aliasing top-level namespaces to avoid collisions.
+
+### New in 4.0.1 - (Released 2017-05-25)
+* Fix issues with gluon-client package
+
+### New in 4.0.0 - (Released 2017-05-25)
 * Switch to external and nested module code generation to work with module imports
 * Publish gluon-client library to npm
 * Gluon.CLI now packaged with the gluon-client library
