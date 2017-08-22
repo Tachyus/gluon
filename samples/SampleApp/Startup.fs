@@ -14,6 +14,12 @@ module private Services =
 
     type Marker = class end
 
+    type Content = { Value : L.Text }
+
+    [<Remote>]
+    let testGeneric () =
+        { Content.Value = { L.Text.Value = "test" } }
+
     [<Remote>]
     let dictCheck (x: IDictionary<string,string*string>) : IDictionary<string,string*string> =
         dict [for kv in x -> (kv.Key, kv.Value)]

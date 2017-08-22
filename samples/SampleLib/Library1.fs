@@ -2,6 +2,8 @@
 
 open System
 
+type Text = { Value : string }
+
 type DataPoint =
     {
         time : DateTime

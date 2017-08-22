@@ -32,8 +32,8 @@ let makeType t =
 let makeOptionType t =
     S.TypeReference ("Gluon.Option", [t])
 
-let rec typeLiteral sch =
-    let ( ! ) t = typeLiteral t
+let rec typeLiteralNs ns sch =
+    let ( ! ) t = typeLiteralNs ns t
     match sch with
     | Schema.ArrayType t | Schema.ListType t | Schema.SequenceType t -> S.ArrayType !t
     | Schema.BooleanType -> makeType "boolean"
@@ -44,8 +44,12 @@ let rec typeLiteral sch =
     | Schema.StringType -> makeType "string"
     | Schema.OptionType t -> makeOptionType (!t)
     | Schema.StringDictType t -> S.TypeReference ("Gluon.Dict", [!t])
-    | Schema.TypeReference n -> makeType n
+    | Schema.TypeReference n ->
+        let isGenerated = ns |> List.exists (fun x -> n.StartsWith x)
+        makeType (if isGenerated then "_"+n else n)
     | Schema.TupleType ts -> S.TupleType (List.map (!) ts)
+
+let typeLiteral sch = typeLiteralNs [] sch
 
 let rec nestNamespaces defs cont namespaces =
     match namespaces with
@@ -61,21 +65,21 @@ let inNamespace name defs =
 let promiseOf x =
     S.TypeReference ("Promise", [makeOptionType x])
 
-let generateSignature (m: Schema.Method) =
-    let formals = [for par in m.MethodParameters -> (par.ParameterName, typeLiteral par.ParameterType)]
+let generateSignature ns (m: Schema.Method) =
+    let formals = [for par in m.MethodParameters -> (par.ParameterName, typeLiteralNs ns par.ParameterType)]
     let out =
         match m.MethodReturnType with
         | None -> makeType "void"
-        | Some ty -> typeLiteral ty
+        | Some ty -> typeLiteralNs ns ty
         |> promiseOf
     S.TypeLiteral.FunctionType {
         ParameterTypes = formals
         ReturnType = out
     }
 
-let generateMethodStub (m: Schema.Method) =
+let generateMethodStub namespaces (m: Schema.Method) =
     let (ns, name) = splitName m.MethodName
-    let signature = generateSignature m
+    let signature = generateSignature namespaces m
     let body = S.Call (S.Var "Gluon.Internals.remoteMethod", [signature], [S.LiteralString m.MethodName])
     let main = S.DeclareVar (name, body)
     match ns with
@@ -239,5 +243,10 @@ let registerActivators typeDefs =
 let typeDefinitions typeDefs =
     S.DefinitionSequence [for t in typeDefs -> typeDef t]
 
-let methodStubs (svc: Schema.Service) =
-    S.DefinitionSequence [for m in svc.Methods -> generateMethodStub m]
+let methodStubs (typeDefinitions: S.Definitions) (svc: Schema.Service) =
+    let namespaces =
+        match typeDefinitions.GroupNamespaces() with
+        | S.DefinitionSequence defs ->
+            defs |> List.choose (function S.InTopLevelNamespace(name, _) -> Some name | _ -> None)
+        | _ -> []
+    S.DefinitionSequence [for m in svc.Methods -> generateMethodStub namespaces m]

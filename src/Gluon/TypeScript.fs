@@ -59,9 +59,10 @@ type Generator() =
 
     member this.GenerateServiceCode(service: Service) =
         let defs =
+            let typeDefinitions = CodeGen.typeDefinitions service.Schema.TypeDefinitions
             Syntax.DefinitionSequence [
-                CodeGen.typeDefinitions service.Schema.TypeDefinitions
-                CodeGen.methodStubs service.Schema
+                typeDefinitions
+                CodeGen.methodStubs typeDefinitions service.Schema
             ]
             |> PrettyPrinter.definitions
         let init =
