@@ -19,8 +19,8 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <StartArguments>--out "samples\WebApp\Gen\Gluon.Generated.ts" --reflect "samples\SampleApp\bin\Debug\SampleApp.dll"</StartArguments>
-    <StartWorkingDirectory>C:\Users\Anton\work\gluon\</StartWorkingDirectory>
+    <StartArguments>--out "samples\WebApp\Scripts\Generated.ts" --reflect "samples\SampleApp\bin\Debug\SampleApp.dll" --reference "samples\SampleApp\bin\Debug\SampleLib.dll"</StartArguments>
+    <StartWorkingDirectory>C:\Tachyus\gluon\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
