@@ -30,7 +30,6 @@
   },
   "homepage": "http://www.tachyus.com/gluon",
   "devDependencies": {
-    "@types/isomorphic-fetch": "^0.0.33",
     "@types/jquery": "^2.0.39",
     "rimraf": "2.5.1",
     "typescript": "^2.2.2",

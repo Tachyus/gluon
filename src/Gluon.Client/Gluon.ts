@@ -814,7 +814,7 @@ export interface RemoteMethod<T> {
 
 export interface IHttpClient {
     httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T> | Response>;
 }
 
 export class FetchClient implements IHttpClient {
