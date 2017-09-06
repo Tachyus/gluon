@@ -30,7 +30,6 @@
   },
   "homepage": "http://www.tachyus.com/gluon",
   "devDependencies": {
-    "@types/jquery": "^2.0.39",
     "rimraf": "2.5.1",
     "typescript": "^2.5.2",
     "uglify-js": "2.6.1"

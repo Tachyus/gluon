@@ -671,34 +671,6 @@ var FetchClient = (function () {
     return FetchClient;
 }());
 exports.FetchClient = FetchClient;
-var JQueryClient = (function () {
-    function JQueryClient() {
-    }
-    JQueryClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
-        return Promise.resolve(jQuery.ajax({
-            url: url,
-            type: "get",
-            data: queryParams
-        })).then(function (x) { return parseJsonResponse(x); });
-    };
-    JQueryClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
-        var ajaxParams = { "url": url, "type": httpMethod };
-        if (Option.isSome(jsonRequest)) {
-            ajaxParams.data = jsonRequest;
-            ajaxParams.dataType = "json";
-            ajaxParams.contentType = "application/json";
-        }
-        var promise = Promise.resolve(jQuery.ajax(ajaxParams));
-        if (Option.isSome(parseJsonResponse)) {
-            return promise.then(function (x) { return parseJsonResponse(x); });
-        }
-        else {
-            return promise;
-        }
-    };
-    return JQueryClient;
-}());
-exports.JQueryClient = JQueryClient;
 var Remoting;
 (function (Remoting) {
     function verbName(m) {
