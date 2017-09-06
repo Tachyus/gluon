@@ -1,0 +1,134 @@
+REDIRECTS: ON
+RESTRICTION: >= net461
+NUGET
+  remote: https://www.nuget.org/api/v2
+    Argu (3.7)
+      FSharp.Core (>= 4.0.1.7-alpha) - restriction: >= net463
+      NETStandard.Library (>= 1.6) - restriction: >= net463
+      System.Xml.XDocument (>= 4.0.11) - restriction: >= net463
+    FSharp.Compiler.Service (2.0.0.6)
+    FSharp.Core (4.1.17)
+      System.ValueTuple (>= 4.3)
+    FSharp.Formatting (2.14.4)
+      FSharp.Compiler.Service (2.0.0.6)
+      FSharpVSPowerTools.Core (>= 2.3 < 2.4)
+    FSharpVSPowerTools.Core (2.3)
+      FSharp.Compiler.Service (>= 2.0.0.3)
+    Microsoft.Owin (3.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.Diagnostics (3.1)
+      Microsoft.Owin (>= 3.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.FileSystems (3.1)
+    Microsoft.Owin.Host.HttpListener (3.1)
+    Microsoft.Owin.Host.SystemWeb (3.1)
+      Microsoft.Owin (>= 3.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.Hosting (3.1)
+      Microsoft.Owin (>= 3.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.SelfHost (3.1)
+      Microsoft.Owin (>= 3.1)
+      Microsoft.Owin.Diagnostics (>= 3.1)
+      Microsoft.Owin.Host.HttpListener (>= 3.1)
+      Microsoft.Owin.Hosting (>= 3.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.StaticFiles (3.1)
+      Microsoft.Owin (>= 3.1)
+      Microsoft.Owin.FileSystems (>= 3.1)
+      Owin (>= 1.0)
+    Microsoft.TypeScript.MSBuild (2.3.1)
+    Microsoft.Win32.Primitives (4.3) - restriction: >= net463
+    NETStandard.Library (1.6.1) - restriction: >= net463
+      Microsoft.Win32.Primitives (>= 4.3)
+      System.AppContext (>= 4.3)
+      System.Collections.Concurrent (>= 4.3)
+      System.Console (>= 4.3)
+      System.Diagnostics.Tracing (>= 4.3)
+      System.Globalization.Calendars (>= 4.3)
+      System.IO.Compression (>= 4.3)
+      System.IO.Compression.ZipFile (>= 4.3)
+      System.IO.FileSystem (>= 4.3)
+      System.IO.FileSystem.Primitives (>= 4.3)
+      System.Net.Http (>= 4.3)
+      System.Net.Sockets (>= 4.3)
+      System.Runtime.Handles (>= 4.3)
+      System.Runtime.InteropServices (>= 4.3)
+      System.Runtime.InteropServices.RuntimeInformation (>= 4.3)
+      System.Runtime.Numerics (>= 4.3)
+      System.Security.Cryptography.Algorithms (>= 4.3)
+      System.Security.Cryptography.Encoding (>= 4.3)
+      System.Security.Cryptography.Primitives (>= 4.3)
+      System.Security.Cryptography.X509Certificates (>= 4.3)
+      System.Threading.Timer (>= 4.3)
+    Newtonsoft.Json (10.0.2)
+    Owin (1.0)
+    System.AppContext (4.3) - restriction: >= net463
+    System.Collections.Concurrent (4.3) - restriction: >= net463
+    System.Console (4.3) - restriction: >= net463
+    System.Diagnostics.Tracing (4.3) - restriction: >= net463
+    System.Globalization.Calendars (4.3) - restriction: >= net463
+    System.IO (4.3) - restriction: >= net463
+    System.IO.Compression (4.3) - restriction: >= net463
+    System.IO.Compression.ZipFile (4.3) - restriction: >= net463
+    System.IO.FileSystem (4.3) - restriction: >= net463
+      System.IO.FileSystem.Primitives (>= 4.3)
+    System.IO.FileSystem.Primitives (4.3)
+    System.Net.Http (4.3.1) - restriction: >= net463
+      System.Security.Cryptography.X509Certificates (>= 4.3)
+    System.Net.Sockets (4.3) - restriction: >= net463
+    System.Runtime (4.3)
+    System.Runtime.Handles (4.3) - restriction: >= net463
+    System.Runtime.InteropServices (4.3) - restriction: >= net463
+      System.Runtime (>= 4.3) - restriction: >= net462
+    System.Runtime.InteropServices.RuntimeInformation (4.3) - restriction: >= net463
+    System.Runtime.Numerics (4.3) - restriction: >= net463
+    System.Security.Cryptography.Algorithms (4.3)
+      System.IO (>= 4.3) - restriction: >= net463
+      System.Runtime (>= 4.3) - restriction: >= net463
+      System.Security.Cryptography.Encoding (>= 4.3) - restriction: >= net463
+      System.Security.Cryptography.Primitives (>= 4.3) - restriction: || (== net461) (>= net463)
+    System.Security.Cryptography.Encoding (4.3)
+    System.Security.Cryptography.Primitives (4.3)
+    System.Security.Cryptography.X509Certificates (4.3)
+      System.Security.Cryptography.Algorithms (>= 4.3)
+      System.Security.Cryptography.Encoding (>= 4.3)
+    System.Threading.Timer (4.3) - restriction: >= net463
+    System.ValueTuple (4.3)
+    System.Xml.XDocument (4.3) - restriction: >= net463
+
+GROUP Build
+REDIRECTS: ON
+RESTRICTION: >= net461
+NUGET
+  remote: https://www.nuget.org/api/v2
+    FAKE (4.60)
+    SourceLink.Fake (1.1)
+
+GROUP Test
+REDIRECTS: ON
+RESTRICTION: >= net461
+NUGET
+  remote: https://www.nuget.org/api/v2
+    FsCheck (2.8)
+      FSharp.Core (>= 3.1.2.5)
+    FsCheck.Xunit (2.8)
+      FsCheck (>= 2.8)
+      xunit.extensibility.execution (>= 2.2 < 3.0)
+    FSharp.Core (4.1.17)
+      System.ValueTuple (>= 4.3)
+    System.ValueTuple (4.3)
+    xunit (2.2)
+      xunit.assert (2.2)
+      xunit.core (2.2)
+    xunit.abstractions (2.0.1)
+    xunit.assert (2.2)
+    xunit.core (2.2)
+      xunit.extensibility.core (2.2)
+      xunit.extensibility.execution (2.2)
+    xunit.extensibility.core (2.2)
+      xunit.abstractions (>= 2.0.1)
+    xunit.extensibility.execution (2.2)
+      xunit.extensibility.core (2.2)
+    xunit.runner.console (2.2)
+    xunit.runner.visualstudio (2.2.0) - version_in_path: true

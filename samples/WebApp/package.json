@@ -33,7 +33,7 @@
         "rimraf": "^2.5.2",
         "source-map-loader": "^0.2.1",
         "ts-loader": "^2.0.3",
-        "typescript": "^2.2.2",
+        "typescript": "^2.5.2",
         "webpack": "^2.4.1"
     }
 }
