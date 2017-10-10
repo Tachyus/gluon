@@ -11,6 +11,7 @@ docs/output/
 docs/tools/*.svclog
 packages
 paket.exe
+paket-files/
 samples/*/bin
 samples/*/obj
 src/*/AssemblyInfo.*
