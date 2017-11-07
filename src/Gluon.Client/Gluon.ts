@@ -391,13 +391,11 @@ const dateSerializer: Serializer<Date> =
     {
         init: f => { },
         toJSON: date => {
-            let str = date.toISOString();
             // if .unspecified marker set before by Gluon ..
-            if ((<any>date).unspecified) {
-                // we remove the timezone marker (trailing "Z")
-                str = str.substring(0, str.length - 1);
-            }
-            return str;
+            return (<any>date).unspecified ?
+                // format without an associated time zone
+                date.toGMTString().slice(0, 17) + date.toTimeString().slice(0, 8) :
+                date.toISOString();
         },
         fromJSON: (str: string) => {
             // check if timezone marker is given ..
