@@ -1,3 +1,6 @@
+### New in 4.0.3 - (Released 2017-11-06)
+* Fix issue #49 to resolve client -> server date serialization.
+
 ### New in 4.0.2 - (Released 2017-08-22)
 * Fix issue #47 by aliasing top-level namespaces to avoid collisions.
 
