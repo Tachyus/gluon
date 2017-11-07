@@ -3,6 +3,7 @@ node_modules/
 obj/
 Properties/
 Gluon.Client.csproj*
-paket.*
+paket.references
+paket.template
 tsconfig.json
 yarn.lock
