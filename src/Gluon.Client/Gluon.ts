@@ -387,6 +387,7 @@ const numberSerializer: Serializer<number> =
         fromJSON: deserializeNumber
     };
 
+const DateFormat = new Intl.DateTimeFormat("en-GB", {weekday: "short", day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false})
 const dateSerializer: Serializer<Date> =
     {
         init: f => { },
@@ -394,7 +395,7 @@ const dateSerializer: Serializer<Date> =
             // if .unspecified marker set before by Gluon ..
             return (<any>date).unspecified ?
                 // format without an associated time zone
-                date.toGMTString().slice(0, 17) + date.toTimeString().slice(0, 8) :
+                DateFormat.format(date) :
                 date.toISOString();
         },
         fromJSON: (str: string) => {
