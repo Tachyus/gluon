@@ -21,7 +21,7 @@
     <WarningLevel>3</WarningLevel>
     <StartArguments>--out "samples\WebApp\Gen\Gluon.Generated.ts" --reflect "C:\prj\thermion\Thermion.WebAPI\bin\Thermion.WebAPI.dll"</StartArguments>
     <StartWorkingDirectory>C:\tachyus\gluon\</StartWorkingDirectory>
-    <StartArguments>--out "samples\WebApp\Scripts\Generated.ts" --reflect "samples\SampleApp\bin\Debug\SampleApp.dll" --reference "samples\SampleApp\bin\Debug\SampleLib.dll"</StartArguments>
+    <StartArguments>--out "samples\WebApp\Scripts\gu-oon.ts" --reflect "C:\prj\thermion\Thermion.WebAPI\bin\Thermion.WebAPI.dll"</StartArguments>
     <StartWorkingDirectory>C:\Tachyus\gluon\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

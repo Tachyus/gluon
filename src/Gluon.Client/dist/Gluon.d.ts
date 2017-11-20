@@ -19,6 +19,9 @@ export declare namespace Schema {
     interface DateTimeType {
         tag: "DateTimeType";
     }
+    interface DateTimeOffsetType {
+        tag: "DateTimeOffsetType";
+    }
     interface DoubleType {
         tag: "DoubleType";
     }
@@ -55,7 +58,7 @@ export declare namespace Schema {
         tag: "TypeReference";
         Item: string;
     }
-    type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
+    type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DateTimeOffsetType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
     class Parameter {
         ParameterName: string;
         ParameterType: DataType;
@@ -159,13 +162,6 @@ export declare class FetchClient implements IHttpClient {
         [key: string]: string;
     }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
     httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T> | Response>;
-}
-export declare class JQueryClient implements IHttpClient {
-    constructor();
-    httpGet<T>(url: string, queryParams: {
-        [key: string]: string;
-    }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
 }
 export declare namespace Internals {
     function toJSON(typeRef: string, value: any): any;

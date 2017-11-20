@@ -216,6 +216,7 @@ function dataTypeKey(dataType) {
             case "BooleanType": return ":bool";
             case "BytesType": return ":bytes";
             case "DateTimeType": return ":datetime";
+            case "DateTimeOffsetType": return ":datetime";
             case "DoubleType": return ":double";
             case "IntType": return ":int";
             case "JsonType": return ":json";
@@ -400,6 +401,7 @@ function buildDataTypeSerializer(dt) {
         case "BooleanType": return booleanSerializer;
         case "BytesType": return bytesSerializer;
         case "DateTimeType": return dateSerializer;
+        case "DateTimeOffsetType": return dateSerializer;
         case "DoubleType": return numberSerializer;
         case "IntType": return numberSerializer;
         case "JsonType": return rawJsonSerializer;
@@ -670,34 +672,6 @@ var FetchClient = (function () {
     return FetchClient;
 }());
 exports.FetchClient = FetchClient;
-var JQueryClient = (function () {
-    function JQueryClient() {
-    }
-    JQueryClient.prototype.httpGet = function (url, queryParams, parseJsonResponse) {
-        return Promise.resolve(jQuery.ajax({
-            url: url,
-            type: "get",
-            data: queryParams
-        })).then(function (x) { return parseJsonResponse(x); });
-    };
-    JQueryClient.prototype.httpCall = function (httpMethod, url, jsonRequest, parseJsonResponse) {
-        var ajaxParams = { "url": url, "type": httpMethod };
-        if (Option.isSome(jsonRequest)) {
-            ajaxParams.data = jsonRequest;
-            ajaxParams.dataType = "json";
-            ajaxParams.contentType = "application/json";
-        }
-        var promise = Promise.resolve(jQuery.ajax(ajaxParams));
-        if (Option.isSome(parseJsonResponse)) {
-            return promise.then(function (x) { return parseJsonResponse(x); });
-        }
-        else {
-            return promise;
-        }
-    };
-    return JQueryClient;
-}());
-exports.JQueryClient = JQueryClient;
 var Remoting;
 (function (Remoting) {
     function verbName(m) {
@@ -847,6 +821,7 @@ var RawSchemaJsonParser;
             case "BooleanType": return { tag: "BooleanType" };
             case "BytesType": return { tag: "BytesType" };
             case "DateTimeType": return { tag: "DateTimeType" };
+            case "DateTimeOffsetType": return { tag: "DateTimeOffsetType" };
             case "DoubleType": return { tag: "DoubleType" };
             case "IntType": return { tag: "IntType" };
             case "JsonType": return { tag: "JsonType" };
@@ -980,6 +955,7 @@ Internals.registerActivators({
     "Gluon.Schema.BooleanType": function () { return ({ tag: "BooleanType" }); },
     "Gluon.Schema.BytesType": function () { return ({ tag: "BytesType" }); },
     "Gluon.Schema.DateTimeType": function () { return ({ tag: "DateTimeType" }); },
+    "Gluon.Schema.DateTimeOffsetType": function () { return ({ tag: "DateTimeOffsetType" }); },
     "Gluon.Schema.DoubleType": function () { return ({ tag: "DoubleType" }); },
     "Gluon.Schema.IntType": function () { return ({ tag: "IntType" }); },
     "Gluon.Schema.JsonType": function () { return ({ tag: "JsonType" }); },

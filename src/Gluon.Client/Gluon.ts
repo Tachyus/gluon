@@ -323,6 +323,7 @@ function dataTypeKey(dataType: Schema.DataType): string {
             case "BooleanType": return ":bool";
             case "BytesType": return ":bytes";
             case "DateTimeType": return ":datetime";
+            case "DateTimeOffsetType": return ":datetime";
             case "DoubleType": return ":double";
             case "IntType": return ":int";
             case "JsonType": return ":json";
@@ -553,6 +554,7 @@ function buildDataTypeSerializer(dt: Schema.DataType): Serializer<any> {
         case "BooleanType": return booleanSerializer;
         case "BytesType": return bytesSerializer;
         case "DateTimeType": return dateSerializer;
+        case "DateTimeOffsetType": return dateSerializer;
         case "DoubleType": return numberSerializer;
         case "IntType": return numberSerializer;
         case "JsonType": return rawJsonSerializer;
@@ -1058,6 +1060,7 @@ namespace RawSchemaJsonParser {
             case "BooleanType": return { tag: "BooleanType" };
             case "BytesType": return { tag: "BytesType" };
             case "DateTimeType": return { tag: "DateTimeType" };
+            case "DateTimeOffsetType": return { tag: "DateTimeOffsetType" };
             case "DoubleType": return { tag: "DoubleType" };
             case "IntType": return { tag: "IntType" };
             case "JsonType": return { tag: "JsonType" };
@@ -1207,6 +1210,7 @@ Internals.registerActivators({
   "Gluon.Schema.BooleanType": () => <Schema.BooleanType>{ tag: "BooleanType" },
   "Gluon.Schema.BytesType": () => <Schema.BytesType>{ tag: "BytesType" },
   "Gluon.Schema.DateTimeType": () => <Schema.DateTimeType>{ tag: "DateTimeType" },
+  "Gluon.Schema.DateTimeOffsetType": () => <Schema.DateTimeOffsetType>{ tag: "DateTimeOffsetType" },
   "Gluon.Schema.DoubleType": () => <Schema.DoubleType>{ tag: "DoubleType" },
   "Gluon.Schema.IntType": () => <Schema.IntType>{ tag: "IntType" },
   "Gluon.Schema.JsonType": () => <Schema.JsonType>{ tag: "JsonType" },
