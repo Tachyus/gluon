@@ -47,6 +47,7 @@ module internal Reflect =
         | BooleanType
         | BytesType
         | DateTimeType
+        | DateTimeOffsetType
         | DoubleType
         | EnumType
         | IntType

@@ -698,6 +698,7 @@ var JQueryClient = (function () {
     };
     return JQueryClient;
 }());
+exports.JQueryClient = JQueryClient;
 var Remoting;
 (function (Remoting) {
     function verbName(m) {

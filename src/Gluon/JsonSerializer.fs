@@ -344,6 +344,22 @@ module JsonUtility =
     type DateTimeSerializer() =
         inherit ConvertSerializer<string,DateTime>(parseDateTime, printDateTime)
 
+    let parseDateTimeOffset (txt: string) =
+        DateTimeOffset.Parse(txt, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal)
+    
+    let printDateTimeOffset (ds: DateTimeOffset) =
+        let dt = ds.LocalDateTime
+        match dt.Kind with
+        | DateTimeKind.Unspecified ->
+            let s = dt.ToString("r", CultureInfo.InvariantCulture)
+            s.Remove(s.Length - 4)
+        | _ ->
+            dt.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture)
+
+    [<Sealed>]
+    type DateTimeOffsetSerializer() =
+        inherit ConvertSerializer<string,DateTimeOffset>(parseDateTimeOffset, printDateTimeOffset)
+
     [<Sealed>]
     type ListSerializer<'T>() =
         inherit ConvertSerializer<array<'T>,list<'T>>(List.ofArray, List.toArray)
@@ -583,6 +599,7 @@ module JsonUtility =
                 rawJsonSerializer
                 stringSerializer
                 DateTimeSerializer()
+                DateTimeOffsetSerializer()
             ]
         dict [for s in included -> (s.SerializedType, s)]
 
@@ -601,6 +618,7 @@ module JsonUtility =
         | Reflect.BooleanType
         | Reflect.BytesType
         | Reflect.DateTimeType
+        | Reflect.DateTimeOffsetType
         | Reflect.DoubleType
         | Reflect.IntType
         | Reflect.StringType

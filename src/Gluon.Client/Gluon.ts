@@ -37,6 +37,9 @@ export namespace Schema {
     export interface DateTimeType {
         tag: "DateTimeType";
     }
+    export interface DateTimeOffsetType {
+        tag: "DateTimeOffsetType"
+    }
     export interface DoubleType {
         tag: "DoubleType";
     }
@@ -73,7 +76,7 @@ export namespace Schema {
         tag: "TypeReference";
         Item: string;
     }
-    export type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
+    export type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DateTimeOffsetType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
 
     export class Parameter {
         ParameterName: string;

@@ -39,6 +39,7 @@ let rec typeLiteral sch =
     | Schema.BooleanType -> makeType "boolean"
     | Schema.BytesType -> makeType "Uint8Array"
     | Schema.DateTimeType -> makeType "Date"
+    | Schema.DateTimeOffsetType -> makeType "Date"
     | Schema.DoubleType | Schema.IntType -> makeType "number"
     | Schema.JsonType -> makeType "any"
     | Schema.StringType -> makeType "string"

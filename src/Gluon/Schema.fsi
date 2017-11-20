@@ -23,6 +23,7 @@ type DataType =
     | BooleanType
     | BytesType
     | DateTimeType
+    | DateTimeOffsetType
     | DoubleType
     | IntType
     | JsonType

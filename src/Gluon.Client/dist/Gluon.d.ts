@@ -160,6 +160,13 @@ export declare class FetchClient implements IHttpClient {
     }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
     httpCall<T>(httpMethod: string, url: string, jsonRequest: any, parseJsonResponse: (json: any) => T): Promise<Option<T> | Response>;
 }
+export declare class JQueryClient implements IHttpClient {
+    constructor();
+    httpGet<T>(url: string, queryParams: {
+        [key: string]: string;
+    }, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
+}
 export declare namespace Internals {
     function toJSON(typeRef: string, value: any): any;
     function fromJSON(typeRef: string, json: any): any;

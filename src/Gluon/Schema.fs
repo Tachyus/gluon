@@ -23,6 +23,7 @@ type DataType =
     | BooleanType
     | BytesType
     | DateTimeType
+    | DateTimeOffsetType
     | DoubleType
     | IntType
     | JsonType
@@ -127,6 +128,7 @@ type DataType with
         | BooleanType
         | BytesType
         | DateTimeType
+        | DateTimeOffsetType
         | DoubleType
         | IntType
         | JsonType -> []
