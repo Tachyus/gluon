@@ -124,6 +124,9 @@ type Service =
         TypeDefinitions : list<TypeDefinition>
     }
 
+    /// Lists the top-level namespaces.
+    member Namespaces : string list
+
     /// Validates absense of common errors: invalid names,
     /// name clashes, dangling references.
     member Check : unit -> unit

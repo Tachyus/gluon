@@ -60,7 +60,7 @@ type Generator() =
     member this.GenerateServiceCode(service: Service) =
         let defs =
             Syntax.DefinitionSequence [
-                CodeGen.typeDefinitions service.Schema.TypeDefinitions
+                CodeGen.typeDefinitions service.Schema
                 CodeGen.methodStubs service.Schema
             ]
             |> PrettyPrinter.definitions
@@ -68,18 +68,6 @@ type Generator() =
             Syntax.DefinitionSequence [
                 CodeGen.registerActivators service.Schema.TypeDefinitions
                 CodeGen.registerService service.Schema
-            ]
-            |> PrettyPrinter.definitions
-        Program(defs = CodeUnit(defs), init = CodeUnit(init))
-
-    member this.GenerateTypeCode(types) =
-        let defs =
-            CodeGen.typeDefinitions types
-            |> PrettyPrinter.definitions
-        let init =
-            Syntax.DefinitionSequence [
-                CodeGen.registerActivators types
-                CodeGen.registerTypeDefinitions types
             ]
             |> PrettyPrinter.definitions
         Program(defs = CodeUnit(defs), init = CodeUnit(init))

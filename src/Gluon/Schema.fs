@@ -190,7 +190,7 @@ type TypeDefinition with
         | DefineEnum e -> e.EnumName
         | DefineRecord r -> r.RecordName
         | DefineUnion u -> u.UnionName
-
+    
     member this.AllRefs =
         match this with
         | DefineRecord r -> r.AllRefs
@@ -286,5 +286,13 @@ module ServiceChecks =
             failwith errors
 
 type Service with
+    member this.Namespaces =
+        this.TypeDefinitions
+        |> List.choose (fun def ->
+            match def.Name.IndexOf('.') with
+            | -1 -> None
+            | n -> Some (def.Name.Substring(0, n)))
+        |> List.distinct
+
     member this.Check() =
         ServiceChecks.check this

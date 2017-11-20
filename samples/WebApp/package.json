@@ -7,7 +7,7 @@
         "clean-webapp": "rimraf ./Scripts/*.js* && rimraf ./bin && mkdir bin",
         "clean": "yarn run clean-webapp",
         "build-webapp": "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe WebApp.csproj /p:Configuration=Release",
-        "generate-client": "./node_modules/gluon-client/bin/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll",
+        "generate-client": "./node_modules/gluon-client/bin/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ../SampleApp/bin/Debug/SampleApp.dll --reference ../SampleApp/bin/Debug/SampleLib.dll",
         "postinstall": "yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
         "build": "webpack --config webpack.config.js -d",
@@ -24,16 +24,14 @@
     },
     "homepage": "https://github.com/Tachyus/gluon#readme",
     "dependencies": {
-        "gluon-client": "file:../../src/Gluon.Client",
-        "jquery": "^3.1.1"
+        "gluon-client": "file:../../src/Gluon.Client"
     },
     "devDependencies": {
-        "@types/jquery": "^2.0.34",
         "cpx": "^1.5.0",
         "rimraf": "^2.5.2",
         "source-map-loader": "^0.2.1",
         "ts-loader": "^2.0.3",
-        "typescript": "^2.2.2",
+        "typescript": "^2.5.2",
         "webpack": "^2.4.1"
     }
 }

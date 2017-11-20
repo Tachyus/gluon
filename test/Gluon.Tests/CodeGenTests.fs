@@ -45,7 +45,7 @@ module CodeGenTests =
     let service = Service.FromAssembly(Assembly.GetExecutingAssembly())
     let internal defs =
         Syntax.DefinitionSequence [
-            CodeGen.typeDefinitions service.Schema.TypeDefinitions
+            CodeGen.typeDefinitions service.Schema
             CodeGen.methodStubs service.Schema
         ]
 
@@ -64,7 +64,7 @@ module CodeGenTests =
     let ``should create service with 1 namespace group matching module names`` () =
         let groups = defs.GroupNamespaces()
         match groups with
-        | Syntax.DefinitionSequence [Syntax.InNamespace(ns1,_)] -> ns1 = "Gluon"
+        | Syntax.DefinitionSequence [Syntax.InTopLevelNamespace(ns1,_)] -> ns1 = "Gluon"
         | _ -> failwith "Expected a DefinitionSequence at the top of the tree"
 
     [<Property>]
@@ -72,7 +72,7 @@ module CodeGenTests =
         let groups = defs.GroupNamespaces()
         match groups with
         | Syntax.DefinitionSequence
-            [ Syntax.InNamespace("Gluon",
+            [ Syntax.InTopLevelNamespace("Gluon",
                 Syntax.InNamespace("Tests",
                   Syntax.DefinitionSequence
                     [ Syntax.InNamespace("TestApp", _)
@@ -82,7 +82,7 @@ module CodeGenTests =
               )
             ] -> true
         | Syntax.DefinitionSequence
-            [ Syntax.InNamespace("Gluon",
+            [ Syntax.InTopLevelNamespace("Gluon",
                 Syntax.InNamespace("Tests",
                   Syntax.DefinitionSequence actual))
             ] ->

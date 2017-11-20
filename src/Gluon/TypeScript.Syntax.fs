@@ -152,6 +152,7 @@ type Definitions =
     | DefineTypeAlias of string * TypeLiteral
     | DefineUnionCase of UnionCaseDefinition
     | InNamespace of string * Definitions
+    | InTopLevelNamespace of string * Definitions
 
     member this.GroupNamespaces() =
         let rec merge (a:Definitions) (b:Definitions) : Definitions =
@@ -208,6 +209,10 @@ type Definitions =
 
         match this with
         | DefinitionSequence defs ->
-            let xs = defs |> Seq.fold step []
-            xs |> DefinitionSequence
+            defs
+            |> Seq.fold step []
+            |> List.map (function
+                | InNamespace(mname, defs) -> InTopLevelNamespace(mname, defs)
+                | def -> def)
+            |> DefinitionSequence
         | _ -> this

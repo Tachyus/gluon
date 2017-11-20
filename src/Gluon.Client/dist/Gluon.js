@@ -263,14 +263,13 @@ var numberSerializer = {
     toJSON: serializeNumber,
     fromJSON: deserializeNumber
 };
+var DateFormat = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
 var dateSerializer = {
     init: function (f) { },
     toJSON: function (date) {
-        var str = date.toISOString();
-        if (date.unspecified) {
-            str = str.substring(0, str.length - 1);
-        }
-        return str;
+        return date.unspecified ?
+            DateFormat.format(date) :
+            date.toISOString();
     },
     fromJSON: function (str) {
         var unspecified = str.charAt(str.length - 1).toLowerCase() != "z";

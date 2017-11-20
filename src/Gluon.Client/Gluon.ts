@@ -390,17 +390,16 @@ const numberSerializer: Serializer<number> =
         fromJSON: deserializeNumber
     };
 
+const DateFormat = new Intl.DateTimeFormat("en-GB", {weekday: "short", day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false})
 const dateSerializer: Serializer<Date> =
     {
         init: f => { },
         toJSON: date => {
-            let str = date.toISOString();
             // if .unspecified marker set before by Gluon ..
-            if ((<any>date).unspecified) {
-                // we remove the timezone marker (trailing "Z")
-                str = str.substring(0, str.length - 1);
-            }
-            return str;
+            return (<any>date).unspecified ?
+                // format without an associated time zone
+                DateFormat.format(date) :
+                date.toISOString();
         },
         fromJSON: (str: string) => {
             // check if timezone marker is given ..
@@ -817,7 +816,7 @@ export interface RemoteMethod<T> {
 
 export interface IHttpClient {
     httpGet<T>(url: string, queryParams: {[key:string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>>;
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>>;
+    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T> | Response>;
 }
 
 export class FetchClient implements IHttpClient {
@@ -869,33 +868,33 @@ export class FetchClient implements IHttpClient {
     }
 }
 
-export class JQueryClient implements IHttpClient {
-    constructor() {
-    }
+//export class JQueryClient implements IHttpClient {
+//    constructor() {
+//    }
 
-    httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
-        return Promise.resolve(jQuery.ajax({
-            url: url,
-            type: "get",
-            data: queryParams
-        })).then(x => parseJsonResponse(x));
-    }
+//    httpGet<T>(url: string, queryParams: {[key: string]: string}, parseJsonResponse: (json: any) => T): Promise<Option<T>> {
+//        return Promise.resolve(jQuery.ajax({
+//            url: url,
+//            type: "get",
+//            data: queryParams
+//        })).then(x => parseJsonResponse(x));
+//    }
 
-    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>> {
-        const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
-        if (Option.isSome(jsonRequest)) {
-            ajaxParams.data = jsonRequest;
-            ajaxParams.dataType = "json";
-            ajaxParams.contentType = "application/json";
-        }
-        const promise = Promise.resolve(jQuery.ajax(ajaxParams));
-        if (Option.isSome(parseJsonResponse)) {
-            return promise.then(x => parseJsonResponse(x));
-        } else {
-            return promise;
-        }
-    }
-}
+//    httpCall<T>(httpMethod: string, url: string, jsonRequest?: any, parseJsonResponse?: (json: any) => T): Promise<Option<T>> {
+//        const ajaxParams: JQueryAjaxSettings = { "url": url, "type": httpMethod };
+//        if (Option.isSome(jsonRequest)) {
+//            ajaxParams.data = jsonRequest;
+//            ajaxParams.dataType = "json";
+//            ajaxParams.contentType = "application/json";
+//        }
+//        const promise = Promise.resolve(jQuery.ajax(ajaxParams));
+//        if (Option.isSome(parseJsonResponse)) {
+//            return promise.then(x => parseJsonResponse(x));
+//        } else {
+//            return promise;
+//        }
+//    }
+//}
 
 namespace Remoting {
 

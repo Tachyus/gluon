@@ -5,7 +5,6 @@ module.exports = {
         app: "./Scripts/App.ts",
         vendor: [
             "core-js",
-            "jquery",
             "gluon-client"
         ]
     },

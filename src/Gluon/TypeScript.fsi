@@ -48,9 +48,6 @@ type Generator =
     /// Generates code for a service.
     member GenerateServiceCode : Service -> Program
 
-    /// Generates type definitions and serialization code helpers.
-    member GenerateTypeCode : seq<Schema.TypeDefinition> -> Program
-
     /// Writes code to a writer.
     member Write : service: Service * TextWriter -> unit
 
