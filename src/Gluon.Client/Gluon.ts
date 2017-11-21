@@ -37,6 +37,12 @@ export namespace Schema {
     export interface DateTimeType {
         tag: "DateTimeType";
     }
+    export interface DateTimeOffsetType {
+        tag: "DateTimeOffsetType"
+    }
+    export interface GuidType {
+        tag: "GuidType"
+    }
     export interface DoubleType {
         tag: "DoubleType";
     }
@@ -73,7 +79,7 @@ export namespace Schema {
         tag: "TypeReference";
         Item: string;
     }
-    export type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
+    export type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DateTimeOffsetType | GuidType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
 
     export class Parameter {
         ParameterName: string;
@@ -320,6 +326,8 @@ function dataTypeKey(dataType: Schema.DataType): string {
             case "BooleanType": return ":bool";
             case "BytesType": return ":bytes";
             case "DateTimeType": return ":datetime";
+            case "DateTimeOffsetType": return ":datetime";
+            case "GuidType": return ":str";
             case "DoubleType": return ":double";
             case "IntType": return ":int";
             case "JsonType": return ":json";
@@ -550,12 +558,14 @@ function buildDataTypeSerializer(dt: Schema.DataType): Serializer<any> {
         case "BooleanType": return booleanSerializer;
         case "BytesType": return bytesSerializer;
         case "DateTimeType": return dateSerializer;
+        case "DateTimeOffsetType": return dateSerializer;
         case "DoubleType": return numberSerializer;
         case "IntType": return numberSerializer;
         case "JsonType": return rawJsonSerializer;
         case "OptionType": return new OptionSerializer(dt.Item);
         case "StringDictType": return new DictSerializer(dt.Item);
         case "StringType": return stringSerializer;
+        case "GuidType": return stringSerializer;
         case "TupleType": return new TupleSerializer(dt.Item);
         default: throw new Error("Invalid DataType");
     }
@@ -1055,6 +1065,7 @@ namespace RawSchemaJsonParser {
             case "BooleanType": return { tag: "BooleanType" };
             case "BytesType": return { tag: "BytesType" };
             case "DateTimeType": return { tag: "DateTimeType" };
+            case "DateTimeOffsetType": return { tag: "DateTimeOffsetType" };
             case "DoubleType": return { tag: "DoubleType" };
             case "IntType": return { tag: "IntType" };
             case "JsonType": return { tag: "JsonType" };
@@ -1063,6 +1074,7 @@ namespace RawSchemaJsonParser {
             case "SequenceType": return { tag: "SequenceType", Item: dataType(at(json, 0)) };
             case "StringDictType": return { tag: "StringDictType", Item: dataType(at(json, 0)) };
             case "StringType": return { tag: "StringType" };
+            case "GuidType": return { tag: "GuidType" };
             case "TupleType": return { tag: "TupleType", Item: at(json, 0).map(dataType) };
             case "TypeReference": return { tag: "TypeReference", Item: at(json, 0) };
             default: throw new Error("failed to parse a data type");
@@ -1204,6 +1216,7 @@ Internals.registerActivators({
   "Gluon.Schema.BooleanType": () => <Schema.BooleanType>{ tag: "BooleanType" },
   "Gluon.Schema.BytesType": () => <Schema.BytesType>{ tag: "BytesType" },
   "Gluon.Schema.DateTimeType": () => <Schema.DateTimeType>{ tag: "DateTimeType" },
+  "Gluon.Schema.DateTimeOffsetType": () => <Schema.DateTimeOffsetType>{ tag: "DateTimeOffsetType" },
   "Gluon.Schema.DoubleType": () => <Schema.DoubleType>{ tag: "DoubleType" },
   "Gluon.Schema.IntType": () => <Schema.IntType>{ tag: "IntType" },
   "Gluon.Schema.JsonType": () => <Schema.JsonType>{ tag: "JsonType" },
@@ -1212,6 +1225,7 @@ Internals.registerActivators({
   "Gluon.Schema.SequenceType": (a: Schema.DataType) => <Schema.SequenceType>{ tag: "SequenceType", Item: a },
   "Gluon.Schema.StringDictType": (a: Schema.DataType) => <Schema.StringDictType>{ tag: "StringDictType", Item: a },
   "Gluon.Schema.StringType": () => <Schema.StringType>{ tag: "StringType" },
+  "Gluon.Schema.GuidType": () => <Schema.GuidType>{ tag: "GuidType" },
   "Gluon.Schema.TupleType": (a: Schema.DataType[]) => <Schema.TupleType>{ tag: "TupleType", Item: a },
   "Gluon.Schema.TypeReference": (a: string) => <Schema.TypeReference>{ tag: "TypeReference", Item: a },
   "Gluon.Schema.Parameter": (a: string, b: Schema.DataType) => <Schema.Parameter>{ ParameterName: a, ParameterType: b },

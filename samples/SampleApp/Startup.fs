@@ -16,6 +16,12 @@ module private Services =
 
     type Content = { Value : L.SomeContent }
 
+    type DataGroup = {
+        Name: string
+        Effective: DateTimeOffset
+        Id: Guid
+        }
+
     [<Remote>]
     let testGeneric () =
         { Content.Value = L.T({L.Text.Value = "test"}) }
@@ -181,6 +187,20 @@ module private Services =
     [<Remote>]
     let optionTurnaround (value: int option) =
         value
+
+    [<Remote(Verb="GET")>]
+    let getDateGroup () = 
+        let date = DateTimeOffset(DateTime.Now)
+        {
+            Name = "Bob"
+            Effective = date
+            Id = Guid.NewGuid()
+            }
+
+    [<Remote(Verb="POST")>]
+    let setDateGroup (dataGroup: DataGroup) = 
+        let t = dataGroup.Effective
+        t |> ignore
 
 type Startup() =
     member x.Configuration(app: IAppBuilder) =

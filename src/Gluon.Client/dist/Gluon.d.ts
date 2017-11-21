@@ -19,6 +19,12 @@ export declare namespace Schema {
     interface DateTimeType {
         tag: "DateTimeType";
     }
+    interface DateTimeOffsetType {
+        tag: "DateTimeOffsetType";
+    }
+    interface GuidType {
+        tag: "GuidType";
+    }
     interface DoubleType {
         tag: "DoubleType";
     }
@@ -55,7 +61,7 @@ export declare namespace Schema {
         tag: "TypeReference";
         Item: string;
     }
-    type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
+    type DataType = ArrayType | BooleanType | BytesType | DateTimeType | DateTimeOffsetType | GuidType | DoubleType | IntType | JsonType | ListType | OptionType | SequenceType | StringDictType | StringType | TupleType | TypeReference;
     class Parameter {
         ParameterName: string;
         ParameterType: DataType;

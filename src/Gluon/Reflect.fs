@@ -56,6 +56,8 @@ module Reflect =
         | BooleanType
         | BytesType
         | DateTimeType
+        | DateTimeOffsetType
+        | GuidType
         | DoubleType
         | EnumType
         | IntType
@@ -77,6 +79,8 @@ module Reflect =
             typeof<bool> => BooleanType
             typeof<byte[]> => BytesType
             typeof<DateTime> => DateTimeType
+            typeof<DateTimeOffset> => DateTimeOffsetType
+            typeof<Guid> => GuidType
             typeof<double> => DoubleType
             typeof<int> => IntType
             typeof<Json> => JsonType
@@ -170,6 +174,8 @@ module Reflect =
         | UnknownType
         | BooleanType
         | DateTimeType
+        | DateTimeOffsetType
+        | GuidType
         | DoubleType
         | IntType -> []
 
@@ -198,6 +204,8 @@ module Reflect =
             | BooleanType -> k Schema.BooleanType
             | BytesType -> k Schema.BytesType
             | DateTimeType -> k Schema.DateTimeType
+            | DateTimeOffsetType -> k Schema.DateTimeOffsetType
+            | GuidType -> k Schema.GuidType
             | DoubleType -> k Schema.DoubleType
             | IntType -> k Schema.IntType
             | JsonType -> k Schema.JsonType

@@ -344,6 +344,29 @@ module JsonUtility =
     type DateTimeSerializer() =
         inherit ConvertSerializer<string,DateTime>(parseDateTime, printDateTime)
 
+    let parseDateTimeOffset (txt: string) =
+        DateTimeOffset.Parse(txt, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)
+    
+    let printDateTimeOffset (ds: DateTimeOffset) =
+        let time = ds.ToString("HH:mm:ss.fffffffzzz")
+        let date = ds.ToString("yyyy-MM-dd")
+        let full = date + "T" + time
+        full
+
+    [<Sealed>]
+    type DateTimeOffsetSerializer() =
+        inherit ConvertSerializer<string,DateTimeOffset>(parseDateTimeOffset, printDateTimeOffset)
+
+    let parseGuid (txt: string) =
+        Guid.Parse txt
+
+    let printGuid (guid: Guid) =
+        guid.ToString()
+
+    [<Sealed>]
+    type GuidSerializer() =
+        inherit ConvertSerializer<string, Guid>(parseGuid, printGuid)
+
     [<Sealed>]
     type ListSerializer<'T>() =
         inherit ConvertSerializer<array<'T>,list<'T>>(List.ofArray, List.toArray)
@@ -583,6 +606,8 @@ module JsonUtility =
                 rawJsonSerializer
                 stringSerializer
                 DateTimeSerializer()
+                DateTimeOffsetSerializer()
+                GuidSerializer()
             ]
         dict [for s in included -> (s.SerializedType, s)]
 
@@ -601,6 +626,8 @@ module JsonUtility =
         | Reflect.BooleanType
         | Reflect.BytesType
         | Reflect.DateTimeType
+        | Reflect.DateTimeOffsetType
+        | Reflect.GuidType
         | Reflect.DoubleType
         | Reflect.IntType
         | Reflect.StringType
