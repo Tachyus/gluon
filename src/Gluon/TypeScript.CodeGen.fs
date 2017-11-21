@@ -40,6 +40,7 @@ let rec typeLiteralNs ns sch =
     | Schema.BytesType -> makeType "Uint8Array"
     | Schema.DateTimeType -> makeType "Date"
     | Schema.DateTimeOffsetType -> makeType "Date"
+    | Schema.GuidType -> makeType "string"
     | Schema.DoubleType | Schema.IntType -> makeType "number"
     | Schema.JsonType -> makeType "any"
     | Schema.StringType -> makeType "string"

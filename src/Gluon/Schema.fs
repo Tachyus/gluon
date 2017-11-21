@@ -24,6 +24,7 @@ type DataType =
     | BytesType
     | DateTimeType
     | DateTimeOffsetType
+    | GuidType
     | DoubleType
     | IntType
     | JsonType
@@ -129,6 +130,7 @@ type DataType with
         | BytesType
         | DateTimeType
         | DateTimeOffsetType
+        | GuidType
         | DoubleType
         | IntType
         | JsonType -> []

@@ -217,6 +217,7 @@ function dataTypeKey(dataType) {
             case "BytesType": return ":bytes";
             case "DateTimeType": return ":datetime";
             case "DateTimeOffsetType": return ":datetime";
+            case "GuidType": return ":str";
             case "DoubleType": return ":double";
             case "IntType": return ":int";
             case "JsonType": return ":json";
@@ -408,6 +409,7 @@ function buildDataTypeSerializer(dt) {
         case "OptionType": return new OptionSerializer(dt.Item);
         case "StringDictType": return new DictSerializer(dt.Item);
         case "StringType": return stringSerializer;
+        case "GuidType": return stringSerializer;
         case "TupleType": return new TupleSerializer(dt.Item);
         default: throw new Error("Invalid DataType");
     }
@@ -830,6 +832,7 @@ var RawSchemaJsonParser;
             case "SequenceType": return { tag: "SequenceType", Item: dataType(at(json, 0)) };
             case "StringDictType": return { tag: "StringDictType", Item: dataType(at(json, 0)) };
             case "StringType": return { tag: "StringType" };
+            case "GuidType": return { tag: "GuidType" };
             case "TupleType": return { tag: "TupleType", Item: at(json, 0).map(dataType) };
             case "TypeReference": return { tag: "TypeReference", Item: at(json, 0) };
             default: throw new Error("failed to parse a data type");
@@ -964,6 +967,7 @@ Internals.registerActivators({
     "Gluon.Schema.SequenceType": function (a) { return ({ tag: "SequenceType", Item: a }); },
     "Gluon.Schema.StringDictType": function (a) { return ({ tag: "StringDictType", Item: a }); },
     "Gluon.Schema.StringType": function () { return ({ tag: "StringType" }); },
+    "Gluon.Schema.GuidType": function () { return ({ tag: "GuidType" }); },
     "Gluon.Schema.TupleType": function (a) { return ({ tag: "TupleType", Item: a }); },
     "Gluon.Schema.TypeReference": function (a) { return ({ tag: "TypeReference", Item: a }); },
     "Gluon.Schema.Parameter": function (a, b) { return ({ ParameterName: a, ParameterType: b }); },

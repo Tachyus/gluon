@@ -24,6 +24,7 @@ type DataType =
     | BytesType
     | DateTimeType
     | DateTimeOffsetType
+    | GuidType
     | DoubleType
     | IntType
     | JsonType

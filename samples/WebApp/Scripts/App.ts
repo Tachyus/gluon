@@ -46,6 +46,16 @@ export namespace WebApp {
         console.log(result);
     })();
 
+
+    (async function getDataGroup() {
+        const result = await S.getDateGroup(cli)();
+        console.log(result)
+        if (Gluon.Option.isSome(result)) {
+            debugger
+            await S.setDateGroup(cli)(result);
+        }
+    })();
+
     S.incr(cli)(1).then(x => {
         console.log("incr(1) ==> ", x);
     });

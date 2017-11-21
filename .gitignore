@@ -22,3 +22,4 @@ test/*/bin
 test/*/obj
 node_modules/
 .yarnclean
+/paket.exe
