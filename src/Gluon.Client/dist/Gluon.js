@@ -280,6 +280,17 @@ var dateSerializer = {
         return d;
     }
 };
+var dateTimeOffsetSerializer = {
+    init: function (f) { },
+    toJSON: function (date) {
+        var d = date.toISOString();
+        return d;
+    },
+    fromJSON: function (str) {
+        var d = new Date(str);
+        return d;
+    }
+};
 var rawJsonSerializer = {
     init: function (f) { },
     toJSON: function (x) { return x; },
@@ -402,7 +413,7 @@ function buildDataTypeSerializer(dt) {
         case "BooleanType": return booleanSerializer;
         case "BytesType": return bytesSerializer;
         case "DateTimeType": return dateSerializer;
-        case "DateTimeOffsetType": return dateSerializer;
+        case "DateTimeOffsetType": return dateTimeOffsetSerializer;
         case "DoubleType": return numberSerializer;
         case "IntType": return numberSerializer;
         case "JsonType": return rawJsonSerializer;

@@ -1,3 +1,6 @@
+### New in 4.0.5 - (Released 2017-12-04)
+* Fix DateTimeOffset serialization.
+
 ### New in 4.0.4 - (Released 2017-11-20)
 * Fix issue #32 to support DateTimeOffset and Guid.
 
