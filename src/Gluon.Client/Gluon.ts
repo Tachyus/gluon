@@ -416,6 +416,19 @@ const dateSerializer: Serializer<Date> =
         }
     };
 
+const dateTimeOffsetSerializer: Serializer<Date> =
+    {
+        init: f => { },
+        toJSON: date => {
+            let d = date.toISOString();
+            return d;
+        },
+        fromJSON: (str: string) => {
+            const d = new Date(str);
+            return d;
+        }
+    };
+
 const rawJsonSerializer: Serializer<any> =
     {
         init: f => { },
@@ -558,7 +571,7 @@ function buildDataTypeSerializer(dt: Schema.DataType): Serializer<any> {
         case "BooleanType": return booleanSerializer;
         case "BytesType": return bytesSerializer;
         case "DateTimeType": return dateSerializer;
-        case "DateTimeOffsetType": return dateSerializer;
+        case "DateTimeOffsetType": return dateTimeOffsetSerializer;
         case "DoubleType": return numberSerializer;
         case "IntType": return numberSerializer;
         case "JsonType": return rawJsonSerializer;
