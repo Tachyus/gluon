@@ -1,3 +1,6 @@
+### New in 4.0.6 - (Released 2018-02-09)
+* Fix DateTimeOffset serialization round trip.
+
 ### New in 4.0.5 - (Released 2017-12-04)
 * Fix DateTimeOffset serialization.
 
