@@ -19,8 +19,8 @@ export namespace WebApp {
     const p1x = parse(S.Person, j1);
     const p2x = parse(S.Person, j2);
 
-    console.log(p1x);
-    console.log(p2x);
+    console.log("parse(S.Person, j1) ==> ", p1x);
+    console.log("parse(S.Person, j2) ==> ", p2x);
 
     const dataSeries = new L.DataSeries([]);
 
@@ -29,30 +29,30 @@ export namespace WebApp {
     }
 
     const dataJson = JSON.stringify(dataSeries);
-    console.log(dataJson);
+    console.log("JSON.stringify(dataSeries) ==> ", dataJson);
 
     const dataSeries1 = parse(L.DataSeries, dataJson);
-    console.log(dataSeries1);
+    console.log("parse(L.DataSeries, dataJson) ==> ", dataSeries1);
 
     const cli = new Gluon.Client();
 
     (async function testPersonPhone() {
         const result = await S.showContact(cli)(p1);
-        console.log(result);
+        console.log("testPersonPhone ==> ", result);
     })();
 
     (async function testPersonAddress() {
         const result = await S.showContact(cli)(p2);
-        console.log(result);
+        console.log("testPersonAddress ==> ", result);
     })();
 
 
     (async function getDataGroup() {
-        const result = await S.getDateGroup(cli)();
-        console.log(result)
+        const result = await S.getDataGroup(cli)();
+        console.log("getDataGroup ==> ", result)
         if (Gluon.Option.isSome(result)) {
-            debugger
-            await S.setDateGroup(cli)(result);
+            const setResult = await S.setDataGroup(cli)(result);
+            console.log("setDataGroup ==> ", setResult)
         }
     })();
 

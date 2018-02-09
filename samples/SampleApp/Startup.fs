@@ -189,7 +189,7 @@ module private Services =
         value
 
     [<Remote(Verb="GET")>]
-    let getDateGroup () = 
+    let getDataGroup () = 
         let date = DateTimeOffset(DateTime.Now)
         {
             Name = "Bob"
@@ -198,9 +198,10 @@ module private Services =
             }
 
     [<Remote(Verb="POST")>]
-    let setDateGroup (dataGroup: DataGroup) = 
+    let setDataGroup (context:Context) (dataGroup: DataGroup) = 
         let t = dataGroup.Effective
-        t |> ignore
+        context.OwinContext.Response.StatusCode <- int Net.HttpStatusCode.Created
+        t
 
 type Startup() =
     member x.Configuration(app: IAppBuilder) =

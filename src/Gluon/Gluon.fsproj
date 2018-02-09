@@ -143,4 +143,8 @@
       </ItemGroup>
     </When>
   </Choose>
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir)..\..
+.paket\paket.exe restore</PreBuildEvent>
+  </PropertyGroup>
 </Project>
