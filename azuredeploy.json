@@ -72,7 +72,8 @@
                         "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
                     ],
                     "properties": {
-                        "PROJECT": "samples\\WebApp\\WebApp.csproj"
+                        "WEBSITE_NODE_DEFAULT_VERSION": "6.9.1",
+                        "WEBSITE_TIME_ZONE": "Pacific Standard Time"
                     }
                 },
                 {
