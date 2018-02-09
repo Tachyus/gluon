@@ -139,11 +139,11 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir)
-yarn install</PreBuildEvent>
+npm install</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-yarn run build</PostBuildEvent>
+npm run build</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
