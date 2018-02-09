@@ -80,18 +80,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Gluon.Client\Gluon.Client.csproj">
-      <Project>{dde1011a-6059-4a36-b46f-9f821fadfb70}</Project>
-      <Name>Gluon.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Gluon.CLI\Gluon.CLI.fsproj">
-      <Project>{72fdba6e-ce61-4811-9f18-39faa585b5ea}</Project>
-      <Name>Gluon.CLI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Gluon\Gluon.fsproj">
-      <Project>{a49bbfb6-98a6-42ca-a5b3-35c89a7c3800}</Project>
-      <Name>Gluon</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SampleApp\SampleApp.fsproj">
       <Project>{f0c775be-25a2-48f0-ba2f-03a36aad4dbd}</Project>
       <Name>SampleApp</Name>
