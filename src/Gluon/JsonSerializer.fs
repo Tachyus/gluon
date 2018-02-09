@@ -344,14 +344,11 @@ module JsonUtility =
     type DateTimeSerializer() =
         inherit ConvertSerializer<string,DateTime>(parseDateTime, printDateTime)
 
-    let parseDateTimeOffset (txt: string) =
+    let parseDateTimeOffset txt =
         DateTimeOffset.Parse(txt, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)
     
-    let printDateTimeOffset (ds: DateTimeOffset) =
-        let time = ds.ToString("HH:mm:ss.fffffffzzz")
-        let date = ds.ToString("yyyy-MM-dd")
-        let full = date + "T" + time
-        full
+    let printDateTimeOffset (dto: DateTimeOffset) =
+        dto.ToString("u")
 
     [<Sealed>]
     type DateTimeOffsetSerializer() =
