@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Version>4.0.6</Version>
+    <Authors>Tachyus</Authors>
+    <Copyright>Copyright Tachyus Corp. All rights reserved.</Copyright>
+    <Summary>Type-safe remoting connector between F# and TypeScript.</Summary>
+    <Description>Gluon provides a type-safe remoting connector between an F# backend and a TypeScript client.</Description>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Tachyus/gluon/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>http://www.tachyus.com/gluon</PackageProjectUrl>
+    <PackageTags>F#;fsharp;web;typescript;webapi</PackageTags>
+    <RepositoryUrl>https://github.com/Tachyus/gluon</RepositoryUrl>
+  </PropertyGroup>
+</Project>

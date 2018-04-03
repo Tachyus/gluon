@@ -3,7 +3,7 @@ redirects on
 framework: >= net461
 
 nuget Argu
-nuget FSharp.Core
+nuget FSharp.Core 4.1.17
 nuget FSharp.Formatting
 nuget Microsoft.Owin
 nuget Microsoft.Owin.Diagnostics
@@ -23,15 +23,17 @@ group Build
     framework: >= net461
 
     nuget Fake
-    nuget SourceLink.Fake
 
 group Test
     source https://nuget.org/api/v2
     redirects on
     framework: >= net461
 
+    nuget AppVeyor.TestLogger
+    nuget Microsoft.NET.Test.Sdk
+    nuget FsCheck
+    nuget FsCheck.Xunit
     nuget xunit
     nuget xunit.runner.console
     nuget xunit.runner.visualstudio version_in_path: true
-    nuget FsCheck
-    nuget FsCheck.Xunit
+    nuget XunitXml.TestLogger

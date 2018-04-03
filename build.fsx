@@ -6,43 +6,14 @@
 #r "FakeLib.dll"
 
 open System
-open System.Diagnostics
 open System.IO
 open Fake
 open Fake.Git
-open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
-open Fake.Testing
 
 // --------------------------------------------------------------------------------------
 // Provide project-specific details below
 // --------------------------------------------------------------------------------------
-
-// Information about the project are used
-//  - for version and project name in generated AssemblyInfo file
-//  - by the generated NuGet package 
-//  - to run tests and to publish documentation on GitHub gh-pages
-//  - for documentation, you also need to edit info in "docs/tools/generate.fsx"
-
-// The name of the project 
-// (used by attributes in AssemblyInfo, name of a NuGet package and directory in 'src')
-let project = "Gluon"
-
-// Short summary of the project
-// (used as description in AssemblyInfo and as a short summary for NuGet package)
-let summary = "Type-safe remoting connector between F# and TypeScript."
-
-// Longer description of the project
-// (used as a description for NuGet package; line breaks are automatically cleaned up)
-let description = """
-    Gluon provides a type-safe remoting connector between an F# backend
-    and a TypeScript client."""
-
-// List of author names (for NuGet package)
-let authors = [ "Tachyus Corp" ]
-
-// Tags for your project (for NuGet package)
-let tags = "F# fsharp web typescript webapi"
 
 // File system information 
 // (<solutionFile>.sln is built during the building process)
@@ -60,41 +31,11 @@ let gitName = "gluon"
 
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/Tachyus"
 
-let projects =
-    !! "src/Gluon/Gluon.fsproj"
-    ++ "src/Gluon.CLI/Gluon.CLI.fsproj"
-    ++ "src/Gluon.Client/Gluon.Client.csproj"
-    ++ "test/Gluon.Tests/Gluon.Tests.fsproj"
-
-let msBuildRelease target projects =
-    for projFile in projects do
-        build (fun x ->
-            { x with
-                NodeReuse = false
-                Properties =
-                    [ "Optimize",      environVarOrDefault "Build.Optimize"      "True"
-                      "DebugSymbols",  environVarOrDefault "Build.DebugSymbols"  "True"
-                      "Configuration", environVarOrDefault "Build.Configuration" "Release" ]
-                Targets =
-                    [ target ]
-                Verbosity = Some Quiet }) projFile
+let buildDir = IO.Path.Combine(Environment.CurrentDirectory, "bin")
 
 // --------------------------------------------------------------------------------------
 // The rest of the file includes standard build steps 
 // --------------------------------------------------------------------------------------
-
-let bash script =
-    let code = Shell.Exec("bash", args = script)
-    if code <> 0 then
-        failwithf "bash %s exited with code %i" script code
-
-let ps script =
-    let code = Shell.Exec("powershell", args = sprintf "-NoProfile %s" script)
-    if code <> 0 then
-        failwithf "powershell %s exited with code %i" script code
-
-let exec script =
-    (if isUnix then bash else ps) script
 
 // Read additional information from the release notes document
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
@@ -114,19 +55,6 @@ let nugetVersion =
             sprintf "%s-b%03i" release.NugetVersion (int buildVersion)
     else release.NugetVersion
 
-let fsharpAssemblyInfo proj =
-    CreateFSharpAssemblyInfo (sprintf "src/%s/AssemblyInfo.fs" proj)
-        [ Attribute.Title proj
-          Attribute.Product proj
-          Attribute.Description summary
-          Attribute.Version release.AssemblyVersion
-          Attribute.FileVersion release.AssemblyVersion ]
-
-// Generate assembly info files with the right version & up-to-date information
-Target "AssemblyInfo" <| fun _ ->
-    fsharpAssemblyInfo "Gluon"
-    fsharpAssemblyInfo "Gluon.CLI"
-
 Target "BuildVersion" <| fun _ ->
     Shell.Exec("appveyor", sprintf "UpdateBuild -Version \"%s\"" nugetVersion) |> ignore
 
@@ -135,9 +63,7 @@ Target "BuildVersion" <| fun _ ->
 
 Target "Clean" <| fun _ ->
     CleanDirs ["bin"; "temp"]
-    projects |> msBuildRelease "Clean"
     if (Directory.Exists "src/Gluon.Client/node_modules") then
-        exec "cd src/Gluon.Client; yarn run clean"
         DeleteDir "src/Gluon.Client/node_modules"
 
 Target "CleanDocs" <| fun _ ->
@@ -146,42 +72,43 @@ Target "CleanDocs" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
-Target "Compile" <| fun _ ->
-    projects |> msBuildRelease "Build"
-
-Target "Build" <| DoNothing
+Target "Build" <| fun _ ->
+    DotNetCli.Build (fun p ->
+        { p with
+            Project = "src\Gluon.Client"
+            Configuration = "Release" })
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
 
 Target "RunTests" <| fun _ ->
-    CreateDir "bin"
-    !! testAssemblies
-    |> xUnit2 (fun p ->
+    DotNetCli.Test (fun p ->
         { p with
+            Project = "test\Gluon.Tests"
+            Configuration = "Release"
             TimeOut = TimeSpan.FromMinutes 20.
-            XmlOutputPath = Some "bin/TestResults.xml" })
-
-#if MONO
-#else
-// --------------------------------------------------------------------------------------
-// SourceLink allows Source Indexing on the PDB generated by the compiler, this allows
-// the ability to step through the source code of external libraries https://github.com/ctaggart/SourceLink
-#load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
-open SourceLink
-
-Target "SourceLink" <| fun _ ->
-    let baseUrl = sprintf "%s/%s/{0}/%%var2%%" gitRaw project
-    !! "src/**/*.fsproj"
-    |> Seq.iter (fun projFile ->
-        let proj = VsProj.LoadRelease projFile 
-        SourceLink.Index proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ baseUrl)
-#endif
+            AdditionalArgs =
+              [ yield "--test-adapter-path:."
+                yield if isAppVeyorBuild then
+                        sprintf "--logger:Appveyor"
+                      else
+                        sprintf "--logger:xunit;LogFileName=%s" (IO.Path.Combine(buildDir, "TestResults.xml")) ]
+        })
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
 Target "NuGet" <| fun _ ->
+    DotNetCli.Pack <| fun x ->
+        { x with
+            Project = "src\Gluon"
+            OutputPath = buildDir
+            AdditionalArgs =
+              [ "--no-build"
+                sprintf "/p:Version=%s" nugetVersion
+                //"/p:ReleaseNotes=" + (toLines release.Notes)
+              ]
+        }
     Paket.Pack <| fun x ->
         { x with
             OutputPath = "bin"
@@ -264,9 +191,8 @@ Target "BuildPackage" DoNothing
 
 Target "All" DoNothing
 
-"AssemblyInfo"
+"Clean"
   =?> ("BuildVersion", isAppVeyorBuild)
-  ==> "Compile"
   ==> "Build"
   ==> "RunTests"
   ==> "All"
@@ -275,10 +201,6 @@ Target "All" DoNothing
   =?> ("ReleaseDocs",isLocalBuild && not isMono)
 
 "All" 
-#if MONO
-#else
-  =?> ("SourceLink", Pdbstr.tryFind().IsSome )
-#endif
   ==> "NuGet"
   ==> "BuildPackage"
 

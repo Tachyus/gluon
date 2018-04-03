@@ -15,5 +15,4 @@ files
     dist/Gluon.js.map ==> content\Scripts
     dist/Gluon.min.js ==> content\Scripts
     dist/Gluon.min.js.map ==> content\Scripts
-    ..\Gluon.CLI\bin\Release\*.* ==> tools
-    bin/*.* ==> tools
+    bin/net461/*.* ==> tools
