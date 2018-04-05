@@ -14,7 +14,6 @@
 
 namespace Gluon.TypeScript
 
-open System
 open System.IO
 open Gluon
 

@@ -19,7 +19,6 @@ open System.Collections.Generic
 open System.IO
 open System.Net
 open System.Threading.Tasks
-open System.Web
 open Owin
 open Microsoft.Owin
 
@@ -87,7 +86,10 @@ module OwinSupport =
         }
 
     let getParamJson (ctx: IOwinContext) (p: Schema.Parameter) =
-        HttpUtility.ParseQueryString(ctx.Request.Uri.Query).[p.ParameterName]
+        ctx.Request.Query
+        |> Seq.tryFind (fun (KeyValue(key, value)) -> key = p.ParameterName && value.Length = 1)
+        |> Option.map (fun (KeyValue(_, value)) -> value.[0])
+        |> Option.toObj
 
     let readJsonString server (m: Method) json =
         use reader = new StringReader(json)
@@ -97,7 +99,7 @@ module OwinSupport =
         match m.Schema.MethodParameters with
         | [] -> null
         | [p] -> getParamJson ctx p |> readJsonString server m
-        | n ->
+        | _ ->
             [for p in m.Schema.MethodParameters -> getParamJson ctx p]
             |> String.concat ","
             |> sprintf "[%s]"

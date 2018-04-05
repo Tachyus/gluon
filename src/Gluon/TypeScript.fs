@@ -14,11 +14,8 @@
 
 namespace Gluon.TypeScript
 
-open System
 open System.IO
 open System.Text
-open System.Threading
-open System.Web
 open Gluon
 
 module FileWriter =

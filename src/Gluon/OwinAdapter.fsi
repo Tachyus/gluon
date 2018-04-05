@@ -18,7 +18,6 @@ open System
 open System.Collections.Generic
 open System.Threading.Tasks
 open Owin
-open Microsoft.Owin
 open Gluon
 
 /// Options for adapting Gluon services to OWIN using HTTP transport.
