@@ -1,15 +1,18 @@
 {
   "name": "gluon-client",
-  "version": "4.0.6",
+  "version": "4.1.0",
   "description": "TypeScript to FSharp connector",
   "main": "./dist/Gluon.js",
   "typings": "./dist/Gluon.d.ts",
   "scripts": {
-    "clean": "rimraf ./dist && mkdir dist",
+    "clean": "rimraf ./bin && mkdir bin && rimraf ./dist && mkdir dist",
     "tsc": "tsc -p ./",
     "minify": "uglifyjs dist/Gluon.js -o dist/Gluon.min.js --source-map dist/Gluon.min.js.map -p 1 -m",
+    "dotnet-build": "dotnet build ../Gluon.CLI --configuration Release",
+    "postdotnet-build": "cpx ../Gluon.CLI/bin/Release/**/*.* ./bin",
+    "ts-build": "yarn run tsc && yarn run minify",
     "prebuild": "yarn run clean",
-    "build": "yarn run tsc && yarn run minify",
+    "build": "yarn run dotnet-build && yarn run ts-build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc --watch"
   },
@@ -30,6 +33,7 @@
   },
   "homepage": "http://www.tachyus.com/gluon",
   "devDependencies": {
+    "cpx": "^1.5.0",
     "rimraf": "2.5.1",
     "typescript": "^2.5.2",
     "uglify-js": "2.6.1"

@@ -1,14 +1,19 @@
 os: Visual Studio 2017
 version: '{build}'
+clone_depth: 10
 branches:
   except:
     - gh-pages
-clone_depth: 10
 build:
   verbosity: minimal
 build_script:
   - ps: .\build.cmd BuildPackage
 test: off
 artifacts:
-  - path: 'bin\*.nupkg'
+  - path: 'bin\Gluon.*.nupkg'
     name: Gluon
+  - path: 'bin\Gluon.Client.*.nupkg'
+    name: Gluon.Client
+cache:
+  - packages -> paket.lock # preserve packages directory unless a paket-related file changes
+  - "%LOCALAPPDATA%\\Yarn"

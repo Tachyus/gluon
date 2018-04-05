@@ -204,8 +204,11 @@ module private Services =
         t
 
 type Startup() =
-    member x.Configuration(app: IAppBuilder) =
-        app.MapGluon() |> ignore
+    member __.Configuration(app: IAppBuilder) =
+        let service = Service.FromAssembly(Reflection.Assembly.GetCallingAssembly())
+        let options = Gluon.Options.Create(service)
+        //let options = Options.Create(service, ?prefix = prefix) // Default prefix is /gluon-api
+        app.Map(options.UrlPrefix, fun ctx -> ctx.Use(Owin.middleware options) |> ignore) |> ignore
 
 [<assembly:OwinStartupAttribute(typeof<Startup>)>]
 do ()

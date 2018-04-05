@@ -47,7 +47,7 @@ let rec typeLiteralNs ns sch =
     | Schema.OptionType t -> makeOptionType (!t)
     | Schema.StringDictType t -> S.TypeReference ("Gluon.Dict", [!t])
     | Schema.TypeReference n ->
-        let isGenerated = ns |> List.exists (fun x -> n.StartsWith x)
+        let isGenerated = ns |> List.exists n.StartsWith
         makeType (if isGenerated then "_"+n else n)
     | Schema.TupleType ts -> S.TupleType (List.map (!) ts)
 

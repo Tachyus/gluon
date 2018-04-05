@@ -1,4 +1,4 @@
-Microsoft.Owin
 Newtonsoft.Json
-Owin
 FSharp.Core
+System.Text.Encodings.Web
+KatanaNetStandard

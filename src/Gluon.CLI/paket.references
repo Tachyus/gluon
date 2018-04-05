@@ -1,4 +1,5 @@
 Argu
 FSharp.Core
-Microsoft.Owin
 Newtonsoft.Json
+System.Text.Encodings.Web
+KatanaNetStandard

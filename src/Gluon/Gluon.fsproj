@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <ProjectGuid>{a49bbfb6-98a6-42ca-a5b3-35c89a7c3800}</ProjectGuid>
     <OutputType>Library</OutputType>
     <Name>Gluon</Name>
@@ -39,10 +39,6 @@
     <None Include="Bootstrap.fsx" />
     <Compile Include="AssemblyMetadata.fs" />
     <None Include="paket.references" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Web" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

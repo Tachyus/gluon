@@ -6,10 +6,12 @@
 #r "FakeLib.dll"
 
 open System
+open System.Diagnostics
 open System.IO
 open Fake
 open Fake.Git
 open Fake.ReleaseNotesHelper
+open Fake.YarnHelper
 
 // --------------------------------------------------------------------------------------
 // Provide project-specific details below
@@ -44,7 +46,7 @@ let (!!) includes =
     (!! includes).SetBaseDirectory __SOURCE_DIRECTORY__
 
 let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
-let isAppVeyorBuild = environVar "APPVEYOR" <> null
+let isAppVeyorBuild = not(isNull(environVar "APPVEYOR"))
 
 let nugetVersion =
     if isAppVeyorBuild then
@@ -54,6 +56,23 @@ let nugetVersion =
         else
             sprintf "%s-b%03i" release.NugetVersion (int buildVersion)
     else release.NugetVersion
+
+let private yarnFileName =
+    let which = if isWindows then "where.exe" else "which"
+    let yarn = if isWindows then "yarn.cmd" else "yarn"
+    let defaultPath = if isWindows then "C:\\Program Files (x86)\\Yarn\\bin\\yarn.cmd" else "/usr/bin/yarn"
+    let info =
+        new ProcessStartInfo(which, yarn,
+            StandardOutputEncoding = System.Text.Encoding.UTF8,
+            RedirectStandardOutput = true,
+            UseShellExecute        = false,
+            CreateNoWindow         = true)
+    use proc = Process.Start info
+    proc.WaitForExit()
+    match proc.ExitCode with
+        | 0 when not proc.StandardOutput.EndOfStream ->
+          proc.StandardOutput.ReadLine()
+        | _ -> defaultPath
 
 Target "BuildVersion" <| fun _ ->
     Shell.Exec("appveyor", sprintf "UpdateBuild -Version \"%s\"" nugetVersion) |> ignore
@@ -74,9 +93,19 @@ Target "CleanDocs" <| fun _ ->
 
 Target "Build" <| fun _ ->
     DotNetCli.Build (fun p ->
-        { p with
-            Project = "src\Gluon.Client"
+        { p  with
+            Project = "src\Gluon"
             Configuration = "Release" })
+    Yarn (fun p ->
+        { p with
+            Command = Install Standard
+            YarnFilePath = yarnFileName
+            WorkingDirectory = "./src/Gluon.Client" })
+    Yarn (fun p ->
+        { p with
+            Command = (Custom "build")
+            YarnFilePath = yarnFileName
+            WorkingDirectory = "./src/Gluon.Client" })
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
@@ -98,7 +127,7 @@ Target "RunTests" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
-Target "NuGet" <| fun _ ->
+Target "PackGluon" <| fun _ ->
     DotNetCli.Pack <| fun x ->
         { x with
             Project = "src\Gluon"
@@ -109,6 +138,8 @@ Target "NuGet" <| fun _ ->
                 //"/p:ReleaseNotes=" + (toLines release.Notes)
               ]
         }
+
+Target "PackGluonClient" <| fun _ ->
     Paket.Pack <| fun x ->
         { x with
             OutputPath = "bin"
@@ -201,7 +232,8 @@ Target "All" DoNothing
   =?> ("ReleaseDocs",isLocalBuild && not isMono)
 
 "All" 
-  ==> "NuGet"
+  ==> "PackGluon"
+  ==> "PackGluonClient"
   ==> "BuildPackage"
 
 "CleanDocs"

@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <ProjectGuid>07b678c4-af34-4fe1-85b9-e32093a54d03</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SampleLib</RootNamespace>

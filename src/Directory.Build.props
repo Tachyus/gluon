@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Version>4.0.6</Version>
+    <Version>4.1.0</Version>
     <Authors>Tachyus</Authors>
     <Copyright>Copyright Tachyus Corp. All rights reserved.</Copyright>
     <Summary>Type-safe remoting connector between F# and TypeScript.</Summary>

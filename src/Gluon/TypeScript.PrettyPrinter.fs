@@ -15,7 +15,7 @@
 module Gluon.TypeScript.PrettyPrinter
 
 open System
-open System.Web
+open System.Text.Encodings.Web
 open Gluon
 module PP = PrettyPrint
 open PP.Operators
@@ -85,7 +85,7 @@ let rec expression e =
     | S.Call (func, [], args) -> !func +. parens (commasTight !!args)
     | S.Call (func, gen, args) -> !func +. angular (commasTight [for g in gen -> typeLiteral g]) +. parens (commasTight !!args)
     | S.Invoke (o, m, args) -> !o +. t "." +. t m +. parens (commasTight !!args)
-    | S.LiteralString str -> HttpUtility.JavaScriptStringEncode(str, addDoubleQuotes = true) |> t
+    | S.LiteralString str -> t ("\"" + JavaScriptEncoder.Default.Encode str + "\"")
     | S.Var v -> t v
     | S.LiteralJson x -> t x
     | S.LiteralObject fields -> braces (commas [for (n, v) in fields -> !(S.LiteralString n) +. t ":" ++ !v])
@@ -155,7 +155,7 @@ let functionDefinition f =
     t "function" ++ methodLike f
 
 let layoutTag (tag: string) : PP.Layout =
-    t "tag" +. t ":" ++ t (HttpUtility.JavaScriptStringEncode(tag, addDoubleQuotes = true)) +. t ";"
+    t "tag" +. t ":" ++ typeLiteral (S.LiteralStringType tag) +. t ";"
 
 let unionCaseDefinition (u: S.UnionCaseDefinition) : PP.Layout =
     let body =

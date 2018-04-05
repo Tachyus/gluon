@@ -17,12 +17,10 @@ namespace Gluon
 open System
 open System.Collections.Generic
 open System.Threading.Tasks
-open Owin
-open Gluon
 
 /// Options for adapting Gluon services to OWIN using HTTP transport.
 [<Sealed>]
-type OwinOptions =
+type Options =
 
     /// The Gluon service used by the adapter.
     member Service : Service
@@ -32,7 +30,10 @@ type OwinOptions =
 
     /// Constructs a new OwinAdapter for a given service.
     /// The URL prefix defaults to `/gluon-api`.
-    static member Create : Service * ?urlPrefix: string -> OwinOptions
+    static member Create : Service * ?urlPrefix: string -> Options
+
+[<Obsolete("Use Gluon.Options instead.")>]
+type OwinOptions = Options
 
 /// Owin-related types.
 module Owin =
@@ -44,17 +45,4 @@ module Owin =
     type MidFunc = Func<AppFunc, AppFunc>
 
     /// Handles a web request by dispatching it to a service method.
-    val middleware : options: OwinOptions -> MidFunc
-
-[<AutoOpen>]
-module OwinExtensions =
-
-    /// Provides an extension method for use in mapping the Gluon OWIN adapter
-    /// into a Katana (Microsoft.Owin) web application.
-    type IAppBuilder with
-
-        /// F# type extension to provide UseGluon extension to IAppBuilder.
-        member MapGluon : options: OwinOptions -> IAppBuilder
-
-        /// F# type extension to provide UseGluon extension to IAppBuilder.
-        member MapGluon : ?service: Service * ?prefix: string -> IAppBuilder
+    val middleware : options: Options -> MidFunc

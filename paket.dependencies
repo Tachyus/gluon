@@ -1,10 +1,11 @@
 source https://nuget.org/api/v2
 redirects on
-framework: >= net461
+framework: auto-detect
 
 nuget Argu
-nuget FSharp.Core 4.1.17
+nuget FSharp.Core
 nuget FSharp.Formatting
+nuget KatanaNetStandard
 nuget Microsoft.Owin
 nuget Microsoft.Owin.Diagnostics
 nuget Microsoft.Owin.FileSystems
@@ -16,6 +17,7 @@ nuget Microsoft.Owin.StaticFiles
 nuget Microsoft.TypeScript.MSBuild
 nuget Newtonsoft.Json
 nuget Owin
+nuget System.Text.Encodings.Web
 
 group Build
     source https://nuget.org/api/v2
@@ -27,7 +29,7 @@ group Build
 group Test
     source https://nuget.org/api/v2
     redirects on
-    framework: >= net461
+    framework: auto-detect
 
     nuget AppVeyor.TestLogger
     nuget Microsoft.NET.Test.Sdk

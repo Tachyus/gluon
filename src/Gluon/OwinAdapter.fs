@@ -19,7 +19,6 @@ open System.Collections.Generic
 open System.IO
 open System.Net
 open System.Threading.Tasks
-open Owin
 open Microsoft.Owin
 
 module OwinSupport =
@@ -165,40 +164,30 @@ module OwinSupport =
         Async.StartAsTask(work, cancellationToken = ct) :> Task
 
 [<Sealed>]
-type OwinOptions(prefix: string, server: OwinSupport.Server) =
+type Options(prefix: string, server: OwinSupport.Server) =
 
-    override this.ToString() =
+    override __.ToString() =
         seq { for KeyValue(k, v) in server.methods -> string k }
         |> String.concat "\r\n"
 
-    member this.Server = server
-    member this.Service = server.service
-    member this.UrlPrefix = prefix
+    member __.Server = server
+    member __.Service = server.service
+    member __.UrlPrefix = prefix
 
     static member Create(svc: Service, ?prefix) =
         let prefix = defaultArg prefix "/gluon-api"
-        OwinOptions(prefix, OwinSupport.prepare svc prefix)
+        Options(prefix, OwinSupport.prepare svc prefix)
+
+[<Obsolete("Use Gluon.Options instead.")>]
+type OwinOptions = Options
 
 module Owin =
 
     type AppFunc = Func<IDictionary<string, obj>, Task>
     type MidFunc = Func<AppFunc, AppFunc>
 
-    let middleware (options: OwinOptions) =
-        MidFunc(fun next ->
+    let middleware (options: Options) =
+        MidFunc(fun _ ->
             AppFunc(fun env ->
                 let ctx = OwinContext(env)
                 OwinSupport.handleRequest options.Server ctx))
-
-[<AutoOpen>]
-module OwinExtensions =
-
-    type IAppBuilder with
-
-        member app.MapGluon(options: OwinOptions) =
-            app.Map(options.UrlPrefix, fun ctx -> ctx.Use(Owin.middleware options) |> ignore)
-
-        member app.MapGluon(?service: Service, ?prefix: string) =
-            let service = defaultArg service (Service.FromAssembly(Reflection.Assembly.GetCallingAssembly()))
-            let options = OwinOptions.Create(service, ?prefix = prefix)
-            app.MapGluon(options)
