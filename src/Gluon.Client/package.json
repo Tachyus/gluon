@@ -1,6 +1,6 @@
 {
   "name": "gluon-client",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "TypeScript to FSharp connector",
   "main": "./dist/Gluon.js",
   "typings": "./dist/Gluon.d.ts",

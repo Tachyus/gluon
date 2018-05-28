@@ -1,4 +1,4 @@
-### New in 4.1.0 - (TBD)
+### New in 5.0.0 - (TBD)
 * Convert to netstandard2.0 and work with FSharp.Core 4.3.4.
 * Removed IAppBuilder extensions in order to support netstandard2.0.
 
