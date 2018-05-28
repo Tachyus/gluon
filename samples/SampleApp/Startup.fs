@@ -205,7 +205,7 @@ module private Services =
 
 type Startup() =
     member __.Configuration(app: IAppBuilder) =
-        let service = Service.FromAssembly(Reflection.Assembly.GetCallingAssembly())
+        let service = Service.FromAssembly(Reflection.Assembly.GetExecutingAssembly())
         let options = Gluon.Options.Create(service)
         //let options = Options.Create(service, ?prefix = prefix) // Default prefix is /gluon-api
         app.Map(options.UrlPrefix, fun ctx -> ctx.Use(Owin.middleware options) |> ignore) |> ignore
