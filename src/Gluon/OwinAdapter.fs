@@ -106,7 +106,7 @@ module OwinSupport =
 
     let wrapMethodInvocation server (ctx: IOwinContext) (req: MethodKey) (m: Method) =
         async {
-            let context = Context(ctx)
+            let context = Context(ctx.Environment)
             let input =
                 match m.IOTypes.InputType with
                 | None -> null
@@ -182,9 +182,6 @@ type Options(prefix: string, server: OwinSupport.Server) =
 type OwinOptions = Options
 
 module Owin =
-
-    type AppFunc = Func<IDictionary<string, obj>, Task>
-    type MidFunc = Func<AppFunc, AppFunc>
 
     let middleware (options: Options) =
         MidFunc(fun _ ->

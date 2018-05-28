@@ -36,8 +36,9 @@ module private Services =
 
     [<Remote(Verb="GET")>]
     let addWithContext (ctx: Gluon.Context) (input: int) =
-        ctx.OwinContext.Response.StatusCode <- 403
-        ctx.OwinContext.Response.Headers.Add("X-STUFF", [| "STUFF" |])
+        let ctx = OwinContext ctx.Environment
+        ctx.Response.StatusCode <- 403
+        ctx.Response.Headers.Add("X-STUFF", [| "STUFF" |])
         input + 1
 
     [<Remote(Verb="GET")>]
@@ -200,7 +201,8 @@ module private Services =
     [<Remote(Verb="POST")>]
     let setDataGroup (context:Context) (dataGroup: DataGroup) = 
         let t = dataGroup.Effective
-        context.OwinContext.Response.StatusCode <- int Net.HttpStatusCode.Created
+        let ctx = OwinContext(context.Environment)
+        ctx.Response.StatusCode <- int Net.HttpStatusCode.Created
         t
 
 type Startup() =

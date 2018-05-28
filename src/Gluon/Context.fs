@@ -14,12 +14,19 @@
 
 namespace Gluon
 
-open Owin
-open Microsoft.Owin
+open System
+open System.Collections.Generic
+open System.Threading.Tasks
+
+/// Formalizes OWIN Application Function.
+type AppFunc = Func<IDictionary<string, obj>, Task>
+
+/// Formalizes OWIN Middleware Function.
+type MidFunc = Func<AppFunc, AppFunc>
 
 /// This gets passed into methods automatically.
 [<Sealed>]
-type Context(owin: IOwinContext) =
+type Context(environment: IDictionary<string, obj>) =
 
     /// The OWIN execution context.
-    member this.OwinContext = owin
+    member __.Environment = environment

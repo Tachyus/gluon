@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net462;net471</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net461;net462;net471</TargetFrameworks>
     <ProjectGuid>{a49bbfb6-98a6-42ca-a5b3-35c89a7c3800}</ProjectGuid>
     <OutputType>Library</OutputType>
     <Name>Gluon</Name>

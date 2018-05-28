@@ -1,6 +1,7 @@
 ### New in 5.0.0 - (TBD)
-* Convert to netstandard2.0 and work with FSharp.Core 4.3.4.
+* Changed Context.OwinContext to Context.Environment to correctly expose only OWIN abstractions.
 * Removed IAppBuilder extensions in order to support netstandard2.0.
+* Convert to netstandard2.0 and work with FSharp.Core 4.3.4.
 
 ### New in 4.0.6 - (Released 2018-02-09)
 * Fix DateTimeOffset serialization round trip.

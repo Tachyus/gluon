@@ -1,4 +1,6 @@
-Newtonsoft.Json
 FSharp.Core
-System.Text.Encodings.Web
 KatanaNetStandard
+Microsoft.Owin
+Newtonsoft.Json
+Owin
+System.Text.Encodings.Web

@@ -38,11 +38,5 @@ type OwinOptions = Options
 /// Owin-related types.
 module Owin =
 
-    /// Formalizes OWIN Application Function.
-    type AppFunc = Func<IDictionary<string, obj>, Task>
-
-    /// Formalizes OWIN Middleware Function.
-    type MidFunc = Func<AppFunc, AppFunc>
-
     /// Handles a web request by dispatching it to a service method.
     val middleware : options: Options -> MidFunc

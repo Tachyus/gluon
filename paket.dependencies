@@ -1,12 +1,13 @@
 source https://nuget.org/api/v2
 redirects on
-framework: auto-detect
+framework: >= netstandard2.0, >= net461
 
 nuget Argu
 nuget FSharp.Core
 nuget FSharp.Formatting
-nuget KatanaNetStandard
-nuget Microsoft.Owin
+nuget KatanaNetStandard framework: >= netstandard2.0
+nuget Owin framework: >= net45
+nuget Microsoft.Owin framework: >= net45
 nuget Microsoft.Owin.Diagnostics
 nuget Microsoft.Owin.FileSystems
 nuget Microsoft.Owin.Host.HttpListener
@@ -15,7 +16,6 @@ nuget Microsoft.Owin.Hosting
 nuget Microsoft.Owin.SelfHost
 nuget Microsoft.Owin.StaticFiles
 nuget Newtonsoft.Json
-nuget Owin
 nuget System.Text.Encodings.Web
 
 group Build
@@ -26,7 +26,7 @@ group Build
 group Test
     source https://nuget.org/api/v2
     redirects on
-    framework: auto-detect
+    framework: net461
 
     nuget AppVeyor.TestLogger
     nuget Microsoft.NET.Test.Sdk
