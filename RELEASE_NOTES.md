@@ -1,3 +1,6 @@
+### New in 5.0.1 - (Released 2018-05-28)
+* Match up release versions with npm.
+
 ### New in 5.0.0 - (Released 2018-05-28)
 * Changed Context.OwinContext to Context.Environment to correctly expose only OWIN abstractions.
 * Removed IAppBuilder extensions in order to support netstandard2.0.
