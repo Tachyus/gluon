@@ -1,7 +1,3 @@
-FSharp.Core
-Microsoft.Owin
-Newtonsoft.Json
-
 group Test
 AppVeyor.TestLogger
 Microsoft.NET.Test.Sdk

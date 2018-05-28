@@ -20,8 +20,6 @@ nuget System.Text.Encodings.Web
 
 group Build
     source https://nuget.org/api/v2
-    redirects on
-    framework: >= net461
 
     nuget Fake
 

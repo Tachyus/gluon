@@ -210,8 +210,6 @@ NUGET
       System.Runtime (>= 4.3) - restriction: || (&& (== net461) (< net45)) (&& (== net461) (< portable-net45+win8+wp8+wpa81)) (&& (== net462) (< net45)) (&& (== net462) (< portable-net45+win8+wp8+wpa81)) (&& (== net471) (< net45)) (&& (== net471) (< portable-net45+win8+wp8+wpa81)) (== netcoreapp2.0) (== netstandard2.0)
 
 GROUP Build
-REDIRECTS: ON
-RESTRICTION: >= net461
 NUGET
   remote: https://www.nuget.org/api/v2
     FAKE (4.64.13)
@@ -565,9 +563,9 @@ NUGET
       System.Runtime.InteropServices (>= 4.3) - restriction: || (&& (== net461) (< net45)) (&& (== net462) (< net45)) (&& (== net471) (< net45)) (== netcoreapp2.0) (== netstandard2.0)
       System.Threading (>= 4.3) - restriction: || (&& (== net461) (< net45)) (&& (== net461) (< netstandard1.1)) (&& (== net462) (< net45)) (&& (== net462) (< netstandard1.1)) (&& (== net471) (< net45)) (&& (== net471) (< netstandard1.1)) (== netcoreapp2.0) (== netstandard2.0)
     System.Runtime.Loader (4.3) - restriction: || (&& (== net461) (>= netcoreapp1.0)) (&& (== net462) (>= netcoreapp1.0)) (&& (== net471) (>= netcoreapp1.0)) (== netcoreapp2.0) (&& (== netstandard2.0) (>= netcoreapp1.0))
-      System.IO (>= 4.3) - restriction: || (&& (== net461) (>= netstandard1.5)) (&& (== net471) (< net462)) (== netcoreapp2.0) (== netstandard2.0)
-      System.Reflection (>= 4.3) - restriction: || (&& (== net461) (>= netstandard1.5)) (&& (== net471) (< net462)) (== netcoreapp2.0) (== netstandard2.0)
-      System.Runtime (>= 4.3) - restriction: || (&& (== net461) (>= netstandard1.5)) (&& (== net471) (< net462)) (== netcoreapp2.0) (== netstandard2.0)
+      System.IO (>= 4.3) - restriction: || (&& (== net461) (== net462)) (&& (== net461) (== net471)) (&& (== net461) (>= netstandard1.5)) (&& (== net471) (< net462)) (== netcoreapp2.0) (== netstandard2.0)
+      System.Reflection (>= 4.3) - restriction: || (&& (== net461) (== net462)) (&& (== net461) (== net471)) (&& (== net461) (>= netstandard1.5)) (&& (== net471) (< net462)) (== netcoreapp2.0) (== netstandard2.0)
+      System.Runtime (>= 4.3) - restriction: || (&& (== net461) (== net462)) (&& (== net461) (== net471)) (&& (== net461) (>= netstandard1.5)) (&& (== net471) (< net462)) (== netcoreapp2.0) (== netstandard2.0)
     System.Runtime.Serialization.Json (4.3) - restriction: || (&& (== net461) (>= netcoreapp1.0)) (&& (== net462) (>= netcoreapp1.0)) (&& (== net471) (>= netcoreapp1.0)) (== netcoreapp2.0) (&& (== netstandard2.0) (>= netcoreapp1.0))
       System.IO (>= 4.3) - restriction: || (&& (== net461) (< net45)) (&& (== net461) (< portable-net45+win8+wp8+wpa81)) (&& (== net462) (< net45)) (&& (== net462) (< portable-net45+win8+wp8+wpa81)) (&& (== net471) (< net45)) (&& (== net471) (< portable-net45+win8+wp8+wpa81)) (== netcoreapp2.0) (== netstandard2.0)
       System.Private.DataContractSerialization (>= 4.3) - restriction: || (&& (== net461) (< net45)) (&& (== net461) (< portable-net45+win8+wp8+wpa81)) (&& (== net462) (< net45)) (&& (== net462) (< portable-net45+win8+wp8+wpa81)) (&& (== net471) (< net45)) (&& (== net471) (< portable-net45+win8+wp8+wpa81)) (== netcoreapp2.0) (== netstandard2.0)
