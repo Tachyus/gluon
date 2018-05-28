@@ -13,7 +13,7 @@ NUGET
       FSharpVSPowerTools.Core (>= 2.3 < 2.4)
     FSharpVSPowerTools.Core (2.3)
       FSharp.Compiler.Service (>= 2.0.0.3)
-    KatanaNetStandard (3.0.7) - restriction: >= netstandard2.0
+    KatanaNetStandard (3.0.7) - restriction: && (< net47) (>= netstandard2.0)
       System.Collections.Concurrent (>= 4.3) - restriction: || (&& (< net45) (>= net461)) (&& (< net45) (>= netstandard2.0))
       System.Diagnostics.Debug (>= 4.3) - restriction: || (&& (< net45) (>= net461)) (&& (< net45) (>= netstandard2.0))
       System.Diagnostics.Tools (>= 4.3) - restriction: || (&& (< net45) (>= net461)) (&& (< net45) (>= netstandard2.0))
