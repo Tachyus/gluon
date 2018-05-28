@@ -49,7 +49,6 @@ NUGET
       Microsoft.Owin (>= 4.0)
       Microsoft.Owin.FileSystems (>= 4.0)
       Owin (>= 1.0)
-    Microsoft.TypeScript.MSBuild (2.8.3)
     NETStandard.Library (2.0.1) - restriction: || (== net461) (== net462) (&& (== net471) (< netstandard2.0)) (&& (== netcoreapp2.0) (< netstandard2.0))
       Microsoft.NETCore.Platforms (>= 1.1)
     Newtonsoft.Json (11.0.2)

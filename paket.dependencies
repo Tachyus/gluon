@@ -14,7 +14,6 @@ nuget Microsoft.Owin.Host.SystemWeb
 nuget Microsoft.Owin.Hosting
 nuget Microsoft.Owin.SelfHost
 nuget Microsoft.Owin.StaticFiles
-nuget Microsoft.TypeScript.MSBuild
 nuget Newtonsoft.Json
 nuget Owin
 nuget System.Text.Encodings.Web
