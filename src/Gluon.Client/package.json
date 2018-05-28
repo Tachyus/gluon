@@ -35,6 +35,7 @@
   "devDependencies": {
     "cpx": "^1.5.0",
     "rimraf": "2.5.1",
+    "snyk": "^1.82.0",
     "typescript": "^2.5.2",
     "uglify-js": "2.6.1"
   }
