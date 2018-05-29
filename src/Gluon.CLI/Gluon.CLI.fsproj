@@ -16,7 +16,6 @@
     <Compile Include="CommandLine.fs" />
     <Compile Include="Main.fs" />
     <None Include="paket.references" />
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gluon\Gluon.fsproj" />
