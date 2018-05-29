@@ -15,4 +15,5 @@ files
     dist/Gluon.js.map ==> content\Scripts
     dist/Gluon.min.js ==> content\Scripts
     dist/Gluon.min.js.map ==> content\Scripts
-    bin/netcoreapp2.0/*.* ==> tools\gluon-cli
+    bin/netcoreapp2.0/*.* ==> tools
+    bin/net461/*.* ==> tools

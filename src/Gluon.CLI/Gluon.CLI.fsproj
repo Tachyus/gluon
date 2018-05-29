@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
     <ProjectGuid>{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <Name>Gluon.CLI</Name>
