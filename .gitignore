@@ -24,3 +24,4 @@ node_modules/
 .yarnclean
 /paket.exe
 TestResults/
+.vscode/
