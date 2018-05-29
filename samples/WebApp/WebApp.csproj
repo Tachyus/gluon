@@ -87,6 +87,12 @@
   <ItemGroup>
     <Content Include="Scripts\Generated.ts" Condition="Exists('Scripts\Generated.ts')" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SampleApp\SampleApp.fsproj">
+      <Project>{f0c775be-25a2-48f0-ba2f-03a36aad4dbd}</Project>
+      <Name>SampleApp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
