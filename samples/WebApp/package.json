@@ -8,7 +8,7 @@
         "clean": "yarn run clean-webapp",
         "dotnet-build": "dotnet build ../SampleApp",
         "postdotnet-build": "cpx ../SampleApp/bin/Debug/net461/*.* ./bin",
-        "generate-client": "dotnet ../../src/Gluon.Client/bin/netcoreapp2.0/Gluon.CLI.dll --out Scripts/Generated.ts --reflect ./bin/SampleApp.dll --reference ./bin/SampleLib.dll",
+        "generate-client": "../../src/Gluon.Client/bin/net461/Gluon.CLI.exe --out Scripts/Generated.ts --reflect ./bin/SampleApp.dll --reference ./bin/SampleLib.dll",
         "postinstall": "yarn run dotnet-build && yarn run generate-client",
         "compile": "node_modules/.bin/tsc -p ./",
         "build": "webpack --config webpack.config.js -d",
