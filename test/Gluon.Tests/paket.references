@@ -1,4 +1,5 @@
 group Test
+FSharp.Core
 AppVeyor.TestLogger
 Microsoft.NET.Test.Sdk
 FsCheck

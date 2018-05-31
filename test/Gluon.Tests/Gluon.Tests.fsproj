@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <ProjectGuid>{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <Name>Gluon.Tests</Name>
@@ -12,8 +12,8 @@
   <ItemGroup>
     <Compile Include="JsonProtocolTests.fs" />
     <Compile Include="CodeGenTests.fs" />
+    <Compile Include="Program.fs" />
     <None Include="paket.references" />
-    <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Gluon\Gluon.fsproj" />

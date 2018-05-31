@@ -1,8 +1,9 @@
+lowest_matching: true
 source https://nuget.org/api/v2
 framework: >= netstandard2.0, >= net461
 
 nuget Argu
-nuget FSharp.Core
+nuget FSharp.Core >= 4.3.4 lowest_matching:true
 nuget FSharp.Formatting
 nuget KatanaNetStandard framework: >= netstandard2.0 < net47
 nuget Owin framework: >= net45
@@ -24,8 +25,8 @@ group Build
 
 group Test
     source https://nuget.org/api/v2
-    framework: net461
 
+    nuget FSharp.Core >= 4.3.4 lowest_matching: true
     nuget AppVeyor.TestLogger
     nuget Microsoft.NET.Test.Sdk
     nuget FsCheck
