@@ -1,4 +1,5 @@
-### New in 5.0.3 - (TBD)
+### New in 5.0.3 - (Released 2018-05-31)
+* Fix dependecnies to use FSharp.Core 4.3.4.
 
 ### New in 5.0.2 - (Released 2018-05-28)
 * Include netcoreapp and net461 Gluon.CLI in Gluon.Client package.
