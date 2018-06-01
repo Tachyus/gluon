@@ -6,7 +6,7 @@ for the C# or TypeScript web application.
 
 ## F# Project
 
-In the F# project, reference `Gluon` NuGet package. Also reference
+In the F# project, reference the `Gluon` and `Gluon.Client` NuGet packages. Also reference
 `Owin` and `Microsoft.Owin`. Mark some methods as remote:
 
 ```fsharp
@@ -26,8 +26,15 @@ open Microsoft.Owin
 open Gluon
 
 type Startup() =
+    let gluonOptions =
+        Reflection.Assembly.GetExecutingAssembly()
+        |> Gluon.Service.FromAssembly
+        |> Gluon.Options.Create
+
     member x.Configuration(app: IAppBuilder) =
-        app.MapGluon() |> ignore
+        app.Map(gluonOptions.UrlPrefix,
+                fun b -> b.Use(Gluon.Owin.middleware gluonOptions) |> ignore)
+           |> ignore
 
 [<assembly: OwinStartup(typeof<Startup>)>]
 do ()
@@ -37,7 +44,7 @@ Lastly, you need to make sure Gluon added a target to your `fsproj` file to get 
 
 ```xml
 <PropertyGroup>
-  <GluonToolPath>..\packages\Gluon\tools\Gluon.CLI.exe</GluonToolPath>
+  <GluonToolPath>..\packages\Gluon.Client\tools\net461\Gluon.CLI.exe</GluonToolPath>
 </PropertyGroup>
 <Target Name="GluonCompiler" AfterTargets="Build">
   <Exec Command="&quot;$(GluonToolPath)&quot; --out &quot;..\WebProject\Scripts\$(Name).ts&quot; --reflect &quot;$(TargetPath)&quot;" ContinueOnError="false" WorkingDirectory="$(MSBuildThisFileDirectory)" />
@@ -71,7 +78,7 @@ import * as $ from "jquery";
 import * as Gluon from "gluon-client";
 import { MyApp } from "./Generated";
 
-jQuery(() => {
+$(() => {
     console.log('start');
     var cli = new Gluon.Client();
 
