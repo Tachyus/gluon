@@ -82,8 +82,14 @@ Target "BuildVersion" <| fun _ ->
 
 Target "Clean" <| fun _ ->
     CleanDirs ["bin"; "temp"]
-    if (Directory.Exists "src/Gluon.Client/node_modules") then
-        DeleteDir "src/Gluon.Client/node_modules"
+    !!"src/Gluon/bin"
+    ++"src/Gluon/obj"
+    ++"src/Gluon.CLI/bin"
+    ++"src/Gluon.CLI/obj"
+    ++"src/Gluon.Cient/bin"
+    ++"src/Gluon.Cient/obj"
+    ++"src/Gluon.Client/node_modules"
+    |> Seq.iter (fun dir -> if Directory.Exists dir then DeleteDir dir)
 
 Target "CleanDocs" <| fun _ ->
     CleanDirs ["docs/output"]

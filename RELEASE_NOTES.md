@@ -1,3 +1,5 @@
+### New in 5.0.4 - (TBD)
+
 ### New in 5.0.3 - (Released 2018-05-31)
 * Fix dependecnies to use FSharp.Core 4.3.4.
 
