@@ -38,7 +38,7 @@
 typically use two projects, one for the F# APIs and web setup, and one
 for the C# or TypeScript web application.</p>
 <h2><a name="F-Project" class="anchor" href="#F-Project">F# Project</a></h2>
-<p>In the F# project, reference <code>Gluon</code> NuGet package. Also reference
+<p>In the F# project, reference the <code>Gluon</code> and <code>Gluon.Client</code> NuGet packages. Also reference
 <code>Owin</code> and <code>Microsoft.Owin</code>. Mark some methods as remote:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -65,6 +65,13 @@ for the C# or TypeScript web application.</p>
 <span class="l">10: </span>
 <span class="l">11: </span>
 <span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">namespace</span> <span class="i">MyApp</span>
 
@@ -73,8 +80,15 @@ for the C# or TypeScript web application.</p>
 <span class="k">open</span> <span class="i">Gluon</span>
 
 <span class="k">type</span> <span class="i">Startup</span>() <span class="o">=</span>
+    <span class="k">let</span> <span class="i">gluonOptions</span> <span class="o">=</span>
+        <span class="i">Reflection</span><span class="o">.</span><span class="i">Assembly</span><span class="o">.</span><span class="i">GetExecutingAssembly</span>()
+        <span class="o">|&gt;</span> <span class="i">Gluon</span><span class="o">.</span><span class="i">Service</span><span class="o">.</span><span class="i">FromAssembly</span>
+        <span class="o">|&gt;</span> <span class="i">Gluon</span><span class="o">.</span><span class="i">Options</span><span class="o">.</span><span class="i">Create</span>
+
     <span class="k">member</span> <span class="i">x</span><span class="o">.</span><span class="i">Configuration</span>(<span class="i">app</span><span class="o">:</span> <span class="i">IAppBuilder</span>) <span class="o">=</span>
-        <span class="i">app</span><span class="o">.</span><span class="i">MapGluon</span>() <span class="o">|&gt;</span> <span class="i">ignore</span>
+        <span class="i">app</span><span class="o">.</span><span class="i">Map</span>(<span class="i">gluonOptions</span><span class="o">.</span><span class="i">UrlPrefix</span>,
+                <span class="k">fun</span> <span class="i">b</span> <span class="k">-&gt;</span> <span class="i">b</span><span class="o">.</span><span class="i">Use</span>(<span class="i">Gluon</span><span class="o">.</span><span class="i">Owin</span><span class="o">.</span><span class="i">middleware</span> <span class="i">gluonOptions</span>) <span class="o">|&gt;</span> <span class="i">ignore</span>)
+           <span class="o">|&gt;</span> <span class="i">ignore</span>
 
 [&lt;<span class="i">assembly</span><span class="o">:</span> <span class="i">OwinStartup</span>(<span class="i">typeof</span><span class="o">&lt;</span><span class="i">Startup</span><span class="o">&gt;</span>)&gt;]
 <span class="k">do</span> ()
@@ -90,7 +104,7 @@ for the C# or TypeScript web application.</p>
 <span class="l">6: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="xml"><span class="k">&lt;</span><span class="i">PropertyGroup</span><span class="k">&gt;</span>
-  <span class="k">&lt;</span><span class="i">GluonToolPath</span><span class="k">&gt;</span>..\packages\Gluon\tools\Gluon.CLI.exe<span class="k">&lt;/</span><span class="i">GluonToolPath</span><span class="k">&gt;</span>
+  <span class="k">&lt;</span><span class="i">GluonToolPath</span><span class="k">&gt;</span>..\packages\Gluon.Client\tools\net461\Gluon.CLI.exe<span class="k">&lt;/</span><span class="i">GluonToolPath</span><span class="k">&gt;</span>
 <span class="k">&lt;/</span><span class="i">PropertyGroup</span><span class="k">&gt;</span>
 <span class="k">&lt;</span><span class="i">Target</span> <span class="o">Name</span><span class="k">="GluonCompiler"</span> <span class="o">AfterTargets</span><span class="k">="Build"</span><span class="k">&gt;</span>
   <span class="k">&lt;</span><span class="i">Exec</span> <span class="o">Command</span><span class="k">="&amp;quot;$(GluonToolPath)&amp;quot; --out &amp;quot;..\WebProject\Scripts\$(Name).ts&amp;quot; --reflect &amp;quot;$(TargetPath)&amp;quot;"</span> <span class="o">ContinueOnError</span><span class="k">="false"</span> <span class="o">WorkingDirectory</span><span class="k">="$(MSBuildThisFileDirectory)"</span> <span class="k">/&gt;</span>
@@ -142,7 +156,7 @@ already.  This typically takes this form in <code>.csproj</code>:</p>
 <span class="k">import</span> <span class="o">*</span> <span class="k">as</span> Gluon <span class="k">from</span> <span class="s">"gluon-client"</span>;
 <span class="k">import</span> { MyApp } <span class="k">from</span> <span class="s">"./Generated"</span>;
 
-jQuery(() <span class="o">=</span><span class="o">&gt;</span> {
+$(() <span class="o">=</span><span class="o">&gt;</span> {
     console.log(<span class="s">'start'</span>);
     <span class="k">var</span> cli <span class="o">=</span> <span class="k">new</span> Gluon.Client();
 
