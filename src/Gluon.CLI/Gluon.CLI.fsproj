@@ -8,7 +8,7 @@
     <AssemblyName>Gluon.CLI</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <IsTool>true</IsTool>
+    <PackAsTool>true</PackAsTool>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyResolvers.fsi" />
