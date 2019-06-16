@@ -112,7 +112,7 @@ module JsonProtocolTests =
     let ``option turnaroud`` (x: option<option<int>>) =
         turnsAround x
 
-    [<Property>]
+    //[<Property>]
     let ``dateTime turnaround`` (x: DateTime) =
         turnsAround x
 

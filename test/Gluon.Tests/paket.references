@@ -7,3 +7,4 @@ FsCheck.Xunit
 xunit
 xunit.runner.visualstudio
 XunitXml.TestLogger
+Microsoft.FSharpLu.Json
