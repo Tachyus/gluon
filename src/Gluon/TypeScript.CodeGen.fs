@@ -32,7 +32,7 @@ let makeType t =
 let makeOptionType t =
     S.TypeReference ("Gluon.Option", [t])
 
-let rec typeLiteralNs ns sch =
+let rec typeLiteralNs (ns:string list) sch =
     let ( ! ) t = typeLiteralNs ns t
     match sch with
     | Schema.ArrayType t | Schema.ListType t | Schema.SequenceType t -> S.ArrayType !t
