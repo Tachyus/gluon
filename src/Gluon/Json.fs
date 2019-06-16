@@ -34,6 +34,6 @@ type Json internal (rawJson: JToken) =
 
     /// Lifts a raw Json string to Json.
     static member FromJsonString(rawJson: string) =
-        if rawJson = null then
+        if isNull rawJson then
             nullArg "rawJson"
         Json(JToken.Parse(rawJson))

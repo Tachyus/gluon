@@ -81,7 +81,7 @@ Target "BuildVersion" <| fun _ ->
 // Clean build results & restore NuGet packages
 
 Target "Clean" <| fun _ ->
-    CleanDirs ["bin"; "temp"]
+    CleanDirs ["bin"]
     !!"src/Gluon/bin"
     ++"src/Gluon/obj"
     ++"src/Gluon.CLI/bin"
@@ -90,9 +90,6 @@ Target "Clean" <| fun _ ->
     ++"src/Gluon.Cient/obj"
     ++"src/Gluon.Client/node_modules"
     |> Seq.iter (fun dir -> if Directory.Exists dir then DeleteDir dir)
-
-Target "CleanDocs" <| fun _ ->
-    CleanDirs ["docs/output"]
 
 // --------------------------------------------------------------------------------------
 // Build library & test project
@@ -157,62 +154,7 @@ Target "PublishNuGet" <| fun _ ->
         { p with WorkingDir = "bin" }
 
 // --------------------------------------------------------------------------------------
-// Generate the documentation
-
-// --------------------------------------------------------------------------------------
-// Generate the documentation
-
-Target "GenerateReferenceDocs" <| fun _ ->
-    if not <| executeFSIWithArgs "docs/tools" "generate.fsx" ["--define:RELEASE"; "--define:REFERENCE"] [] then
-      failwith "generating reference documentation failed"
-
-let generateHelp' fail debug =
-    let args =
-        if debug then ["--define:HELP"]
-        else ["--define:RELEASE"; "--define:HELP"]
-    if executeFSIWithArgs "docs/tools" "generate.fsx" args [] then
-        traceImportant "Help generated"
-    else
-        if fail then
-            failwith "generating help documentation failed"
-        else
-            traceImportant "generating help documentation failed"
-
-let generateHelp fail =
-    generateHelp' fail false
-
-Target "GenerateHelp" <| fun _ ->
-    DeleteFile "docs/content/release-notes.md"
-    CopyFile "docs/content/" "RELEASE_NOTES.md"
-    Rename "docs/content/release-notes.md" "docs/content/RELEASE_NOTES.md"
-    generateHelp true
-
-Target "GenerateHelpDebug" <| fun _ ->
-    DeleteFile "docs/content/release-notes.md"
-    CopyFile "docs/content/" "RELEASE_NOTES.md"
-    Rename "docs/content/release-notes.md" "docs/content/RELEASE_NOTES.md"
-    generateHelp' true true
-
-Target "KeepRunning" <| fun _ ->
-    use watcher = !! "docs/content/**/*.*" |> WatchChanges (fun changes ->
-        generateHelp false)
-    traceImportant "Waiting for help edits. Press any key to stop."
-    System.Console.ReadKey() |> ignore
-    watcher.Dispose()
-
-Target "GenerateDocs" DoNothing
-
-// --------------------------------------------------------------------------------------
 // Release Scripts
-
-Target "ReleaseDocs" <| fun _ ->
-    let tempDocsDir = "temp/gh-pages"
-    CleanDir tempDocsDir
-    Repository.cloneSingleBranch "" (gitHome + "/" + gitName + ".git") "gh-pages" tempDocsDir
-    CopyRecursive "docs/output" tempDocsDir true |> tracefn "%A"
-    StageAll tempDocsDir
-    Commit tempDocsDir (sprintf "Update generated documentation for version %s" release.NugetVersion)
-    Branches.push tempDocsDir
 
 Target "Release" <| fun _ ->
     StageAll ""
@@ -241,14 +183,6 @@ Target "All" DoNothing
   ==> "PackGluon"
   ==> "PackGluonClient"
   ==> "BuildPackage"
-
-"CleanDocs"
-  ==> "GenerateHelp"
-  ==> "GenerateReferenceDocs"
-  ==> "GenerateDocs"
-    
-"ReleaseDocs"
-  ==> "Release"
 
 "BuildPackage"
   ==> "PublishNuGet"
