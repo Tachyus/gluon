@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.2;net461</TargetFrameworks>
-    <ProjectGuid>{72FDBA6E-CE61-4811-9F18-39FAA585B5EA}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <Name>Gluon.CLI</Name>
-    <RootNamespace>Gluon.CLI</RootNamespace>
-    <AssemblyName>Gluon.CLI</AssemblyName>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>gluon-cli</ToolCommandName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyResolvers.fsi" />

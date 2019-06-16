@@ -6,12 +6,10 @@
 #r "FakeLib.dll"
 
 open System
-open System.Diagnostics
 open System.IO
 open Fake
 open Fake.Git
 open Fake.ReleaseNotesHelper
-open Fake.YarnHelper
 
 // --------------------------------------------------------------------------------------
 // Provide project-specific details below
@@ -57,23 +55,6 @@ let nugetVersion =
             sprintf "%s-b%03i" release.NugetVersion (int buildVersion)
     else release.NugetVersion
 
-let private yarnFileName =
-    let which = if isWindows then "where.exe" else "which"
-    let yarn = if isWindows then "yarn.cmd" else "yarn"
-    let defaultPath = if isWindows then "C:\\Program Files (x86)\\Yarn\\bin\\yarn.cmd" else "/usr/bin/yarn"
-    let info =
-        new ProcessStartInfo(which, yarn,
-            StandardOutputEncoding = System.Text.Encoding.UTF8,
-            RedirectStandardOutput = true,
-            UseShellExecute        = false,
-            CreateNoWindow         = true)
-    use proc = Process.Start info
-    proc.WaitForExit()
-    match proc.ExitCode with
-        | 0 when not proc.StandardOutput.EndOfStream ->
-          proc.StandardOutput.ReadLine()
-        | _ -> defaultPath
-
 Target "BuildVersion" <| fun _ ->
     Shell.Exec("appveyor", sprintf "UpdateBuild -Version \"%s\"" nugetVersion) |> ignore
 
@@ -86,29 +67,19 @@ Target "Clean" <| fun _ ->
     ++"src/Gluon/obj"
     ++"src/Gluon.CLI/bin"
     ++"src/Gluon.CLI/obj"
-    ++"src/Gluon.Cient/bin"
-    ++"src/Gluon.Cient/obj"
-    ++"src/Gluon.Client/node_modules"
     |> Seq.iter (fun dir -> if Directory.Exists dir then DeleteDir dir)
 
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
 Target "Build" <| fun _ ->
-    DotNetCli.Build (fun p ->
-        { p  with
-            Project = "src\Gluon"
-            Configuration = "Release" })
-    Yarn (fun p ->
-        { p with
-            Command = Install Standard
-            YarnFilePath = yarnFileName
-            WorkingDirectory = "./src/Gluon.Client" })
-    Yarn (fun p ->
-        { p with
-            Command = (Custom "build")
-            YarnFilePath = yarnFileName
-            WorkingDirectory = "./src/Gluon.Client" })
+    !! "src\Gluon"
+    ++ "src\Gluon.CLI"
+    |> Seq.iter (fun project ->
+        DotNetCli.Build (fun p ->
+            { p  with
+                Project = project
+                Configuration = "Release" }))
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
@@ -130,24 +101,20 @@ Target "RunTests" <| fun _ ->
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
-Target "PackGluon" <| fun _ ->
-    DotNetCli.Pack <| fun x ->
-        { x with
-            Project = "src\Gluon"
-            OutputPath = buildDir
-            AdditionalArgs =
-              [ "--no-build"
-                sprintf "/p:Version=%s" nugetVersion
-                //"/p:ReleaseNotes=" + (toLines release.Notes)
-              ]
-        }
-
-Target "PackGluonClient" <| fun _ ->
-    Paket.Pack <| fun x ->
-        { x with
-            OutputPath = "bin"
-            Version = nugetVersion
-            ReleaseNotes = String.concat Environment.NewLine release.Notes }
+Target "BuildPackage" <| fun _ ->
+    !! "src\Gluon"
+    ++ "src\Gluon.CLI"
+    |> Seq.iter (fun project ->
+        DotNetCli.Pack <| fun x ->
+          { x with
+              Project = project
+              OutputPath = buildDir
+              AdditionalArgs =
+                [ "--no-build"
+                  sprintf "/p:Version=%s" nugetVersion
+                  //"/p:ReleaseNotes=" + (toLines release.Notes)
+                ]
+          })
 
 Target "PublishNuGet" <| fun _ ->
     Paket.Push <| fun p ->
@@ -163,8 +130,6 @@ Target "Release" <| fun _ ->
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
 
-Target "BuildPackage" DoNothing
-
 // --------------------------------------------------------------------------------------
 // Run all targets by default. Invoke 'build <Target>' to override
 
@@ -175,16 +140,7 @@ Target "All" DoNothing
   ==> "Build"
   ==> "RunTests"
   ==> "All"
-  =?> ("GenerateReferenceDocs",isLocalBuild && not isMono)
-  =?> ("GenerateDocs",isLocalBuild && not isMono)
-  =?> ("ReleaseDocs",isLocalBuild && not isMono)
-
-"All" 
-  ==> "PackGluon"
-  ==> "PackGluonClient"
   ==> "BuildPackage"
-
-"BuildPackage"
   ==> "PublishNuGet"
   ==> "Release"
 

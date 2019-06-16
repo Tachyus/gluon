@@ -1,18 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
-    <ProjectGuid>{AFA282BA-4E4F-4FD1-8FAA-C8AA333FA28F}</ProjectGuid>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <Name>Gluon.Tests</Name>
-    <RootNamespace>Gluon.Tests</RootNamespace>
-    <AssemblyName>Gluon.Tests</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="JsonProtocolTests.fs" />
     <Compile Include="CodeGenTests.fs" />
-    <Compile Include="Program.fs" />
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>

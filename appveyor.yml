@@ -12,8 +12,7 @@ test: off
 artifacts:
   - path: 'bin\Gluon.*.nupkg'
     name: Gluon
-  - path: 'bin\Gluon.Client.*.nupkg'
-    name: Gluon.Client
+  - path: 'bin\Gluon.CLI.*.nupkg'
+    name: Gluon.CLI
 cache:
   - packages -> paket.lock # preserve packages directory unless a paket-related file changes
-  - "%LOCALAPPDATA%\\Yarn"

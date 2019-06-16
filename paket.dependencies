@@ -1,5 +1,6 @@
 source https://nuget.org/api/v2
 framework: >= netstandard2.0, >= net461
+storage: none
 
 nuget Argu
 nuget FSharp.Core >= 4.3.4 lowest_matching:true
@@ -25,6 +26,8 @@ group Build
 
 group Test
     source https://nuget.org/api/v2
+    storage: none
+    framework: auto-detect
 
     nuget FSharp.Core
     nuget AppVeyor.TestLogger
