@@ -14,22 +14,5 @@
 
 namespace Gluon
 
-open Newtonsoft.Json
-open Newtonsoft.Json.Linq
-
 /// Represents arbitrary raw pass-through JSON.
-[<Sealed>]
-type Json private (rawJson:JToken) =
-
-    /// Same as ToJsonString.
-    override this.ToString() =
-        rawJson.ToString(Formatting.None)
-
-    /// The JToken representation.
-    member this.AsJToken = rawJson
-
-    /// Lifts a raw Json string to Json.
-    static member Parse(rawJson:string) =
-        if isNull rawJson then
-            nullArg "rawJson"
-        Json(JToken.Parse(rawJson))
+type Json = Newtonsoft.Json.Linq.JToken

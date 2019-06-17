@@ -3,7 +3,7 @@ framework: >= netstandard2.0, >= net461
 storage: none
 
 nuget Argu
-nuget FSharp.Core >= 4.3.4 lowest_matching:true
+nuget FSharp.Core >= 4.5.4 lowest_matching:true
 nuget KatanaNetStandard framework: >= netstandard2.0 < net47
 nuget Microsoft.FSharpLu.Json
 nuget Microsoft.OpenApi

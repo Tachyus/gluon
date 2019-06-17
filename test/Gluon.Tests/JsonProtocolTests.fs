@@ -24,13 +24,13 @@ open Gluon
 [<Trait("Kind", "UnitTest")>]
 module JsonProtocolTests =
 
-    let inline fromString< ^T> (s: string) =
-        JsonSerializer.deserialize< ^T> s
+    let fromString<'T> (s: string) =
+        JsonSerializer.deserializeType typeof<'T> s :?> 'T
 
     let toString<'T> (value: 'T) : string =
         JsonSerializer.serialize value
 
-    let inline turnsAround< ^T when ^T : equality> (value: 'T) =
+    let turnsAround<'T when 'T : equality> (value: 'T) =
         fromString (toString value) = value
 
     [<Property>]
@@ -125,7 +125,7 @@ module JsonProtocolTests =
 
     [<Property>]
     let ``string dict turnaround`` (t: list<string * int>) =
-        if t |> List.exists (fun (k, _) -> k = null) then
+        if t |> List.exists (fun (k, _) -> isNull k) then
             true
         else
             let d1 = dict t

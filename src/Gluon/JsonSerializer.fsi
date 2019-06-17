@@ -19,59 +19,15 @@ namespace Gluon
 
 module JsonSerializer =
 
-    open System.Runtime.CompilerServices
-
-    /// A contract resolver that requires presence of all properties
-    /// that are not of type option<_>
-    [<Sealed>]
-    type RequireNonOptionalPropertiesContractResolver =
-        inherit Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver
-        new : unit -> RequireNonOptionalPropertiesContractResolver
-
-    /// Compact serialization where tuples are serialized as JSON objects
-    [<Sealed>]
-    type CompactStrictSettings =
-        static member formatting : Newtonsoft.Json.Formatting
-        static member settings : Newtonsoft.Json.JsonSerializerSettings
-
-    type private S = Microsoft.FSharpLu.Json.With<CompactStrictSettings>
-
     /// Serialize an object to Json with the specified converter
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline serialize< ^T> : x:obj -> string
-    /// Serialize an object to Json with the specified converter and save the result to a file
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline serializeToFile< ^T> : file:string -> obj:obj -> unit
+    val serialize<'T> : x:'T -> string
     /// Serialize an object to Json with the specified converter and save the result to a stream
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline serializeToStream< ^T> : stream:System.IO.Stream -> obj: ^T -> unit
-    /// Try to deserialize json to an object of type ^T
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline tryDeserialize< ^T> : json:string -> Choice< ^T, string>
-    /// Try to read Json from a file and desrialized it to an object of type ^T
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline tryDeserializeFile< ^T> : file:string -> Choice< ^T, string>
-    /// Try to deserialize a stream to an object of type ^T
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline tryDeserializeStream< ^T> : stream:System.IO.Stream -> Choice< ^T, string>
-    /// Deserialize a Json to an object of type ^T
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline deserialize< ^T> : json:string ->  ^T
-    /// Read Json from a file and desrialized it to an object of type ^T
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline deserializeFile< ^T> : file:string -> ^T
-    /// Deserialize a stream to an object of type ^T
-    [<MethodImplAttribute(MethodImplOptions.NoInlining)>]
-    val inline deserializeStream< ^T> : stream:System.IO.Stream -> ^T
+    val serializeToStream<'T> : stream:System.IO.Stream -> obj:'T -> unit
     /// Serialize an object to Json with the specified converter
-    val inline serializeType : typ:System.Type -> x:obj -> string
-    /// Serialize an object to Json with the specified converter and save the result to a file
-    val inline serializeTypeToFile : typ:System.Type -> file:string -> obj:obj -> unit
+    val serializeType : typ:System.Type -> x:obj -> string
     /// Serialize an object to Json with the specified converter and save the result to a stream
-    val inline serializeTypeToStream : typ:System.Type -> stream:System.IO.Stream -> obj:obj -> unit
+    val serializeTypeToStream : typ:System.Type -> stream:System.IO.Stream -> obj:obj -> unit
     /// Deserialize a Json to an object of type typ
-    val inline deserializeType : typ:System.Type -> json:string -> obj
-    /// Read Json from a file and desrialized it to an object of type typ
-    val inline deserializeTypeFromFile : typ:System.Type -> file:string -> obj
+    val deserializeType : typ:System.Type -> json:string -> obj
     /// Deserialize a stream to an object of type typ
-    val inline deserializeTypeFromStream : typ:System.Type -> stream:System.IO.Stream -> obj
+    val deserializeTypeFromStream : typ:System.Type -> stream:System.IO.Stream -> obj
