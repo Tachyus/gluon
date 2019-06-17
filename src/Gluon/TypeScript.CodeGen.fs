@@ -89,8 +89,7 @@ let generateMethodStub namespaces (m: Schema.Method) =
     | Some _ -> inNamespace m.MethodName main
 
 let literalJson (value: 'T) =
-    let ser = JsonSerializer.Create([typeof<'T>])
-    S.LiteralJson (ser.ToJsonString(value))
+    S.LiteralJson (JsonSerializer.serialize value)
 
 let registerTypeDefinitions (typeDefs: seq<Schema.TypeDefinition>) =
     let typeDefs = Seq.toArray typeDefs

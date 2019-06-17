@@ -34,7 +34,6 @@ module OwinSupport =
 
     type Server =
         {
-            json : JsonSerializer
             methods : IDictionary<MethodKey,Method>
             prefix : string
             schemaJson : string
@@ -66,12 +65,10 @@ module OwinSupport =
             else failwithf "No method found with the key [%O]" req
 
     let computeSchemaJson (svc: Service) =
-        let ser = JsonSerializer.Create([typeof<Schema.Service>])
-        ser.ToJsonString<Schema.Service>(svc.Schema)
+        Microsoft.FSharpLu.Json.Compact.serialize(svc.Schema)
 
     let prepare (svc: Service) (prefix: string) =
         {
-            json = JsonSerializer.Create(svc.IOTypes)
             methods =
                 seq {
                     for m in svc.Methods ->
@@ -91,8 +88,7 @@ module OwinSupport =
         |> Option.toObj
 
     let readJsonString server (m: Method) json =
-        use reader = new StringReader(json)
-        server.json.ReadJson(m.IOTypes.InputType.Value, reader)
+        JsonSerializer.deserializeType m.IOTypes.InputType.Value json
 
     let parseGetInput server ctx (m: Method) =
         match m.Schema.MethodParameters with
@@ -113,12 +109,9 @@ module OwinSupport =
                 | Some t ->
                     match req.httpMethod with
                     | Schema.HttpMethod.Get -> parseGetInput server ctx m
-                    | _ ->
-                        use reader = new StreamReader(ctx.Request.Body)
-                        server.json.ReadJson(t, reader)
+                    | _ -> JsonSerializer.deserializeTypeFromStream t ctx.Request.Body
             let! output = m.Invoke(context, input)
             return
-                use writer = new StreamWriter(ctx.Response.Body) in
                 match m.IOTypes.OutputType with
                 | None ->
                     // if the status code is unchanged, set it to 204 No Content;
@@ -128,7 +121,7 @@ module OwinSupport =
                     else ()
                 | Some t ->
                     ctx.Response.ContentType <- "application/json"
-                    server.json.WriteJson(t, writer, output)
+                    JsonSerializer.serializeTypeToStream t ctx.Response.Body output
         }
 
     let serveSchema server (ctx: IOwinContext) =
