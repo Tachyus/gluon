@@ -16,7 +16,6 @@ namespace Gluon
 
 open System
 open System.Collections.Generic
-open System.IO
 open System.Net
 open System.Threading.Tasks
 open Microsoft.Owin
@@ -87,20 +86,20 @@ module OwinSupport =
         |> Option.map (fun (KeyValue(_, value)) -> value.[0])
         |> Option.toObj
 
-    let readJsonString server (m: Method) json =
+    let readJsonString (m: Method) json =
         JsonSerializer.deserializeType m.IOTypes.InputType.Value json
 
-    let parseGetInput server ctx (m: Method) =
+    let parseGetInput ctx (m: Method) =
         match m.Schema.MethodParameters with
         | [] -> null
-        | [p] -> getParamJson ctx p |> readJsonString server m
+        | [p] -> getParamJson ctx p |> readJsonString m
         | _ ->
             [for p in m.Schema.MethodParameters -> getParamJson ctx p]
             |> String.concat ","
             |> sprintf "[%s]"
-            |> readJsonString server m
+            |> readJsonString m
 
-    let wrapMethodInvocation server (ctx: IOwinContext) (req: MethodKey) (m: Method) =
+    let wrapMethodInvocation (ctx: IOwinContext) (req: MethodKey) (m: Method) =
         async {
             let context = Context(ctx.Environment)
             let input =
@@ -108,7 +107,7 @@ module OwinSupport =
                 | None -> null
                 | Some t ->
                     match req.httpMethod with
-                    | Schema.HttpMethod.Get -> parseGetInput server ctx m
+                    | Schema.HttpMethod.Get -> parseGetInput ctx m
                     | _ -> JsonSerializer.deserializeTypeFromStream t ctx.Request.Body
             let! output = m.Invoke(context, input)
             return
@@ -148,7 +147,7 @@ module OwinSupport =
             | _ ->
                 let req = getMethodKeyFromRequest server ctx.Request
                 let m = pickMethod server req
-                return! wrapMethodInvocation server ctx req m
+                return! wrapMethodInvocation ctx req m
         }
 
     let handleRequest server ctx =
@@ -160,7 +159,7 @@ module OwinSupport =
 type Options(prefix: string, server: OwinSupport.Server) =
 
     override __.ToString() =
-        seq { for KeyValue(k, v) in server.methods -> string k }
+        seq { for KeyValue(k, _) in server.methods -> string k }
         |> String.concat "\r\n"
 
     member __.Server = server
