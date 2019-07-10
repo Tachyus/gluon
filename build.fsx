@@ -33,14 +33,13 @@ let gitName = "gluon"
 
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/Tachyus"
 
-let buildDir = IO.Path.Combine(Environment.CurrentDirectory, "bin")
-
 // --------------------------------------------------------------------------------------
 // The rest of the file includes standard build steps 
 // --------------------------------------------------------------------------------------
 
 // Read additional information from the release notes document
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
+let buildDir = IO.Path.Combine(Environment.CurrentDirectory, "bin")
 
 let (!!) includes =
     (!! includes).SetBaseDirectory __SOURCE_DIRECTORY__
@@ -62,11 +61,13 @@ let private yarnFileName =
     let yarn = if isWindows then "yarn.cmd" else "yarn"
     let defaultPath = if isWindows then "C:\\Program Files (x86)\\Yarn\\bin\\yarn.cmd" else "/usr/bin/yarn"
     let info =
-        new ProcessStartInfo(which, yarn,
-            StandardOutputEncoding = System.Text.Encoding.UTF8,
-            RedirectStandardOutput = true,
-            UseShellExecute        = false,
-            CreateNoWindow         = true)
+        ProcessStartInfo(
+            fileName=which,
+            arguments=yarn,
+            StandardOutputEncoding=Text.Encoding.UTF8,
+            RedirectStandardOutput=true,
+            UseShellExecute=false,
+            CreateNoWindow=true)
     use proc = Process.Start info
     proc.WaitForExit()
     match proc.ExitCode with

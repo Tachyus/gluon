@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -16,6 +16,8 @@ namespace Gluon
 
 open System
 open System.Reflection
+open System.Threading.Tasks
+open Microsoft.AspNetCore.Http
 
 /// Reflection facilities.
 module internal Reflect =
@@ -71,7 +73,7 @@ module internal Reflect =
 
     type BoxedMethod =
         {
-            Invoke : Context * obj -> Async<obj>
+            Invoke : HttpContext * obj -> Task<obj>
         }
 
     val adaptRuntimeMethod : MethodInfo -> BoxedMethod

@@ -1,6 +1,4 @@
 FSharp.Core
-KatanaNetStandard
-Microsoft.Owin
 Newtonsoft.Json
-Owin
-System.Text.Encodings.Web
+Microsoft.AspNetCore.Routing
+TaskBuilder.fs

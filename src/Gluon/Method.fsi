@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -14,8 +14,15 @@
 
 namespace Gluon
 
-open System
 open System.Reflection
+open System.Threading.Tasks
+open Microsoft.AspNetCore.Http
+
+type internal MethodKey =
+    {
+        httpMethod : Schema.HttpMethod
+        localPath : string
+    }
 
 /// An executable runtime descriptor of a Gluon remote method.
 [<Sealed>]
@@ -27,26 +34,29 @@ type Method =
     ///     arity = 0   arg = null
     ///     arity = 1   arg = box x
     ///     arity = N   arg = box (x, y, .. z)
-    member Invoke : Context * arg: obj -> Async<obj>
+    member Invoke : HttpContext * arg: obj -> Task<obj>
 
     /// Types used in input and output.
     member internal IOTypes : Reflect.IOTypes
+
+    /// The httpMethod and localPath pair.
+    member internal Key : MethodKey
 
     /// Schema metadata associated with the method.
     member Schema : Schema.Method
 
     /// Defines a method with arity = 0.
-    static member Create : name: string * body: (unit -> Async<'A>) -> Method
+    static member Create : name: string * body: (unit -> Task<'A>) -> Method
 
     /// Defines a method with arity = 1.
     static member Create :
         name: string * argName: string *
-        body: ('A -> Async<'B>) -> Method
+        body: ('A -> Task<'B>) -> Method
 
     /// Defines a method with arity = 2.
     static member Create :
         name: string * arg1Name: string * arg2Name: string *
-        body: ('A -> 'B -> Async<'C>) -> Method
+        body: ('A -> 'B -> Task<'C>) -> Method
 
     /// Defines a method by reflecting a static runtime method.
     static member Reflect : MethodInfo -> Method

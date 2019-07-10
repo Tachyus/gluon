@@ -29,7 +29,7 @@ let info =
 // --------------------------------------------------------------------------------------
 
 #I "../../packages/build/FAKE/tools/"
-#load "../../packages/FSharp.Formatting/FSharp.Formatting.fsx"
+#load "../../packages/build/FSharp.Formatting/FSharp.Formatting.fsx"
 #r "NuGet.Core.dll"
 #r "FakeLib.dll"
 open Fake

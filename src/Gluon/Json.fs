@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -34,6 +34,6 @@ type Json internal (rawJson: JToken) =
 
     /// Lifts a raw Json string to Json.
     static member FromJsonString(rawJson: string) =
-        if rawJson = null then
+        if isNull rawJson then
             nullArg "rawJson"
-        Json(JToken.Parse(rawJson))
+        Json(JToken.Parse rawJson)

@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -14,19 +14,32 @@
 
 namespace Gluon
 
-open System
 open System.Reflection
+open System.Threading.Tasks
+open Microsoft.AspNetCore.Http
+open FSharp.Control.Tasks.ContextInsensitive
+
+type MethodKey =
+    {
+        httpMethod : Schema.HttpMethod
+        localPath : string
+    }
+
+    override this.ToString() =
+        sprintf "%O %s" this.httpMethod this.localPath
 
 type Method =
     {
-        execute : Context -> obj -> Async<obj>
+        execute : HttpContext -> obj -> Task<obj>
         ioTypes : Reflect.IOTypes
         methodSchema : Schema.Method
     }
 
     member this.Invoke(ctx, arg) =
         this.execute ctx arg
-
+    member this.Key =
+        let (Schema.HttpCallingConvention(httpMethod, localPath)) = this.methodSchema.CallingConvention
+        {httpMethod=httpMethod; localPath=localPath}
     member this.IOTypes = this.ioTypes
     member this.Schema = this.methodSchema
 
@@ -65,9 +78,9 @@ type Method =
                     else Some (Reflect.getDataType ret)
         }
 
-    static member Create(name: string, body: unit -> Async<'A>) =
-        let execute (ctx: Context) (v: obj) =
-            async {
+    static member Create(name: string, body: unit -> Task<'A>) =
+        let execute (_:HttpContext) (_:obj) =
+            task {
                 let! v = body ()
                 return box v
             }
@@ -75,9 +88,9 @@ type Method =
             Reflect.IOTypes.Create<unit,'A>(),
             Method.CreateSchema(name, [], typeof<'A>))
 
-    static member Create(name, argName, body: 'A -> Async<'B>) =
-        let execute (ctx: Context) (v: obj) =
-            async {
+    static member Create(name, argName, body: 'A -> Task<'B>) =
+        let execute (_:HttpContext) (v:obj) =
+            task {
                 let! res = body (unbox v)
                 return box res
             }
@@ -86,9 +99,9 @@ type Method =
             Reflect.IOTypes.Create<'A,'B>(),
             Method.CreateSchema(name, ps, typeof<'B>))
 
-    static member Create(name, a1, a2, body: 'A -> 'B -> Async<'C>) =
-        let execute (ctx: Context) (v: obj) =
-            async {
+    static member Create(name, a1, a2, body: 'A -> 'B -> Task<'C>) =
+        let execute (_:HttpContext) (v:obj) =
+            task {
                 let (a, b) = unbox v
                 let! res = body a b
                 return box res
