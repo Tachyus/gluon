@@ -126,7 +126,7 @@ export declare namespace Option {
 }
 export declare class Dict<T> {
     private data;
-    private check(key);
+    private check;
     containsKey(key: string): boolean;
     forEach(visit: (key: string, element: T) => void): void;
     copy(): Dict<T>;
