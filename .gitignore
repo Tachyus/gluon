@@ -4,7 +4,10 @@
 *.user
 *.userprefs
 .fake/
+.idea/
+.ionide/
 .vs/
+.vscode/
 bin/
 docs/content/release-notes.md
 docs/output/
@@ -24,4 +27,3 @@ node_modules/
 .yarnclean
 /paket.exe
 TestResults/
-.vscode/

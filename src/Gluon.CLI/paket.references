@@ -1,5 +1,5 @@
 Argu
 FSharp.Core
 Newtonsoft.Json
-System.Text.Encodings.Web
-KatanaNetStandard
+Microsoft.AspNetCore.Routing
+TaskBuilder.fs

@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -12,11 +12,12 @@
 // implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-namespace Gluon
+/// Gluon Routing infrastructure
+[<System.Runtime.CompilerServices.Extension>]
+module Gluon.Routing
 
 open System
-open System.Collections.Generic
-open System.Threading.Tasks
+open Microsoft.AspNetCore.Builder
 
 /// Options for adapting Gluon services to OWIN using HTTP transport.
 [<Sealed>]
@@ -29,14 +30,10 @@ type Options =
     member UrlPrefix : string
 
     /// Constructs a new OwinAdapter for a given service.
-    /// The URL prefix defaults to `/gluon-api`.
+    /// The URL prefix defaults to `gluon-api`.
     static member Create : Service * ?urlPrefix: string -> Options
 
-[<Obsolete("Use Gluon.Options instead.")>]
-type OwinOptions = Options
-
-/// Owin-related types.
-module Owin =
-
-    /// Handles a web request by dispatching it to a service method.
-    val middleware : options: Options -> MidFunc
+/// Handles a web request by dispatching it to a service method.
+[<System.Runtime.CompilerServices.Extension>]
+[<CompiledName("Map")>]
+val map : app:IApplicationBuilder * options:Options -> IApplicationBuilder

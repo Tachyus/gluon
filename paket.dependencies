@@ -1,32 +1,25 @@
-lowest_matching: true
 source https://nuget.org/api/v2
-framework: >= netstandard2.0, >= net461
+framework: auto-detect
+storage: none
 
 nuget Argu
-nuget FSharp.Core >= 4.3.4 lowest_matching:true
-nuget FSharp.Formatting
-nuget KatanaNetStandard framework: >= netstandard2.0 < net47
-nuget Owin framework: >= net45
-nuget Microsoft.Owin framework: >= net45
-nuget Microsoft.Owin.Diagnostics
-nuget Microsoft.Owin.FileSystems
-nuget Microsoft.Owin.Host.HttpListener
-nuget Microsoft.Owin.Host.SystemWeb
-nuget Microsoft.Owin.Hosting
-nuget Microsoft.Owin.SelfHost
-nuget Microsoft.Owin.StaticFiles
+nuget FSharp.Core >= 4.5.2 lowest_matching:true
+nuget Microsoft.AspNetCore.Routing
 nuget Newtonsoft.Json
-nuget System.Text.Encodings.Web
+nuget TaskBuilder.fs
 
 group Build
     source https://nuget.org/api/v2
 
     nuget Fake
+    nuget FSharp.Formatting
 
 group Test
     source https://nuget.org/api/v2
+    framework: auto-detect
+    storage: none
 
-    nuget FSharp.Core >= 4.3.4 lowest_matching: true
+    nuget FSharp.Core >= 4.5.2 lowest_matching: true
     nuget AppVeyor.TestLogger
     nuget Microsoft.NET.Test.Sdk
     nuget FsCheck

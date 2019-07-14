@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -16,10 +16,11 @@ namespace Gluon
 
 open System
 open System.Collections.Generic
-open System.IO
-open System.Linq
 open System.Linq.Expressions
 open System.Reflection
+open System.Threading.Tasks
+open Microsoft.AspNetCore.Http
+open FSharp.Control.Tasks.ContextInsensitive
 
 module Reflect =
 
@@ -280,17 +281,17 @@ module Reflect =
             | Some attr -> Schema.HttpMethod.Parse(attr.Verb)
         let path =
             match attr with
-            | Some attr when attr.Path <> null -> attr.Path
+            | Some attr when not (isNull attr.Path) -> attr.Path
             | _ -> pickPathBasedOnName info
         Schema.HttpCallingConvention(verb, path)
 
     let hasContextParameter (runtimeMethod: MethodInfo) =
         let ps = runtimeMethod.GetParameters()
-        ps.Length > 0 && ps.[0].ParameterType = typeof<Context>
+        ps.Length > 0 && ps.[0].ParameterType = typeof<HttpContext>
 
     let getParametersWithoutContext (runtimeMethod: MethodInfo) =
         let ps = runtimeMethod.GetParameters()
-        if ps.Length > 0 && ps.[0].ParameterType = typeof<Context>
+        if ps.Length > 0 && ps.[0].ParameterType = typeof<HttpContext>
             then Seq.toArray (Seq.skip 1 ps)
             else ps
 
@@ -322,7 +323,7 @@ module Reflect =
 
     type BoxedMethod =
         {
-            Invoke : Context * obj -> Async<obj>
+            Invoke : HttpContext * obj -> Task<obj>
         }
 
     type IReturnAdapter =
@@ -332,8 +333,8 @@ module Reflect =
     type ActionAdapter() =
         interface IReturnAdapter with
             member this.Adapt(rawFunc) =
-                let f = rawFunc :?> Action<Context,obj>
-                { Invoke = fun (c, x) -> async {
+                let f = rawFunc :?> Action<HttpContext,obj>
+                { Invoke = fun (c, x) -> task {
                     do f.Invoke(c, x)
                     return box () }}
 
@@ -341,8 +342,8 @@ module Reflect =
     type FuncAdapter<'T>() =
         interface IReturnAdapter with
             member this.Adapt(rawFunc) =
-                let f = rawFunc :?> Func<Context,obj,'T>
-                { Invoke = fun (c, x) -> async {
+                let f = rawFunc :?> Func<HttpContext,obj,'T>
+                { Invoke = fun (c, x) -> task {
                     let result = f.Invoke(c, x)
                     return box result }}
 
@@ -350,8 +351,8 @@ module Reflect =
     type AsyncFuncAdapter<'T>() =
         interface IReturnAdapter with
             member this.Adapt(rawFunc) =
-                let f = rawFunc :?> Func<Context,obj,Async<'T>>
-                { Invoke = fun (c, x) -> async {
+                let f = rawFunc :?> Func<HttpContext,obj,Task<'T>>
+                { Invoke = fun (c, x) -> task {
                     let! result = f.Invoke(c, x)
                     return box result }}
 
@@ -362,7 +363,7 @@ module Reflect =
 
     let buildExpression runtimeMethod =
         let ps = getParametersWithoutContext runtimeMethod
-        let context = E.Parameter(typeof<Context>, "context")
+        let context = E.Parameter(typeof<HttpContext>, "context")
         let input = E.Parameter(typeof<obj>, "input")
         match ps.Length with
         | 0 ->

@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -291,7 +291,7 @@ module JsonUtility =
                     match r.TokenType with
                     | JsonToken.PropertyName ->
                         let name = r.Value :?> string
-                        if name = null then
+                        if isNull name then
                             fail ()
                         next r
                         d.[name] <- forceRead inner r :?> 'T
@@ -309,7 +309,7 @@ module JsonUtility =
         override this.Write(w, x) =
             w.WriteStartObject()
             for KeyValue(k, v) in x do
-                if k = null then
+                if isNull k then
                     nullArg "key"
                 w.WritePropertyName(k, escape=true)
                 inner.Write(w, v)

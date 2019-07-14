@@ -1,4 +1,4 @@
-﻿// Copyright 2015 Tachyus Corp.
+﻿// Copyright 2019 Tachyus Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
@@ -32,7 +32,7 @@ let makeType t =
 let makeOptionType t =
     S.TypeReference ("Gluon.Option", [t])
 
-let rec typeLiteralNs ns sch =
+let rec typeLiteralNs (ns:string list) sch =
     let ( ! ) t = typeLiteralNs ns t
     match sch with
     | Schema.ArrayType t | Schema.ListType t | Schema.SequenceType t -> S.ArrayType !t
